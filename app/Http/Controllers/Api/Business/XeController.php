@@ -2,27 +2,35 @@
 
 namespace App\Http\Controllers\Api\Business;
 
-use App\Helpers\Response;
-use Illuminate\Http\Request;
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\KhachHangRequest;
-use App\Http\Resources\KhachHangResource;
-use App\Models\KhachHang;
+use App\Helpers\Response;
+use App\Http\Requests\XeRequest;
+use App\Http\Resources\XeResource;
+use App\Models\Xe;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
-class KhachHangController extends Controller
+class XeController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index(Request $request)
     {
         $perPage = $request->query('per_page', 20);
         $search = $request->query('search');
-        $query = KhachHang::query();
+        $query = Xe::query();
         if ($search) {
-            $query->where('ma','ilike', '%' . $search . '%');
-            $query->orWhere('ma_misa','ilike', '%' . $search . '%');
-            $query->orWhere('ten','ilike', '%' . $search . '%');
+            $query->where('bks','ilike', '%' . $search . '%');
+            $query->orWhere('lai_xe','ilike', '%' . $search . '%');
+            $query->orWhere('chu_xe','ilike', '%' . $search . '%');
 
         }
-        return KhachHangResource::collection($query->paginate($perPage));
+        return XeResource::collection($query->paginate($perPage));
     }
 
     /**
@@ -31,9 +39,9 @@ class KhachHangController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(KhachHangRequest $request)
+    public function store(XeRequest $request)
     {
-        KhachHang::create($request->all());
+        Xe::create($request->all());
         return Response::created();
     }
 
@@ -44,9 +52,9 @@ class KhachHangController extends Controller
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, KhachHang $khachhang)
+    public function update(Request $request, Xe $xe)
     {
-        $khachhang->update($request->all());
+        $xe->update($request->all());
         return Response::updated();
     }
     /**
@@ -57,6 +65,6 @@ class KhachHangController extends Controller
      */
     public function destroy($id)
     {
-        return KhachHang::where('id',$id)->delete();
+        return Xe::where('id',$id)->delete();
     }
 }

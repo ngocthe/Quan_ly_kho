@@ -7,14 +7,12 @@
                         :label="$t('form_search_label')"
                         :placeholder="$t('form_search_placeholder')"
                         clearable
+                          @keyup.enter="$emit('handle-search')"
                         outlined
                         dense
                         v-model="params.search"
                     ></v-text-field>
                 </v-col>
-                <v-col cols="6" md="6" lg="4" class="pb-0">
-                    <DateRangePicker :value.sync="params.date"
-                /></v-col>
             </v-row>
         </v-col>
         <v-col cols="12" style="padding-top: 20px" md="4">
@@ -23,6 +21,7 @@
                 @click="$emit('handle-search')"
                 color="primary"
                 medium
+                
                 >{{ $t("form_search_label") }}</v-btn
             >
             <v-btn

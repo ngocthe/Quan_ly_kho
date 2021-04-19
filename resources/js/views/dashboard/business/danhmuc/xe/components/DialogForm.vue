@@ -10,16 +10,16 @@
                         <v-row>
                             <v-col cols="12" sm="6">
                                 <v-text-field
-                                    v-model="form.name"
-                                    :label="$t('name')"
+                                    v-model="form.bks"
+                                    label="BKS"
                                     dense
                                     :rules="[(v) => !!v || $t('required')]"
                                 ></v-text-field>
                             </v-col>
                             <v-col cols="12" sm="6">
                                 <v-text-field
-                                    v-model="form.code"
-                                    :label="$t('code')"
+                                    v-model="form.dong_xe"
+                                    :label="'Dòng xe'"
                                     dense
                                     :rules="[(v) => !!v || $t('required')]"
                                 ></v-text-field>
@@ -28,26 +28,15 @@
                         <v-row>
                             <v-col cols="12" sm="6">
                                 <v-text-field
-                                    v-model="form.unit"
-                                    :label="$t('unit')"
+                                    v-model="form.lai_xe"
+                                    :label="'Lái xe'"
                                     dense
                                 ></v-text-field>
                             </v-col>
                             <v-col cols="12" sm="6">
                                 <v-text-field
-                                    v-model="form.account_number"
-                                    :label="$t('account_number')"
-                                    dense
-                                ></v-text-field>
-                            </v-col>
-                        </v-row>
-                        <v-row>
-                            <v-col cols="12" sm="6">
-                                <v-text-field
-                                    type="number"
-                                    :min="0"
-                                    v-model="form.balance"
-                                    :label="$t('balance')"
+                                    v-model="form.chu_xe"
+                                    :label="'Chủ xe'"
                                     dense
                                 ></v-text-field>
                             </v-col>

@@ -48,11 +48,12 @@ Route::group(
     [
         'middleware' =>
         [
-            'permission',
         ],
     ],
     function () {
         Route::apiResource('xes', 'Api\Business\XeController');
+        Route::apiResource('phelieus', 'Api\Business\PheLieuController');
+        Route::apiResource('khachhangs', 'Api\Business\KhachHangController');
 
     }
 );

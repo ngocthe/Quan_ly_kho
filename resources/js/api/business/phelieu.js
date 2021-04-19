@@ -2,7 +2,7 @@ import request from "@/utils/request";
 
 export function index(params, responseType = "json") {
     return request({
-        url: "/revenue_expenditures",
+        url: "/phelieus",
         method: "get",
         params,
         responseType
@@ -10,21 +10,21 @@ export function index(params, responseType = "json") {
 }
 export function store(data) {
     return request({
-        url: "/revenue_expenditures",
+        url: "/phelieus",
         method: "post",
         data
     });
 }
 export function update(id, data) {
     return request({
-        url: `/revenue_expenditures/${id}`,
+        url: `/phelieus/${id}`,
         method: "put",
         data
     });
 }
 export function destroy(id) {
     return request({
-        url: `/revenue_expenditures/${id}`,
+        url: `/phelieus/${id}`,
         method: "delete"
     });
 }

@@ -16,24 +16,24 @@ const businessRouter = [
         component: () =>
             import("@/views/dashboard/business/danhmuc/xe/index")
     },
-    // {
-    //     name: "Phế Liệu",
-    //     meta: {
-    //         en_name: "Phế liệu"
-    //     },
-    //     path: "danhmuc/phelieus",
-    //     component: () =>
-    //         import("@/views/dashboard/business/danhmuc/phelieu/index")
-    // },
-    // {
-    //     name: "Khách Hàng",
-    //     meta: {
-    //         en_name: "Khách Hàng"
-    //     },
-    //     path: "danhmuc/khachhangs",
-    //     component: () =>
-    //         import("@/views/dashboard/business/danhmuc/khachhang/index")
-    // },
+    {
+        name: "Phế Liệu",
+        meta: {
+            en_name: "Phế liệu"
+        },
+        path: "danhmuc/phelieus",
+        component: () =>
+            import("@/views/dashboard/business/danhmuc/phelieu/index")
+    },
+    {
+        name: "Khách Hàng",
+        meta: {
+            en_name: "Khách Hàng"
+        },
+        path: "danhmuc/khachhangs",
+        component: () =>
+            import("@/views/dashboard/business/danhmuc/khachhang/index")
+    },
    
 ];
 export default businessRouter;

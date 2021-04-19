@@ -45,24 +45,14 @@ export default {
     data() {
         return {
             defaultParams: {
-                search: "",
-                date: [
-                    new Date(
-                        new Date().getFullYear(),
-                        new Date().getMonth(),
-                        1
-                    ).toLocaleDateString("en-CA"),
-                    new Date().toLocaleDateString("en-CA"),
-                ],
+                search: ""
             },
             form: {
                 id: undefined,
-                name: "",
-                code: "",
-                account_number: "",
-                unit: "",
-                balance_start: "",
-                balance: "",
+                bks: "",
+                dong_xe: "",
+                chu_xe: "",
+                lai_xe: "",
             },
         };
     },

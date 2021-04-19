@@ -12,10 +12,20 @@
     >
         <template v-slot:top>
             <v-toolbar class="custom-toolbar" flat>
-                <v-toolbar-title>{{ $t("debt_list") }}</v-toolbar-title>
+                <v-toolbar-title>Khách hàng</v-toolbar-title>
                 <v-spacer></v-spacer>
+                <v-btn
+                    @click="$emit('handle-create')"
+                    class="mx-2"
+                    small
+                    fab
+                    dark
+                    color="indigo"
+                >
+                    <v-icon dark>mdi-plus</v-icon>
+                </v-btn> 
 
-                <!-- <v-btn
+              <v-btn
                     @click="$emit('handle-export')"
                     class="mx-2"
                     small
@@ -24,22 +34,10 @@
                     color="indigo"
                 >
                     <v-icon dark>mdi-download</v-icon>
-                </v-btn> -->
+                </v-btn> 
             </v-toolbar>
         </template>
- <template v-slot:item.amount_owed_usd="{ item }">
-            {{ (item.type_money=='$'?item.amount_owed:null)|money}}
-        </template>
-            <template v-slot:item.amount_owed_vnd="{ item }">
-            {{ item.amount_owed * item.exchange_rate|money}}
-        </template>
-          
-        <template v-slot:item.amount_payment="{ item }">
-            {{ item.amount_payment  |money}}
-        </template>
-             <template v-slot:item.amount_owed_exist="{ item }">
-            {{ item.amount_owed *item.exchange_rate - item.amount_payment |money}}
-        </template>
+ 
         <template v-slot:item.actions="{ item }">
             <v-btn
                 x-small
@@ -49,6 +47,16 @@
                 color="primary"
             >
                 <v-icon dark>mdi-pencil</v-icon>
+            </v-btn>
+            <v-btn
+                x-small
+                @click="handleDelete(item.id)"
+                class="ml-2"
+                fab
+                dark
+                color="error"
+            >
+                <v-icon dark>mdi-delete</v-icon>
             </v-btn>
         </template>
         <template v-slot:item.active="{ item }">
@@ -72,20 +80,12 @@ export default {
     computed: {
         headers() {
             return [
-                { text: this.$t("date_hd"), value: "date_hd" },
-                { text: this.$t("number_hd"), value: "number_hd" },
-                { text: this.$t("partner"), value: "reference.name" },
-                { text: this.$t("duration"), value: "duration" },
-                { text: this.$t("type_money"), value: "type_money" },
-		 { text: this.$t("amount_owed") +' (USD)', value: "amount_owed_usd" },
-                { text: this.$t("amount_owed") +' (VNĐ)', value: "amount_owed_vnd" },
-
-                { text: this.$t("amount_payment"), value: "amount_payment" },
-                { text: this.$t("date_payment"), value: "date_payment" },
-                {
-                    text: this.$t("amount_owed_exist"),
-                    value: "amount_owed_exist",
-                },
+                { text: 'Mã', value: "ma" },
+                { text: 'Mã misa', value: "ma_misa" },
+                { text: 'Tên', value: "ten" },
+                { text: 'Số điện thoại', value: "sdt" },
+                { text: 'Email', value: "email" },
+		         { text:'Địa chỉ', value: "dia_chi" },
                 {
                     text: this.$t("actions"),
                     value: "actions",

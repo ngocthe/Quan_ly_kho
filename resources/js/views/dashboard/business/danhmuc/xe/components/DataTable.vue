@@ -12,7 +12,7 @@
     >
         <template v-slot:top>
             <v-toolbar class="custom-toolbar" flat>
-                <v-toolbar-title>{{ $t("bank_list") }}</v-toolbar-title>
+                <v-toolbar-title>Danh sách xe</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-btn
                     @click="$emit('handle-create')"
@@ -84,13 +84,10 @@ export default {
     computed: {
         headers() {
             return [
-                { text: this.$t("name"), value: "name" },
-                { text: this.$t("code"), value: "code" },
-                { text: this.$t("account_number"), value: "account_number" },
-                { text: this.$t("unit"), value: "unit" },
-
-                { text: this.$t("incurred"), value: "incurred" },
-                { text: this.$t("balance"), value: "balance" },
+                { text: 'BKS', value: "bks" },
+                { text: 'Dòng xe', value: "dong_xe" },
+                { text: 'Lái xe', value: "lai_xe" },
+                { text: 'Chủ xe', value: "chu_xe" },
                 {
                     text: this.$t("actions"),
                     value: "actions",

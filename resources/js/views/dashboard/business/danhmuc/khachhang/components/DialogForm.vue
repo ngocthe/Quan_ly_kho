@@ -9,25 +9,46 @@
                     <v-container>
                         <v-row>
                             <v-col cols="12" sm="6">
-                                <DatePicker
-                                    :label="$t('date_hd')"
-                                    :value.sync="form.date_hd"
-                                />
+                              <v-text-field
+                                    v-model="form.ma"
+                                    :label="'Mã'"
+                                    dense
+                                ></v-text-field>
                             </v-col>
 
                             <v-col cols="12" sm="6">
                                 <v-text-field
-                                    v-model="form.number_hd"
-                                    :label="$t('number_hd')"
+                                    v-model="form.ma_misa"
+                                    :label="'Mã misa'"
                                     dense
                                 ></v-text-field>
                             </v-col>
 
                               <v-col cols="12" sm="6">
                                 <v-text-field
-                                type="number"
-                                    v-model="form.duration"
-                                    :label="$t('duration')"
+                                    v-model="form.ten"
+                                    :label="'Tên'"
+                                    dense
+                                ></v-text-field>
+                            </v-col>
+                              <v-col cols="12" sm="6">
+                                <v-text-field
+                                    v-model="form.sdt"
+                                    :label="'Số điện thoại'"
+                                    dense
+                                ></v-text-field>
+                            </v-col>
+                              <v-col cols="12" sm="6">
+                                <v-text-field
+                                    v-model="form.email"
+                                    :label="'Email'"
+                                    dense
+                                ></v-text-field>
+                            </v-col>
+                             <v-col cols="12" sm="6">
+                                <v-text-field
+                                    v-model="form.dia_chi"
+                                    :label="'Địa chỉ'"
                                     dense
                                 ></v-text-field>
                             </v-col>
@@ -55,7 +76,7 @@
     </v-dialog>
 </template>
 <script>
-import { store, update } from "@/api/business/debt";
+import { store, update } from "@/api/business/khachhang";
 import dialogMixin from "@/mixins/crud/dialog";
 import DatePicker from "@/components/DatePicker";
 
