@@ -1,0 +1,54 @@
+.my-container {
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+    overflow-y: auto;
+}
+.v-select .v-select__selections {
+    text-transform: unset !important;
+}
+.v-navigation-drawer__content {
+    overflow-y: overlay;
+}
+::-webkit-scrollbar {
+    width: 4px;
+    height: 8px;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    // border-radius: 8px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+    background-color: #eee;
+}
+.custom-toolbar {
+    .v-toolbar__content {
+        padding-left: 8px;
+    }
+}
+.pdf-content {
+    width: 100%;
+    background: #fff;
+}
+#pdf-table {
+    border-collapse: collapse;
+    width: 100%;
+    td,
+    th {
+        border-top: 1px solid black;
+        border-left: 1px solid black;
+        padding: 8px;
+        text-align: center;
+        &:last-child {
+            border-right: 1px solid black;
+        }
+    }
+    tr:last-child {
+        td {
+            border-bottom: 1px solid black;
+        }
+    }
+    th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+}

@@ -1,0 +1,172 @@
+<template>
+    <v-app-bar id="app-bar" absolute app color="transparent" flat height="60">
+        <v-btn
+            class="mr-3"
+            elevation="1"
+            fab
+            small
+            @click="
+                $vuetify.breakpoint.smAndDown
+                    ? setDrawer(!drawer)
+                    : $emit('input', !value)
+            "
+        >
+            <v-icon v-if="value"> mdi-view-quilt </v-icon>
+
+            <v-icon v-else> mdi-dots-vertical </v-icon>
+        </v-btn>
+
+        <v-toolbar-title
+            class="hidden-sm-and-down font-weight-light"
+            v-text="lang === 'vi' ? $route.name : $route.meta.en_name"
+        />
+
+        <v-spacer />
+        <v-select
+            :items="['vi', 'en']"
+            color="secondary"
+            hide-details
+            v-model="lang"
+            style="max-width: 80px"
+            prepend-icon="mdi-translate"
+        >
+        </v-select>
+        <v-btn
+            @click="openDebugger"
+            v-if="roles.includes('System Admin')"
+            class="ml-2"
+            min-width="0"
+            text
+            to="/"
+        >
+            <v-icon>mdi-android-debug-bridge</v-icon>
+        </v-btn>
+
+        <v-menu
+            bottom
+            left
+            min-width="200"
+            offset-y
+            origin="top right"
+            transition="scale-transition"
+        >
+            <template v-slot:activator="{ attrs, on }">
+                <v-btn class="ml-2" min-width="0" text v-bind="attrs" v-on="on">
+                    <v-icon>mdi-account</v-icon>
+                </v-btn>
+            </template>
+
+            <v-list :tile="false" flat nav>
+                <template v-for="(p, i) in profile">
+                    <v-divider
+                        v-if="p.divider"
+                        :key="`divider-${i}`"
+                        class="mb-2 mt-2"
+                    />
+
+                    <app-bar-item :to="p.to" v-else :key="`item-${i}`">
+                        <v-list-item-title
+                            v-text="
+                                lang === 'vi' ? p.title : p.en_title || p.title
+                            "
+                        />
+                    </app-bar-item>
+                </template>
+            </v-list>
+        </v-menu>
+    </v-app-bar>
+</template>
+
+<script>
+// Components
+
+import { VHover, VListItem } from "vuetify/lib";
+
+// Utilities
+import { mapGetters, mapMutations } from "vuex";
+
+export default {
+    name: "DashboardCoreAppBar",
+
+    components: {
+        AppBarItem: {
+            render(h) {
+                return h(VHover, {
+                    scopedSlots: {
+                        default: ({ hover }) => {
+                            return h(
+                                VListItem,
+                                {
+                                    attrs: this.$attrs,
+                                    class: {
+                                        "black--text": !hover,
+                                        "white--text secondary elevation-12": hover,
+                                    },
+                                    props: {
+                                        activeClass: "",
+                                        dark: hover,
+                                        link: true,
+                                        ...this.$attrs,
+                                    },
+                                },
+                                this.$slots.default
+                            );
+                        },
+                    },
+                });
+            },
+        },
+    },
+
+    props: {
+        value: {
+            type: Boolean,
+            default: false,
+        },
+    },
+
+    data: () => ({
+        notifications: [
+            "Mike John Responded to your email",
+            "You have 5 new tasks",
+            "You're now friends with Andrew",
+            "Another Notification",
+            "Another one",
+        ],
+        profile: [
+            { title: "Hồ sơ cá nhân", en_title: "Profile", to: "/profile" },
+            { divider: true },
+            { title: "Đăng xuất", en_title: "Log out", to: "/logout" },
+        ],
+    }),
+
+    computed: {
+        ...mapGetters(["drawer", "lang", "roles"]),
+        lang: {
+            set(val) {
+                this.$store.commit("user/SET_LANG", val);
+            },
+            get(val) {
+                return this.$store.state.user.lang;
+            },
+        },
+    },
+
+    methods: {
+        ...mapMutations({
+            setDrawer: "app/SET_DRAWER",
+        }),
+        openDebugger() {
+            window.open(
+                process.env.MIX_VUE_APP_BASE_URL + "/telescope",
+                "_blank"
+            );
+        },
+    },
+    watch: {
+        lang(val) {
+            this.$i18n.locale = val;
+        },
+    },
+};
+</script>

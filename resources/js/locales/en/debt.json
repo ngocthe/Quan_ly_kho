@@ -1,0 +1,16 @@
+{
+    "debt": "Debt",
+    "debt_list": "Debt list",
+    "debt_t": "Receivable",
+    "debt_c": "Have to pay",
+    "month": "Month",
+    "year": "Year",
+    "date_hd": "Date HĐ",
+    "number_hd": "Number HĐ",
+    "date_payment": "Pay date",
+    "amount_payment": "Residual",
+    "amount_owed": "Debt",
+    "duration": "Duration",
+    "partner": "Partner",
+    "amount_owed_exist": "Debt exist"
+}

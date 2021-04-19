@@ -1,0 +1,12 @@
+{
+    "customer_list": "Partner List",
+    "supplier_list": "Supplier List",
+    "supplier": "Supplier",
+    "name": "Name",
+    "code": "Code",
+    "address": "Address",
+    "tax_code": "TaxCode",
+    "phone_number": "Phone Number",
+    "pic": "Contact",
+    "main_product": "Main Product"
+}

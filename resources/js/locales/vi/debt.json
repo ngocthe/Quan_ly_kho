@@ -1,0 +1,16 @@
+{
+    "debt": "Công nợ",
+    "debt_list": "Danh sách công nợ",
+    "debt_t": "Phải thu",
+    "debt_c": "Phải trả",
+    "month": "Tháng",
+    "year": "Năm",
+    "date_hd": "Ngày HĐ",
+    "number_hd": "Số HĐ",
+    "date_payment": "Ngày thanh toán",
+    "amount_payment": "Có",
+    "amount_owed": "Nợ",
+    "duration": "Thời hạn",
+    "partner": "Đối tác",
+    "amount_owed_exist": "Số còn nợ"
+}

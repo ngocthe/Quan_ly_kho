@@ -1,0 +1,12 @@
+{
+    "customer_list": "Danh sách đối tác",
+    "supplier_list": "Danh sách nhà cung cấp",
+    "supplier": "Nhà cung cấp",
+    "name": "Tên",
+    "code": "Mã",
+    "address": "Địa chỉ",
+    "tax_code": "Mã số thuế",
+    "phone_number": "SĐT",
+    "pic": "Người liên hệ",
+    "main_product": "Sản phẩm chính"
+}

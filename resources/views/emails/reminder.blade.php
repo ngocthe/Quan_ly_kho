@@ -1,0 +1,11 @@
+<p><span style="font-weight:bold">ETD:</span> {{$import->etd}}</p>
+<p><span style="font-weight:bold">ETA:</span> {{$import->eta}}</p>
+<p><span style="font-weight:bold">Term:</span> {{$import->term}}</p>
+<p><span style="font-weight:bold">Source:</span> {{$import->source->name}}</p>
+<p><span style="font-weight:bold">Customer:</span> {{$import->customer}}</p>
+<p><span style="font-weight:bold">Items:</span> {{$import->product->name}}</p>
+<p><span style="font-weight:bold">Quantity:</span> {{$import->quantity}}</p>
+<p><span style="font-weight:bold">Unit Price:</span> {{$import->unit}}{{$import->price}}</p>
+<p><span style="font-weight:bold">Amount:</span> {{$import->unit}}{{$import->amount}}</p>
+<p><span style="font-weight:bold">Payment term:</span> {{$import->paymentTerm->name}}</p>
+<p><span style="font-weight:bold">Payment date:</span> {{$import->payment_date}}</p>
