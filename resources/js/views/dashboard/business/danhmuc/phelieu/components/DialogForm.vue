@@ -22,6 +22,13 @@
                                     dense
                                 ></v-text-field>
                             </v-col>
+                                <v-col cols="12" sm="6">
+                                <v-text-field
+                                    v-model="form.nhom"
+                                    :label="'Nhóm PL'"
+                                    dense
+                                ></v-text-field>
+                            </v-col>
                             <v-col cols="12" sm="6">
                                 <v-text-field
                                     v-model="form.don_vi"

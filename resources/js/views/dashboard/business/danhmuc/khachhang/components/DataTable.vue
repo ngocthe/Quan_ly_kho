@@ -85,6 +85,7 @@ export default {
                 { text: 'Tên', value: "ten" },
                 { text: 'Số điện thoại', value: "sdt" },
                 { text: 'Email', value: "email" },
+                 { text: 'Mã số thuế', value: "ma_so_thue" },
 		         { text:'Địa chỉ', value: "dia_chi" },
                 {
                     text: this.$t("actions"),

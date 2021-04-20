@@ -45,7 +45,7 @@
                                     dense
                                 ></v-text-field>
                             </v-col>
-                             <v-col cols="12" sm="6">
+                            <v-col cols="12" sm="6">
                                 <v-text-field
                                     v-model="form.ma_so_thue"
                                     :label="'Mã số thuế'"
@@ -83,7 +83,7 @@
     </v-dialog>
 </template>
 <script>
-import { store, update } from "@/api/business/khachhang";
+import { store, update } from "@/api/business/doitac";
 import dialogMixin from "@/mixins/crud/dialog";
 import DatePicker from "@/components/DatePicker";
 

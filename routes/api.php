@@ -54,7 +54,8 @@ Route::group(
         Route::apiResource('xes', 'Api\Business\XeController');
         Route::apiResource('phelieus', 'Api\Business\PheLieuController');
         Route::apiResource('khachhangs', 'Api\Business\KhachHangController');
-
+        Route::apiResource('doitacs', 'Api\Business\DoiTacController');
+        Route::apiResource('khos', 'Api\Business\KhoController');
     }
 );
 

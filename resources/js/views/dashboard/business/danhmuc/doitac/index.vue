@@ -44,7 +44,7 @@ import DataTable from "./components/DataTable";
 import Search from "./components/Search";
 import DialogForm from "./components/DialogForm";
 import Pagination from "@/components/Pagination";
-import { index } from "@/api/business/khachhang";
+import { index } from "@/api/business/doitac";
 import indexMixin from "@/mixins/crud/index";
 import FileSaver from "file-saver";
 export default {
@@ -54,7 +54,7 @@ export default {
         return {
             defaultParams: {
                 search: "",
-                page: 1,
+                       page: 1,
                 per_page: 50,
             },
             form: {
@@ -64,8 +64,9 @@ export default {
                 ten: "",
                 sdt: "",
                 email:"",
+                ma_so_thue:"",
                 dia_chi: "",
-                ma_so_thue:""
+
             },
         };
     },

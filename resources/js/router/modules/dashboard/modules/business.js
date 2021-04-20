@@ -34,6 +34,15 @@ const businessRouter = [
         component: () =>
             import("@/views/dashboard/business/danhmuc/khachhang/index")
     },
+    {
+        name: "Đối Tác",
+        meta: {
+            en_name: "Đối Tác"
+        },
+        path: "danhmuc/doitacs",
+        component: () =>
+            import("@/views/dashboard/business/danhmuc/doitac/index")
+    },
    
 ];
 export default businessRouter;

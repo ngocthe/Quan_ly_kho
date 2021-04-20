@@ -12,7 +12,7 @@
     >
         <template v-slot:top>
             <v-toolbar class="custom-toolbar" flat>
-                <v-toolbar-title>Danh sách phế liệu</v-toolbar-title>
+                <v-toolbar-title>Đối tác</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-btn
                     @click="$emit('handle-create')"
@@ -23,8 +23,9 @@
                     color="indigo"
                 >
                     <v-icon dark>mdi-plus</v-icon>
-                </v-btn>
-                <!-- <v-btn
+                </v-btn> 
+
+              <v-btn
                     @click="$emit('handle-export')"
                     class="mx-2"
                     small
@@ -33,11 +34,12 @@
                     color="indigo"
                 >
                     <v-icon dark>mdi-download</v-icon>
-                </v-btn> -->
+                </v-btn> 
             </v-toolbar>
         </template>
+ 
         <template v-slot:item.actions="{ item }">
-             <v-btn
+            <v-btn
                 x-small
                 @click="$emit('handle-edit', item)"
                 fab
@@ -57,9 +59,12 @@
                 <v-icon dark>mdi-delete</v-icon>
             </v-btn>
         </template>
-        
-    
-            
+        <template v-slot:item.active="{ item }">
+            <v-chip v-if="item.active" color="success" dark>{{
+                $t("active")
+            }}</v-chip>
+            <v-chip v-else color="warning" dark>{{ $t("deactive") }}</v-chip>
+        </template>
         <template v-slot:no-data>
             <v-btn color="primary" @click="$emit('handle-reset')"
                 >Refresh</v-btn
@@ -68,25 +73,18 @@
     </v-data-table>
 </template>
 <script>
-import { destroy } from "@/api/business/phelieu";
+import { destroy } from "@/api/business/doitac";
 import dataTableMixin from "@/mixins/crud/data-table";
 export default {
     mixins: [dataTableMixin(destroy)],
     computed: {
-        
         headers() {
             return [
-                { text: "Mã", value: "ma" },
-                {
-                    text: 'Tên',
-                    value: "ten",
-                },
-                 {
-                    text: 'Nhóm PL',
-                    value: "nhom",
-                },
-                { text: 'ĐVT', value: "don_vi" },
-               
+                { text: 'Mã', value: "ma" },
+                { text: 'Tên', value: "ten" },
+                { text: 'Số điện thoại', value: "sdt" },
+                { text: 'Mã số thuế', value: "ma_so_thue" },
+		         { text:'Địa chỉ', value: "dia_chi" },
                 {
                     text: this.$t("actions"),
                     value: "actions",

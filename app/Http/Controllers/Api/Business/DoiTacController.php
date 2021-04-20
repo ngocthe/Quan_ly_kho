@@ -2,32 +2,27 @@
 
 namespace App\Http\Controllers\Api\Business;
 
-use App\Helpers\Helper;
-use App\Http\Controllers\Controller;
 use App\Helpers\Response;
-use App\Http\Requests\PheLieuRequest;
-use App\Http\Resources\PheLieuResource;
-use App\Models\PheLieu;
 use Illuminate\Http\Request;
-class PheLieuController extends Controller
+use App\Http\Controllers\Controller;
+use App\Http\Requests\DoiTacRequest;
+use App\Http\Resources\DoiTacResource;
+use App\Models\DoiTac;
+
+class DoiTacController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         $perPage = $request->query('per_page', 20);
         $search = $request->query('search');
-        $query = PheLieu::query();
+        $query = DoiTac::query();
         if ($search) {
-            $query->where('ten','ilike', '%' . $search . '%');
-            $query->orWhere('nhom','ilike', '%' . $search . '%');
-            $query->orWhere('ma','ilike', '%' . $search . '%');
+            $query->where('ma','ilike', '%' . $search . '%');
+            $query->orWhere('ma_misa','ilike', '%' . $search . '%');
+            $query->orWhere('ten','ilike', '%' . $search . '%');
 
         }
-        return PheLieuResource::collection($query->paginate($perPage));
+        return DoiTacResource::collection($query->paginate($perPage));
     }
 
     /**
@@ -36,9 +31,9 @@ class PheLieuController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PheLieuRequest $request)
+    public function store(DoiTacRequest $request)
     {
-        PheLieu::create($request->all());
+        DoiTac::create($request->all());
         return Response::created();
     }
 
@@ -49,9 +44,9 @@ class PheLieuController extends Controller
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PheLieu $phelieu)
+    public function update(Request $request, DoiTac $DoiTac)
     {
-        $phelieu->update($request->all());
+        $DoiTac->update($request->all());
         return Response::updated();
     }
     /**
@@ -62,6 +57,6 @@ class PheLieuController extends Controller
      */
     public function destroy($id)
     {
-        return PheLieu::where('id',$id)->delete();
+        return DoiTac::where('id',$id)->delete();
     }
 }
