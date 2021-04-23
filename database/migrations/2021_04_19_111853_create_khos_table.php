@@ -17,8 +17,8 @@ class CreateKhosTable extends Migration
             $table->bigIncrements('id');
             $table->string('ma');
             $table->string('ten');
-            $table->string('dia_chi');
-            $table->string('loai');
+            $table->string('dia_chi')->nullable();
+            $table->string('loai')->nullable();
             $table->integer('nhan_vien_ban_hang_id');
             $table->foreign('nhan_vien_ban_hang_id')->references('id')->on('users');
             $table->integer('thu_kho_id');

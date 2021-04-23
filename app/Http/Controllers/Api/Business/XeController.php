@@ -30,7 +30,7 @@ class XeController extends Controller
             $query->orWhere('chu_xe','ilike', '%' . $search . '%');
 
         }
-        return XeResource::collection($query->paginate($perPage));
+        return XeResource::collection($request->all ?  $query->get():$query->paginate($perPage));
     }
 
     /**

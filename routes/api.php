@@ -56,6 +56,13 @@ Route::group(
         Route::apiResource('khachhangs', 'Api\Business\KhachHangController');
         Route::apiResource('doitacs', 'Api\Business\DoiTacController');
         Route::apiResource('khos', 'Api\Business\KhoController');
+        Route::apiResource('taikhoans', 'Api\Business\TaiKhoanController');
+        Route::apiResource('baoves', 'Api\Business\BaoVeController');
+        Route::apiResource('thukhos', 'Api\Business\ThuKhoController');
+        Route::apiResource('nvbhs', 'Api\Business\NhanVienBanHangController');
+
+
+
     }
 );
 

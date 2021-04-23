@@ -2,8 +2,16 @@
 
 namespace App\Http\Controllers\Api\Business;
 
-use Illuminate\Http\Request;
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
+use App\Helpers\Response;
+use App\Http\Requests\ThuKhoRequest;
+use App\Http\Resources\ThuKhoResource;
+use App\Models\ThuKho;
+use App\Models\System\Role;
+use App\Models\System\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ThuKhoController extends Controller
 {
@@ -12,9 +20,18 @@ class ThuKhoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $perPage = $request->query('per_page', 20);
+        $search = $request->query('search');
+        $query = ThuKho::query();
+        if ($search) {
+            $query->where('sdt','ilike', '%' . $search . '%');
+            $query->orWhere('ten','ilike', '%' . $search . '%');
+            $query->orWhere('cmnd','ilike', '%' . $search . '%');
+            $query->orWhere('email','ilike', '%' . $search . '%');
+        }
+        return ThuKhoResource::collection($request->all ?  $query->get():$query->paginate($perPage));
     }
 
     /**
@@ -23,42 +40,49 @@ class ThuKhoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ThuKhoRequest $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        DB::beginTransaction();
+        try{
+         $ThuKho = ThuKho::create($request->all());
+        $user = User::create([
+         'name'=>$request->ten,
+         'username'=>$request->sdt,
+         'email'=>$request->email,
+         'phone_number'=>$request->sdt,
+         'password'=>bcrypt(12345678),
+          'role_id'=>Role::query()->where('code','thukho')->first()->id
+        ]);
+        $ThuKho->user_id = $user->id;
+        $ThuKho->save();
+        DB::commit();
+        return Response::created();
+        }catch(\Exception $ex){
+            DB::rollback();
+            dd($ex);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, ThuKho $thukho)
     {
-        //
+        $thukho->update($request->all());
+        return Response::updated();
     }
-
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        return ThuKho::where('id',$id)->delete();
     }
 }

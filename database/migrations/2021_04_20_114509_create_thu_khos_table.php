@@ -19,6 +19,7 @@ class CreateThuKhosTable extends Migration
             $table->string('sdt')->nullable();
             $table->string('email')->nullable();
             $table->string('cmnd')->nullable();
+            $table->integer('user_id')->nullable();
             $table->timestamps();
         });
     }

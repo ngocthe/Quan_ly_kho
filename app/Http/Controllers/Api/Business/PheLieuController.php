@@ -27,7 +27,7 @@ class PheLieuController extends Controller
             $query->orWhere('ma','ilike', '%' . $search . '%');
 
         }
-        return PheLieuResource::collection($query->paginate($perPage));
+        return PheLieuResource::collection($request->all ?  $query->get():$query->paginate($perPage));
     }
 
     /**

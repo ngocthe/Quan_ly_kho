@@ -22,7 +22,7 @@ class KhachHangController extends Controller
             $query->orWhere('ten','ilike', '%' . $search . '%');
 
         }
-        return KhachHangResource::collection($query->paginate($perPage));
+        return KhachHangResource::collection($request->all?$query->get():$query->paginate($perPage));
     }
 
     /**
