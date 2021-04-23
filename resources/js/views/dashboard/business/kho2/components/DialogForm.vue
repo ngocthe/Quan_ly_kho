@@ -104,10 +104,8 @@
                         <v-row>
                             <v-col cols="12">
                                 <ProductList
-                                    :products="form.products"
-                                    :unit="form.unit"
+                                    :chitiets="form.chitiets"
                                     :options="options"
-                                    :rate="form.exchange_rate"
                                     :editing="true"
                                     :type="type"
                                 />

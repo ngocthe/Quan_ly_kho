@@ -2,7 +2,7 @@ import request from "@/utils/request";
 
 export function index(params, responseType = "json") {
     return request({
-        url: "/khos",
+        url: "/nhapkhos",
         method: "get",
         params,
         responseType
@@ -10,21 +10,21 @@ export function index(params, responseType = "json") {
 }
 export function store(data) {
     return request({
-        url: "/khos",
+        url: "/nhapkhos",
         method: "post",
         data
     });
 }
 export function update(id, data) {
     return request({
-        url: `/khos/${id}`,
+        url: `/nhapkhos/${id}`,
         method: "put",
         data
     });
 }
 export function destroy(id) {
     return request({
-        url: `/khos/${id}`,
+        url: `/nhapkhos/${id}`,
         method: "delete"
     });
 }

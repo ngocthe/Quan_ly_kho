@@ -13,9 +13,13 @@ class NhapKho extends Model
         return $this->belongsTo('App\Models\Kho', 'kho_id');
     }
 
-    public function khacHang()
+    public function khachHang()
     {
         return $this->belongsTo('App\Models\KhachHang', 'khach_hang_id');
+    }
+    public function xe()
+    {
+        return $this->belongsTo('App\Models\Xe', 'xe_id');
     }
     public function chitiets()
     {

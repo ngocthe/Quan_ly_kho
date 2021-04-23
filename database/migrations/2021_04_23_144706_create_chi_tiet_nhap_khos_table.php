@@ -17,7 +17,7 @@ class CreateChiTietNhapKhosTable extends Migration
             $table->bigIncrements('id');
             $table->integer('nhap_kho_id')->default(1);
             $table->integer('phe_lieu_id')->nullable();
-            $table->integer('dvt')->nullable();
+            $table->string('dvt')->nullable();
             $table->double('so_luong_thuc_te')->nullable();
             $table->double('so_luong_chung_tu')->nullable();
             $table->decimal('don_gia',18,0)->nullable();

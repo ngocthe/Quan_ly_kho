@@ -73,22 +73,26 @@ export default {
         
         headers() {
             return [
-                { text: "Mã", value: "ma" },
+                { text: "Ngày", value: "ngay" },
                 {
-                    text: 'Tên',
-                    value: "ten",
+                    text: 'Ca',
+                    value: "ca",
                 },
                  {
-                    text: 'Thủ kho',
-                    value: "thu_kho.ten",
+                    text: 'Khách hàng',
+                    value: "khach_hang.ten",
                 },
                  {
-                    text: 'NVBH',
-                    value: "nvbh.ten",
+                    text: 'Xe',
+                    value: "xe.bks",
                 },
                     {
-                    text: 'Địa chỉ',
-                    value: "dia_chi",
+                    text: 'Kho',
+                    value: "kho.ten",
+                },
+                 {
+                    text: 'Trạng thái',
+                    value: "status_id",
                 },
                 {
                     text: this.$t("actions"),

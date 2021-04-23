@@ -116,7 +116,7 @@
     </v-dialog>
 </template>
 <script>
-import { store, update } from "@/api/business/kho";
+import { store, update } from "@/api/business/nhapkho";
 import dialogMixin from "@/mixins/crud/dialog";
 import DatePicker from "@/components/DatePicker";
 import ProductList from "./ProductList";

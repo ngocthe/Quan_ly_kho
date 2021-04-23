@@ -2,8 +2,15 @@
 
 namespace App\Http\Controllers\Api\Business;
 
+use App\Helpers\Response;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\NhapKhoRequest;
+use App\Http\Resources\NhapKhoResource;
+use App\Models\ChiTietKho;
+use App\Models\ChiTietNhapKho;
+use App\Models\NhapKho;
+use Illuminate\Support\Facades\DB;
 
 class NhapKhoController extends Controller
 {
@@ -12,9 +19,22 @@ class NhapKhoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $perPage = $request->query('per_page', 20);
+        $search = $request->query('search');
+        $khach_hang_id = $request->query('khach_hang_id');
+        $kho_id = $request->query('kho_id');
+        $query = NhapKho::query()->with(['kho','khachHang','xe','chitiets']);
+        if ($search) {
+        }
+        if(isset( $kho_id )){
+            $query->where('kho_id',$kho_id);
+        }
+        if(isset( $nvbh_id )){
+            $query->where('khach_hang_id',$khach_hang_id);
+        }
+        return NhapKhoResource::collection($request->all ? $query->get(): $query->paginate($perPage));
     }
 
     /**
@@ -23,9 +43,47 @@ class NhapKhoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NhapKhoRequest $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $nhapkho = NhapKho::create([
+                'ngay' => $request->ngay,
+                'ca' => $request->ca,
+                'khach_hang_id' => $request->khach_hang_id,
+                'kho_id' => $request->kho_id,
+                'xe_id' => $request->xe_id,
+                'tai_khoan_no_id' => $request->tai_khoan_no_id,
+                'tai_khoan_co_id' => $request->tai_khoan_co_id,
+            ]);
+            foreach($request->chitiets as $item){
+                ChiTietNhapKho::create([
+                 'nhap_kho_id'=>$nhapkho->id,
+                 'phe_lieu_id'=>$item['phe_lieu_id'],
+                 'dvt'=>$item['dvt'],
+                'so_luong_thuc_te'=>$item['so_luong_thuc_te'],
+                'so_luong_chung_tu'=>$item['so_luong_chung_tu'],
+                'don_gia'=>$item['don_gia'],
+                ]);
+                $ctkho=ChiTietKho::where('phe_lieu_id',$item['phe_lieu_id'])->where('kho_id',$request->kho_id)->first();
+                    if(isset($ctkho)){
+                        $ctkho->so_luong =  $ctkho->so_luong+$item['so_luong_thuc_te'];
+                    }else{
+                        ChiTietKho::create([
+                           'kho_id'=>$request->kho_id,
+                          'phe_lieu_id'=>$item['phe_lieu_id'],
+                            'dvt'=>$item['dvt'],
+                            'khoi_luong'=>$item['so_luong_thuc_te'],
+                        ]);
+                    }
+            }
+
+            DB::commit();
+            return Response::created();
+        } catch (Exception $e) {
+            DB::rollBack();
+            return Response::error($e->getMessage());
+        }
     }
 
     /**

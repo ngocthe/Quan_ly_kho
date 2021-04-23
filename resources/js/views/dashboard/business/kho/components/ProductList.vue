@@ -43,7 +43,7 @@ export default {
                 { text: "Mã", value: "phe_lieu.ma", width: 180 },
                 { text: "Tên", value: "phe_lieu.ten", width: 180 },
                 { text: "Đơn vị", value: "dvt", width: 180 },
-                { text: "Số lượng", value: "so_luong", width: 180 },
+                { text: "Số lượng", value: "khoi_luong", width: 180 },
             ];
         }
         

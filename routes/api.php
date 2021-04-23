@@ -60,6 +60,8 @@ Route::group(
         Route::apiResource('baoves', 'Api\Business\BaoVeController');
         Route::apiResource('thukhos', 'Api\Business\ThuKhoController');
         Route::apiResource('nvbhs', 'Api\Business\NhanVienBanHangController');
+        Route::apiResource('nhapkhos', 'Api\Business\NhapKhoController');
+
 
 
 

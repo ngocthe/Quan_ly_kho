@@ -64,9 +64,9 @@
                 dense
             ></v-text-field>
         </template>
-        <template v-slot:item.so_luong_bien_ban="{ item }">
+        <template v-slot:item.so_luong_chung_tu="{ item }">
             <v-text-field
-                v-model="item.so_luong_bien_ban"
+                v-model="item.so_luong_chung_tu"
                 type="number"
                 :min="0"
                 dense
@@ -81,9 +81,20 @@
             ></v-text-field>
         </template>
        <template v-slot:item.chenh_lech="{ item }">
-                       {{ (item.so_luong_thuc_te - item.so_luong_bien_ban) | money }}
+                       {{ (item.so_luong_thuc_te - item.so_luong_chung_tu) | money }}
         </template>
-    
+     <template v-slot:item.actions="{ item }">
+            <v-btn
+                x-small
+                @click="handleDelete(item.id)"
+                class="ml-2"
+                fab
+                dark
+                color="error"
+            >
+                <v-icon dark>mdi-delete</v-icon>
+            </v-btn>
+        </template>
       
         <template>
             <v-btn color="primary" @click="$emit('handle-reset')"
@@ -101,7 +112,7 @@ export default {
                 { text: "Phế liệu", value: "phe_lieu_id", width: 200 },
                 { text: "Đơn vị", value: "dvt", width: 100 },
                 { text: "Số lượng thực", value: "so_luong_thuc_te", width: 180 },
-                 { text: "Số lượng biên bản", value: "so_luong_bien_ban", width: 180 },
+                 { text: "Số lượng biên bản", value: "so_luong_chung_tu", width: 180 },
                 { text: "Đơn giá", value: "don_gia", width: 180 },
                 { text: "Chênh lệch", value: "chenh_lech", width: 100 },
                  {
@@ -121,7 +132,7 @@ export default {
                 phe_lieu_id:null,
                 dvt: 'Kg',
                 so_luong_thuc_te: 0,
-                so_luong_bien_ban:0,
+                so_luong_chung_tu:0,
                 don_gia: 0
             });
         },
