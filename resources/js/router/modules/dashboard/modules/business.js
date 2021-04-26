@@ -21,7 +21,7 @@ const businessRouter = [
         meta: {
             en_name: "Kho"
         },
-        path: "khos",
+        path: "kho/khos",
         component: () =>
             import("@/views/dashboard/business/kho/index")
     },
@@ -30,9 +30,18 @@ const businessRouter = [
         meta: {
             en_name: "Nhập kho"
         },
-        path: "nhapkhos",
+        path: "kho/nhapkhos",
         component: () =>
             import("@/views/dashboard/business/kho/nhapkho/index")
+    },
+    {
+        name: "Phân loại",
+        meta: {
+            en_name: "Phân loại"
+        },
+        path: "kho/phanloais",
+        component: () =>
+            import("@/views/dashboard/business/kho/phanloai/index")
     },
     {
         name: "Phế Liệu",

@@ -44,15 +44,13 @@ import DataTable from "./components/DataTable";
 import Search from "./components/Search";
 import DialogForm from "./components/DialogForm";
 import Pagination from "@/components/Pagination";
-import { index } from "@/api/business/nhapkho";
+import { index } from "@/api/business/phanloai";
 import indexMixin from "@/mixins/crud/index";
 import FileSaver from "file-saver";
 import { index as getKhos } from "@/api/business/kho";
 import { index as getPhelieus } from "@/api/business/phelieu";
 
 import { index as getKhachhangs } from "@/api/business/khachhang";
-import { index as getXes } from "@/api/business/xe";
-import { index as getTaiKhoans } from "@/api/business/taikhoan";
 
 export default {
   mixins: [
@@ -75,25 +73,6 @@ export default {
                    all: true,
                 },
             },
-              xes: {
-                func: getXes,
-                params: {
-                   all: true,
-                },
-            },
-             tknos: {
-                func: getTaiKhoans,
-                params: {
-                      all: true,
-                   loai: 2,
-                },
-            },
-             tkcos: {
-                func: getTaiKhoans,
-                params: {
-                   loai: 1,
-                },
-            },
         }),
     ],
     components: { DataTable, Search, DialogForm, Pagination },
@@ -111,18 +90,18 @@ export default {
                     new Date().toLocaleDateString("en-CA")
                 ],
                 khach_hang_id:null,
-                xe_id:null,
                 per_page: 20,
             },
             form: {
                 id: undefined,
                 ngay: new Date().toLocaleDateString("en-CA"),
-                ca: 1,
                  khach_hang_id:null,
-                xe_id:null,
+                nguoi_can:null,
                 kho_id:null,
-                tai_khoan_no_id:null,
-                tai_khoan_co_id:null,
+                so_phieu:null,
+                phe_lieu_id:null,
+                so_luong:null,
+                noi_dung:null,
                 chitiets:[]
             },
         };

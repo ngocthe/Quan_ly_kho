@@ -65,7 +65,7 @@
     </v-data-table>
 </template>
 <script>
-import { destroy } from "@/api/business/nhapkho";
+import { destroy } from "@/api/business/phanloai";
 import dataTableMixin from "@/mixins/crud/data-table";
 export default {
     mixins: [dataTableMixin(destroy)],

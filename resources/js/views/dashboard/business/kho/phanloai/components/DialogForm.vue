@@ -15,41 +15,22 @@
                                 />
                             </v-col>
                             <v-col cols="12" sm="4">
-                                <v-select
-                                    v-model="form.ca"
-                                    :items="[{'id':1,'name':'Sáng'},{'id':2,'name':'Chiều'}]"
-                                    item-text="name"
-                                    item-value="id"
+                                 <v-text-field
+                                    v-model="form.nguoi_can"
+                                    :label="'Người cân'"
                                     dense
-                                    @change="$emit('handle-search')"
-                                    :label="'Ca'"
-                                    hide-details
-                                ></v-select>
+                                ></v-text-field>
                             </v-col>
-                                     <v-col cols="12" sm="2">
-                                <v-autocomplete
-                                    v-model="form.tai_khoan_co_id"
-                                    :items="options.tkcos"
-                                    item-text="so_tk"
+                                     <v-col cols="12" sm="4">
+                               <v-text-field
+                                    v-model="form.so_phieu"
+                                    :label="'Số phiếu'"
                                     dense
-                                    item-value="id"
-                                    :label="'Có'"
-                                ></v-autocomplete>
+                                ></v-text-field>
                             </v-col>
                          
-                           <v-col cols="12" sm="2">
+                           <v-col cols="12" sm="4">
                                 <v-autocomplete
-                                    v-model="form.tai_khoan_no_id"
-                                    :items="options.tknos"
-                                    item-text="so_tk"
-                                    dense
-                                    item-value="id"
-                                    :label="'Nợ'"
-                                ></v-autocomplete>
-                            </v-col>
-                           
-                                <v-col cols="12" sm="4">
-                                     <v-autocomplete
                                     v-model="form.khach_hang_id"
                                     :items="options.khachhangs"
                                     item-text="ten"
@@ -58,18 +39,9 @@
                                     :label="'Khách hàng'"
                                 ></v-autocomplete>
                             </v-col>
+                           
                                 <v-col cols="12" sm="4">
                                      <v-autocomplete
-                                    v-model="form.xe_id"
-                                    :items="options.xes"
-                                    item-text="bks"
-                                    dense
-                                    item-value="id"
-                                    :label="'Xe'"
-                                ></v-autocomplete>
-                            </v-col>
-                            <v-col cols="12" sm="4">
-                                <v-autocomplete
                                     v-model="form.kho_id"
                                     :items="options.khos"
                                     item-text="ten"
@@ -77,6 +49,31 @@
                                     item-value="id"
                                     :label="'Kho'"
                                 ></v-autocomplete>
+                            </v-col>
+                            <v-col cols="12" sm="4">
+                                 <v-text-field
+                                    v-model="form.noi_dung"
+                                    :label="'Nội dung'"
+                                    dense
+                                ></v-text-field>
+                            </v-col>
+                                <v-col cols="12" sm="6">
+                                     <v-autocomplete
+                                    v-model="form.phe_lieu_id"
+                                    :items="options.phelieus"
+                                    item-text="ten"
+                                    dense
+                                    item-value="id"
+                                    :label="'Phế liệu'"
+                                ></v-autocomplete>
+                            </v-col>
+                            <v-col cols="12" sm="4">
+                                 <v-text-field
+                                    type="number"
+                                    v-model="form.so_luong"
+                                    :label="'Số lượng xuất'"
+                                    dense
+                                ></v-text-field>
                             </v-col>
                      
                          
@@ -88,6 +85,7 @@
                                     :chitiets="form.chitiets"
                                     :editing="editing"
                                     :options="options"
+                                    :kho_id="form.kho_id"
                                 />
                             </v-col>
                         </v-row>
@@ -116,7 +114,7 @@
     </v-dialog>
 </template>
 <script>
-import { store, update } from "@/api/business/nhapkho";
+import { store, update } from "@/api/business/phanloai";
 import dialogMixin from "@/mixins/crud/dialog";
 import DatePicker from "@/components/DatePicker";
 import ProductList from "./ProductList";
