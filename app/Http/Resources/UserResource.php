@@ -23,7 +23,6 @@ class UserResource extends JsonResource
             'role' => $this->role->name,
             'role_id' => $this->role_id,
             'active' => $this->active,
-            'company_id' => $this->company_id,
         ];
     }
 }

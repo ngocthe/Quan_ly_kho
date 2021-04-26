@@ -73,8 +73,7 @@ export default {
                 password: "",
                 password_confirmation: "",
                 active: true,
-                role_id: "",
-                company_id:1
+                role_id: ""
             },
         };
     },

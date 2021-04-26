@@ -87,19 +87,7 @@
                                 ></v-select>
                             </v-col>
                         </v-row>
-                           <v-row>
-                            <v-col cols="12" sm="6">
-                                <v-select
-                                    v-model="form.company_id"
-                                    :items="[{'id':1,'name':'SD CHEMICAL VINA'},{'id':2,'name':'PHUCLINH'}]"
-                                    item-text="name"
-                                    item-value="id"
-                                    :rules="[(v) => !!v || 'Item is required']"
-                                    :label="$t('role')"
-                                    single-line
-                                ></v-select>
-                            </v-col>
-                        </v-row> 
+                           
                          </v-container
                 ></v-form>
             </v-card-text>
