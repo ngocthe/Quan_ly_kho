@@ -62,7 +62,7 @@ export default {
         ],
         titles: {
             "/pages/lock": "Lock Page",
-            "/pages/login": "SD CHEMICAL VINA",
+            "/pages/login": "QUẢN LÝ KHO",
             "/pages/pricing": "Pricing Page",
             "/pages/register": "Register Page",
         },

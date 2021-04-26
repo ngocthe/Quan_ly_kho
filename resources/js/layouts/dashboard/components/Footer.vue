@@ -15,7 +15,7 @@
                         class="body-1 font-weight-light pt-6 pt-md-0 text-center"
                     >
                         <span class="font-weight-bold"
-                            >Copyright &copy; {{ new Date().getFullYear() }} SD CHEMICAL VINA.</span
+                            >Copyright &copy; {{ new Date().getFullYear() }} QUẢN LÝ KHO.</span
                         >
                         All rights reserved.
                     </div>
