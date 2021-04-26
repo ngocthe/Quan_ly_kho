@@ -62,6 +62,7 @@ Route::group(
         Route::apiResource('nvbhs', 'Api\Business\NhanVienBanHangController');
         Route::apiResource('nhapkhos', 'Api\Business\NhapKhoController');
         Route::apiResource('phanloais', 'Api\Business\PhanLoaiController');
+        Route::apiResource('xuatkhos', 'Api\Business\XuatKhoController');
 
 
 
