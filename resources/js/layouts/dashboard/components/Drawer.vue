@@ -21,50 +21,11 @@
                 <v-list-item-title
                     class="text-uppercase font-weight-regular display-2"
                 >
-                    <span class="logo-mini"><img src="/images/sdc.jpg" style="width:40px" /></span>
-                    <span class="logo-normal" v-if="[2,3,4].includes($store.state.user.id)"> 
-                        <v-select
-                        v-model="company_id"
-                        :items="[
-                            { id: 1, name: 'SD CHEMICAL VINA' },
-                            { id: 2, name: 'PHUCLINH' },
-                        ]"
-                        item-text="name"
-                        item-value="id"
-                        @change="addCompany"
-                        outlined
-                        hide-details
-                        dense
-                    ></v-select>
+                    <span class="logo-mini"><img src="/images/logo.jpg" style="width:50px" /></span>
+                    <span class="logo-normal" > 
+                         QUẢN LÝ KHO
+                    </span>
                     
-                    </span>
-                     <span class="logo-normal" style="margin-top:10px" v-else-if="$store.state.user.company_id==1">
-                          <v-select
-                        v-model="$store.state.user.company_id"
-                        :items="[
-                            { id: 1, name: 'SD CHEMICAL VINA' },
-                        ]"
-                        item-text="name"
-                        item-value="id"
-                        outlined
-                        hide-details
-                        dense
-                    ></v-select>
-                    </span>
-                     <span class="logo-normal" v-else-if="$store.state.user.company_id==2"> 
-                         <v-select
-                        v-model="$store.state.user.company_id"
-                        :items="[
-                            { id: 2, name: 'PHUCLINH' },
-                        ]"
-                        item-text="name"
-                        item-value="id"
-                        outlined
-                        hide-details
-                        dense
-                    ></v-select>
-                       
-                    </span>
                 </v-list-item-title>
             </v-list-item-content>
         </v-list-item>

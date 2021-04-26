@@ -26,9 +26,8 @@
                 </v-btn>
             </v-toolbar>
         </template>
-        <template v-slot:item.company="{ item }">
-            <span v-if="item.company_id==1" >SD CHEMICAL VINA</span>
-            <span v-if="item.company_id==2" >PHUCLINH</span>
+        <template>
+            <span >QUẢN LÝ KHO</span>
         </template>
         <template v-slot:item.active="{ item }">
             <v-chip v-if="item.active" color="success" dark>{{

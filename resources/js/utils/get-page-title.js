@@ -1,4 +1,4 @@
-const title = "SD CHEMICAL VINA";
+const title = "QUẢN LÝ KHO";
 
 export default function getPageTitle(pageTitle) {
     if (pageTitle) {
