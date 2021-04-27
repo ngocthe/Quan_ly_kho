@@ -14,7 +14,7 @@
                                     :value.sync="form.ngay"
                                 />
                             </v-col>
-                            <v-col cols="12" sm="4">
+                            <v-col cols="12" sm="2">
                                 <v-select
                                     v-model="form.ca"
                                     :items="[{'id':1,'name':'Sáng'},{'id':2,'name':'Chiều'}]"
@@ -25,6 +25,13 @@
                                     :label="'Ca'"
                                     hide-details
                                 ></v-select>
+                            </v-col>
+                            <v-col cols="12" sm="2">
+                               <v-text-field
+                                    v-model="form.so_phieu"
+                                    :label="'Số phiếu'"
+                                    dense
+                                ></v-text-field>
                             </v-col>
                                      <v-col cols="12" sm="2">
                                 <v-autocomplete

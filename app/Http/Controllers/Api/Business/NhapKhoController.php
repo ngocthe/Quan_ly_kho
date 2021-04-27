@@ -50,6 +50,7 @@ class NhapKhoController extends Controller
             $nhapkho = NhapKho::create([
                 'ngay' => $request->ngay,
                 'ca' => $request->ca,
+                'so_phieu' => $request->so_phieu,
                 'khach_hang_id' => $request->khach_hang_id,
                 'kho_id' => $request->kho_id,
                 'xe_id' => $request->xe_id,

@@ -121,6 +121,7 @@ export default {
                  khach_hang_id:null,
                 xe_id:null,
                 kho_id:null,
+                so_phieu:null,
                 tai_khoan_no_id:null,
                 tai_khoan_co_id:null,
                 chitiets:[]
