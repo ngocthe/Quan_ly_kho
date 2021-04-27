@@ -17,8 +17,8 @@ class CreateXuatKhosTable extends Migration
             $table->bigIncrements('id');
             $table->date('ngay');
             $table->string('so_phieu');
-            $table->integer('tk_co_id')->nullable();
-            $table->integer('tk_no_id')->nullable();
+            $table->integer('tai_khoan_co_id')->nullable();
+            $table->integer('tai_khoan_no_id')->nullable();
             $table->integer('doi_tac_id')->nullable();
             $table->text('ly_do')->nullable();
             $table->integer('kho_id');

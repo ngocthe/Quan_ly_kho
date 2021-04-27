@@ -50,15 +50,15 @@ import FileSaver from "file-saver";
 import { index as getKhos } from "@/api/business/kho";
 import { index as getPhelieus } from "@/api/business/phelieu";
 
-import { index as getKhachhangs } from "@/api/business/khachhang";
+import { index as getDoitacs } from "@/api/business/doitac";
 import { index as getXes } from "@/api/business/xe";
 import { index as getTaiKhoans } from "@/api/business/taikhoan";
 
 export default {
   mixins: [
         indexMixin(index, {
-            khachhangs: {
-                func: getKhachhangs,
+            doitacs: {
+                func: getDoitacs,
                 params: {
                     all: true,
                 },
@@ -110,15 +110,16 @@ export default {
                     ).toLocaleDateString("en-CA"),
                     new Date().toLocaleDateString("en-CA")
                 ],
-                khach_hang_id:null,
+                doi_tac_id:null,
                 xe_id:null,
                 per_page: 20,
             },
             form: {
                 id: undefined,
                 ngay: new Date().toLocaleDateString("en-CA"),
-                ca: 1,
-                 khach_hang_id:null,
+                so_phieu: null,
+                 doi_tac_id:null,
+                 ly_do:null,
                 xe_id:null,
                 kho_id:null,
                 tai_khoan_no_id:null,

@@ -64,9 +64,9 @@
                 dense
             ></v-text-field>
         </template>
-        <template v-slot:item.so_luong_chung_tu="{ item }">
+        <template v-slot:item.so_luong_de_xuat="{ item }">
             <v-text-field
-                v-model="item.so_luong_chung_tu"
+                v-model="item.so_luong_de_xuat"
                 type="number"
                 :min="0"
                 dense
@@ -80,9 +80,7 @@
                 dense
             ></v-text-field>
         </template>
-       <template v-slot:item.chenh_lech="{ item }">
-                       {{ (item.so_luong_thuc_te - item.so_luong_chung_tu) | money }}
-        </template>
+    
      <template v-slot:item.actions="{ item }">
             <v-btn
                 x-small
@@ -111,10 +109,9 @@ export default {
             return [
                 { text: "Phế liệu", value: "phe_lieu_id", width: 200 },
                 { text: "Đơn vị", value: "dvt", width: 100 },
-                { text: "Số lượng thực", value: "so_luong_thuc_te", width: 180 },
-                 { text: "Số lượng biên bản", value: "so_luong_chung_tu", width: 180 },
+                { text: "Đề xuất", value: "so_luong_de_xuat", width: 180 },
+                 { text: "Thực tế", value: "so_luong_thuc_te", width: 180 },
                 { text: "Đơn giá", value: "don_gia", width: 180 },
-                { text: "Chênh lệch", value: "chenh_lech", width: 100 },
                  {
                     text: this.$t("actions") ,
                     value: "actions" ,
@@ -131,8 +128,8 @@ export default {
                 id: Math.random(),
                 phe_lieu_id:null,
                 dvt: 'Kg',
-                so_luong_thuc_te: 0,
-                so_luong_chung_tu:0,
+                so_luong_de_xuat: 0,
+                so_luong_thuc_te:0,
                 don_gia: 0
             });
         },

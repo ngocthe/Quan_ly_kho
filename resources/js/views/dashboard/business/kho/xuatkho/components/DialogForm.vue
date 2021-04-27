@@ -15,16 +15,11 @@
                                 />
                             </v-col>
                             <v-col cols="12" sm="4">
-                                <v-select
-                                    v-model="form.ca"
-                                    :items="[{'id':1,'name':'Sáng'},{'id':2,'name':'Chiều'}]"
-                                    item-text="name"
-                                    item-value="id"
+                                  <v-text-field
+                                    v-model="form.so_phieu"
+                                    :label="'Số phiếu'"
                                     dense
-                                    @change="$emit('handle-search')"
-                                    :label="'Ca'"
-                                    hide-details
-                                ></v-select>
+                                ></v-text-field>
                             </v-col>
                                      <v-col cols="12" sm="2">
                                 <v-autocomplete
@@ -50,12 +45,12 @@
                            
                                 <v-col cols="12" sm="4">
                                      <v-autocomplete
-                                    v-model="form.khach_hang_id"
-                                    :items="options.khachhangs"
+                                    v-model="form.doi_tac_id"
+                                    :items="options.doi_tac"
                                     item-text="ten"
                                     dense
                                     item-value="id"
-                                    :label="'Khách hàng'"
+                                    :label="'Đối tác'"
                                 ></v-autocomplete>
                             </v-col>
                                 <v-col cols="12" sm="4">

@@ -75,12 +75,12 @@ export default {
             return [
                 { text: "Ngày", value: "ngay" },
                 {
-                    text: 'Ca',
-                    value: "ca",
+                    text: 'Số phiếu',
+                    value: "so_phieu",
                 },
                  {
-                    text: 'Khách hàng',
-                    value: "khach_hang.ten",
+                    text: 'Đối tác',
+                    value: "doi_tac.ten",
                 },
                  {
                     text: 'Xe',
@@ -92,7 +92,7 @@ export default {
                 },
                  {
                     text: 'Trạng thái',
-                    value: "status_id",
+                    value: "status",
                 },
                 {
                     text: this.$t("actions"),

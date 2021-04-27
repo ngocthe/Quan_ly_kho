@@ -19,8 +19,8 @@
                
                 <v-col cols="6" md="6" lg="4" class="pb-0">
                     <v-autocomplete
-                                    v-model="params.khach_hang_id"
-                                    :items="options.khachhangs"
+                                    v-model="params.doi_tac_id"
+                                    :items="options.doitacs"
                                     item-text="ten"
                                     clearable
                                     dense
