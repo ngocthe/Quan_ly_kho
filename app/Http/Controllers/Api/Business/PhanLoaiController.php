@@ -10,6 +10,7 @@ use App\Http\Resources\PhanLoaiResource;
 use App\Models\ChiTietKho;
 use App\Models\ChiTietPhanLoai;
 use App\Models\PhanLoai;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class PhanLoaiController extends Controller
@@ -23,9 +24,10 @@ class PhanLoaiController extends Controller
     {
         $perPage = $request->query('per_page', 20);
         $search = $request->query('search');
+        $ngay = $request->query('ngay', [Carbon::now()->toDateString(), Carbon::now()->toDateString()]);
         $khach_hang_id = $request->query('khach_hang_id');
         $kho_id = $request->query('kho_id');
-        $query = PhanLoai::query()->with(['kho','khachHang','chitiets']);
+        $query = PhanLoai::query()->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1])->with(['kho','khachHang','chitiets']);
         if ($search) {
         }
         if(isset( $kho_id )){
@@ -48,7 +50,7 @@ class PhanLoaiController extends Controller
         DB::beginTransaction();
         try {
             $ctkho1= ChiTietKho::where('phe_lieu_id',$request->phe_lieu_id)->where('kho_id',$request->kho_id)->first();
-            if($ctkho1->khoi_luong<$request->so_luong){
+            if(!isset($ctkho1)||$ctkho1->khoi_luong<$request->so_luong){
               return response()->json([
                 'code'    => 500,
                 'message' => 'Khối lượng trong kho không đủ!',
@@ -195,5 +197,93 @@ class PhanLoaiController extends Controller
             DB::rollBack();
             dd($e);
         }
+    }
+
+    public function export(Request $request)
+    {
+        $ngay = $request->query('ngay', [Carbon::now()->toDateString(), Carbon::now()->toDateString()]);
+        
+        $data = PhanLoai::where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1])->get();
+        $file = public_path() . '/excel/PHÂN LOẠI.xlsx';
+        \Excel::load($file, function ($excel) use ($data) {
+            $excel->sheet('Sheet1', function ($sheet) use ($data) {
+                $t=2;
+                foreach ($data as $key => $value) {
+                    $sheet->row($t, [
+                        $value['ngay'],
+                        $value->pheLieu->ma,
+                        $value->pheLieu->ten,
+                        $value->pheLieu->don_vi,
+                        $value->so_phieu,
+                        $value->so_luong,
+                        '',
+                        $value->khachHang->ma,
+                        $value->khachHang->ten,
+                        $value->noi_dung,
+                    ]);
+                    foreach ($value->chitiets as $key2 => $value2) {
+                        $sheet->row($t+$key2+1, [
+                            $value['ngay'],
+                            $value2->pheLieu->ma,
+                            $value2->pheLieu->ten,
+                            $value2->dvt,
+                            $value->so_phieu,
+                            '',
+                            $value2->so_luong,
+                            $value->khachHang->ma,
+                            $value->khachHang->ten,
+                            $value->noi_dung,
+                        ]);
+                    }
+                    $t= $t +$value->chitiets->count()+1;
+
+                    $sheet->cell('A' . ($key + 4), function ($cell) {
+                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
+                    });
+                    $sheet->cell('B' . ($key + 4), function ($cell) {
+                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
+                    });
+                    $sheet->cell('C' . ($key + 4), function ($cell) {
+                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
+                    });
+                    $sheet->cell('D' . ($key + 4), function ($cell) {
+                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
+                    });
+                    $sheet->cell('E' . ($key + 4), function ($cell) {
+                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
+                    });
+                    $sheet->cell('F' . ($key + 4), function ($cell) {
+                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
+                    });
+                    $sheet->cell('G' . ($key + 4), function ($cell) {
+                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
+                    });
+                    $sheet->cell('H' . ($key + 4), function ($cell) {
+                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
+                    });
+                    $sheet->cell('I' . ($key + 4), function ($cell) {
+                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
+                    });
+                    $sheet->cell('J' . ($key + 4), function ($cell) {
+                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
+                    });
+                    $sheet->cell('K' . ($key + 4), function ($cell) {
+                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
+                    });
+                    $sheet->cell('L' . ($key + 4), function ($cell) {
+                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
+                    });
+                    $sheet->cell('M' . ($key + 4), function ($cell) {
+                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
+                    });
+                    $sheet->cell('N' . ($key + 4), function ($cell) {
+                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
+                    });
+                    $sheet->cell('O' . ($key + 4), function ($cell) {
+                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
+                    });
+                }
+            });
+        })->download('xlsx');
     }
 }

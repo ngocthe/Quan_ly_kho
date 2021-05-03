@@ -63,11 +63,10 @@ Route::group(
         Route::apiResource('nhapkhos', 'Api\Business\NhapKhoController');
         Route::apiResource('phanloais', 'Api\Business\PhanLoaiController');
         Route::apiResource('xuatkhos', 'Api\Business\XuatKhoController');
+        Route::get('phanloai/export', 'Api\Business\PhanLoaiController@export');
 
-
-
-
-
+       
     }
+
 );
 

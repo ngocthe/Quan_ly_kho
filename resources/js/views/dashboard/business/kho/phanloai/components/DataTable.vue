@@ -24,6 +24,16 @@
                 >
                     <v-icon dark>mdi-plus</v-icon>
                 </v-btn>
+                <v-btn
+                    @click="$emit('handle-export',item)"
+                    class="mx-2"
+                    small
+                    fab
+                    dark
+                    color="indigo"
+                >
+                    <v-icon dark>mdi-download</v-icon>
+                </v-btn>
                 <!-- <v-btn
                     @click="$emit('handle-export')"
                     class="mx-2"
@@ -37,6 +47,7 @@
             </v-toolbar>
         </template>
         <template v-slot:item.actions="{ item }">
+             
              <v-btn
                 x-small
                 @click="$emit('handle-edit', item)"
@@ -46,6 +57,7 @@
             >
                 <v-icon dark>mdi-pencil</v-icon>
             </v-btn>
+            
             <v-btn
                 x-small
                 @click="handleDelete(item.id)"
@@ -97,8 +109,7 @@ export default {
                 {
                     text: this.$t("actions"),
                     value: "actions",
-                    align: "center",
-                    width: 120,
+                    align: "center"
                 },
             ];
         },

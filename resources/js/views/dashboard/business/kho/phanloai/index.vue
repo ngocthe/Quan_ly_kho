@@ -16,7 +16,7 @@
                     @handle-edit="showDialogForm('edit', $event)"
                     @handle-create="showDialogForm('create')"
                     @handle-delete="getData()"
-                    @handle-export="exportData"
+                    @handle-export="exportExcel($event)"
                 />
             </v-col>
             <v-col cols="12">
@@ -107,11 +107,11 @@ export default {
         };
     },
     methods: {
-        // exportDataReport() {
-        //     this.to(
-        //         `/reports/export?date[]=${this.defaultParams.date[0]}&date[]=${this.defaultParams.date[1]}`
-        //     );
-        // },
+        exportExcel(e) {
+           window.location.assign(
+                `/api/phanloai/export?ngay[]=`+this.defaultParams.ngay[0]+'&ngay[]='+this.defaultParams.ngay[1]
+            );
+        },
     },
 };
 </script>
