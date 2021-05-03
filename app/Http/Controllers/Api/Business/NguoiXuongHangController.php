@@ -14,7 +14,7 @@ class NguoiXuongHangController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
