@@ -45,10 +45,21 @@ import Search from "./components/Search";
 import DialogForm from "./components/DialogForm";
 import Pagination from "@/components/Pagination";
 import { index } from "@/api/business/thukho";
+import { getKhos } from "@/api/business/kho";
 import indexMixin from "@/mixins/crud/index";
 import FileSaver from "file-saver";
 export default {
-    mixins: [indexMixin(index)],
+     mixins: [
+        indexMixin(index, {
+            khos: {
+                func: getKhos,
+                params: {
+                    all: true,
+                },
+            },
+         
+        }),
+    ],
     components: { DataTable, Search, DialogForm, Pagination },
     data() {
         return {
@@ -63,6 +74,7 @@ export default {
                 sdt: "",
                 email:"",
                 cmnd:"",
+                kho_id:null,
             },
         };
     },

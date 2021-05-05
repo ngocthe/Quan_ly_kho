@@ -38,6 +38,16 @@
                                     dense
                                 ></v-text-field>
                             </v-col>
+                             <v-col cols="12" sm="6">
+                                <v-autocomplete
+                                    v-model="form.kho_id"
+                                    :items="options.khos"
+                                    item-text="ten"
+                                    dense
+                                    item-value="id"
+                                    :label="'Kho'"
+                                ></v-autocomplete>
+                            </v-col>
                         </v-row>
                     </v-container>
                 </v-form>

@@ -24,7 +24,7 @@ class NhanVienBanHangController extends Controller
     {
         $perPage = $request->query('per_page', 20);
         $search = $request->query('search');
-        $query = NhanVienBanHang::query();
+        $query = NhanVienBanHang::query()->with('kho');
         if ($search) {
             $query->where('sdt','ilike', '%' . $search . '%');
             $query->orWhere('ten','ilike', '%' . $search . '%');

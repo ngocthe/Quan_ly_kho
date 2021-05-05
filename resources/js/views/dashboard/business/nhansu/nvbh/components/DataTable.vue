@@ -84,6 +84,7 @@ export default {
                 { text: 'Số điện thoại', value: "sdt" },
                 { text: 'Email', value: "email" },
 		         { text:'CMND', value: "cmnd" },
+                   { text:'Kho', value: "kho.ten" },
                 {
                     text: this.$t("actions"),
                     value: "actions",
