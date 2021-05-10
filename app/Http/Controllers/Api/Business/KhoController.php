@@ -45,7 +45,7 @@ class KhoController extends Controller
      */
     public function store(KhoRequest $request)
     {
-        Kho::create($request->all());
+        Kho::create(['ma'=>$request->ma,'ten'=>$request->ten]);
         return Response::created();
     }
 
