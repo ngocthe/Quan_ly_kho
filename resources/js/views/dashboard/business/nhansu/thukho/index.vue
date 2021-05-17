@@ -45,7 +45,7 @@ import Search from "./components/Search";
 import DialogForm from "./components/DialogForm";
 import Pagination from "@/components/Pagination";
 import { index } from "@/api/business/thukho";
-import { getKhos } from "@/api/business/kho";
+import { index as getKhos } from "@/api/business/kho";
 import indexMixin from "@/mixins/crud/index";
 import FileSaver from "file-saver";
 export default {
