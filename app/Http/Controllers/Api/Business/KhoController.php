@@ -37,6 +37,27 @@ class KhoController extends Controller
         return KhoResource::collection($request->all ? $query->get(): $query->paginate($perPage));
     }
 
+
+    function xuongHang(Request $request){
+        $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://mauxanhcuocsong.vn/api/xuonghang_admin?ngay%5B%5D=2021-05-01&ngay%5B%5D=2021-05-01',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+                    ),
+        ));
+        $response = curl_exec($curl);
+        curl_close($curl);
+        return (json_decode($response,true));
+    }
     /**
      * Store a newly created resource in storage.
      *
