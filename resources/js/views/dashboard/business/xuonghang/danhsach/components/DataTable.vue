@@ -62,6 +62,7 @@ export default {
         headers() {
             return [
                 { text: 'Số phiếu', value: "id" },
+                { text: 'Kho', value: "kho.ten" },
                 { text: 'Ngày', value: "ngay" },
                 { text: 'Ca', value: "ca" },
 		         { text:'Khách hàng', value: "ten_khach_hang" },
@@ -80,11 +81,12 @@ export default {
     methods:{
       async duyetXuongHang(item){
                 await  axios.put(`/api/xuong_hang/duyet/${item.id}`);
-                this.$emit('handle-reset')
                 this.$snackbar(
                 "Duyệt thành công",
                     "success"
             );
+                this.$emit('handle-search')
+
             // try {
             //     await duyet(item.id);
             //     this.$snackbar(
