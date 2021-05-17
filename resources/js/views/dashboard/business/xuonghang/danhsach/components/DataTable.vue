@@ -79,8 +79,8 @@ export default {
     },
     methods:{
       async duyetXuongHang(item){
-                console.log(item);
                 await  axios.put(`/api/xuong_hang/duyet/${item.id}`);
+                this.$emit('handle-reset')
                 this.$snackbar(
                 "Duyệt thành công",
                     "success"
