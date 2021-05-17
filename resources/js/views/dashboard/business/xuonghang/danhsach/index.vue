@@ -44,7 +44,7 @@ import DataTable from "./components/DataTable";
 import Search from "./components/Search";
 import DialogForm from "./components/DialogForm";
 import Pagination from "@/components/Pagination";
-import { index } from "@/api/business/nvbh";
+import { xuonghang as index } from "@/api/business/kho";
 import indexMixin from "@/mixins/crud/index";
 import FileSaver from "file-saver";
 export default {

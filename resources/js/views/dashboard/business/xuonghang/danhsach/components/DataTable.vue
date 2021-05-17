@@ -10,45 +10,30 @@
         disable-filtering
         class="elevation-1"
     >
-        <template v-slot:top>
-            <v-toolbar class="custom-toolbar" flat>
-                <v-toolbar-title>Danh sách</v-toolbar-title>
-                <v-spacer></v-spacer>
-                <v-btn
-                    @click="$emit('handle-create')"
-                    class="mx-2"
-                    small
-                    fab
-                    dark
-                    color="indigo"
-                >
-                    <v-icon dark>mdi-plus</v-icon>
-                </v-btn> 
-
-              <v-btn
-                    @click="$emit('handle-export')"
-                    class="mx-2"
-                    small
-                    fab
-                    dark
-                    color="indigo"
-                >
-                    <v-icon dark>mdi-download</v-icon>
-                </v-btn> 
-            </v-toolbar>
-        </template>
+      
  
         <template v-slot:item.actions="{ item }">
             <v-btn
+            v-if="!item.kho_duyet"
                 x-small
-                @click="$emit('handle-edit', item)"
-                fab
-                dark
+                @click="duyetXuongHang(item)"
                 color="primary"
             >
-                <v-icon dark>mdi-pencil</v-icon>
+                <v-icon >mdi-check</v-icon>
+                Duyệt
+
             </v-btn>
-            <v-btn
+             <v-chip
+            v-else
+                x-small
+                @click="$emit('handle-edit', item)"
+                color="primary"
+            >
+                
+               Đã duyệt 
+
+             </v-chip>
+            <!-- <v-btn
                 x-small
                 @click="handleDelete(item.id)"
                 class="ml-2"
@@ -57,14 +42,9 @@
                 color="error"
             >
                 <v-icon dark>mdi-delete</v-icon>
-            </v-btn>
+            </v-btn> -->
         </template>
-        <template v-slot:item.active="{ item }">
-            <v-chip v-if="item.active" color="success" dark>{{
-                $t("active")
-            }}</v-chip>
-            <v-chip v-else color="warning" dark>{{ $t("deactive") }}</v-chip>
-        </template>
+       
         <template v-slot:no-data>
             <v-btn color="primary" @click="$emit('handle-reset')"
                 >Refresh</v-btn
@@ -73,17 +53,21 @@
     </v-data-table>
 </template>
 <script>
-import { destroy } from "@/api/business/nvbh";
+import { duyet } from "@/api/business/kho";
+import axios from "axios";
 import dataTableMixin from "@/mixins/crud/data-table";
 export default {
-    mixins: [dataTableMixin(destroy)],
+    mixins: [dataTableMixin()],
     computed: {
         headers() {
             return [
-                { text: 'Tên', value: "ten" },
-                { text: 'Số điện thoại', value: "sdt" },
-                { text: 'Email', value: "email" },
-		         { text:'CMND', value: "cmnd" },
+                { text: 'Số phiếu', value: "id" },
+                { text: 'Ngày', value: "ngay" },
+                { text: 'Ca', value: "ca" },
+		         { text:'Khách hàng', value: "ten_khach_hang" },
+                 { text:'Xe', value: "xe.bien_kiem_soat" },
+                  { text:'Người xuống hàng', value: "nguoi_xuong_hang" },
+                 { text:'Khối lượng', value: "khoi_luong" },
                 {
                     text: this.$t("actions"),
                     value: "actions",
@@ -93,5 +77,25 @@ export default {
             ];
         },
     },
+    methods:{
+      async duyetXuongHang(item){
+                console.log(item);
+                await  axios.put(`/api/xuong_hang/duyet/${item.id}`);
+                this.$snackbar(
+                "Duyệt thành công",
+                    "success"
+            );
+            // try {
+            //     await duyet(item.id);
+            //     this.$snackbar(
+            //     "Duyệt thành công",
+            //         "success"
+            // );
+            // } catch (error) {
+            //      console.log(error);
+            //     this.loading = false;
+            // }
+        }
+    }
 };
 </script>

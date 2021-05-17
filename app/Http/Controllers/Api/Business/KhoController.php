@@ -8,6 +8,7 @@ use App\Helpers\Response;
 use App\Http\Requests\KhoRequest;
 use App\Http\Resources\KhoResource;
 use App\Models\Kho;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 class KhoController extends Controller
 {
@@ -56,7 +57,33 @@ class KhoController extends Controller
         ));
         $response = curl_exec($curl);
         curl_close($curl);
-        return (json_decode($response,true));
+        $data= json_decode($response,true);
+        return ["data"=>$data['result']['data'],"meta"=>$data['result']];
+    }
+
+    public function duyetXuongHang($id){
+            $user =Auth::user();
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://mauxanhcuocsong.vn/api/xuonghang_duyet/'.$id,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_POSTFIELDS =>'{
+                "nguoi_duyet" : '.$user->name.'
+            }',
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+            ),
+            ));
+                $response = curl_exec($curl);
+                curl_close($curl);
+                return$response;
+
     }
     /**
      * Store a newly created resource in storage.
