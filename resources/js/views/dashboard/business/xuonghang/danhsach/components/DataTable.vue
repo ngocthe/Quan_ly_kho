@@ -14,7 +14,7 @@
  
         <template v-slot:item.actions="{ item }">
             <v-btn
-            v-if="!item.kho_duyet"
+            v-if="!item.duyet_kho"
                 x-small
                 @click="duyetXuongHang(item)"
                 color="primary"
@@ -26,8 +26,8 @@
              <v-chip
                     v-else
                   class="ma-2"
-                   color="green"
-                 text-color="white"
+                   color="orange"
+                      text-color="white"
                     >
                 
                Đã duyệt 

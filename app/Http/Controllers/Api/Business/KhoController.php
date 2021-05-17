@@ -67,7 +67,7 @@ class KhoController extends Controller
             $user =Auth::user();
             $curl = curl_init();
             curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://mauxanhcuocsong.vn/api/xuonghang_duyet/'.$id,
+            CURLOPT_URL => 'https://mauxanhcuocsong.vn/api/xuonghang_duyet/'.$id.'?nguoi_duyet='.$user->name,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
