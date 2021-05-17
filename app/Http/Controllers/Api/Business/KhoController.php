@@ -41,9 +41,9 @@ class KhoController extends Controller
 
     function xuongHang(Request $request){
         $curl = curl_init();
-
+        $ngay = $request->query('ngay', [Carbon::now()->toDateString(), Carbon::now()->toDateString()]);
             curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://mauxanhcuocsong.vn/api/xuonghang_admin?ngay%5B%5D=2021-05-01&ngay%5B%5D=2021-05-01',
+            CURLOPT_URL => 'https://mauxanhcuocsong.vn/api/xuonghang_admin?ngay%5B%5D='. $ngay[0].'&ngay%5B%5D='. $ngay[1].'',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
