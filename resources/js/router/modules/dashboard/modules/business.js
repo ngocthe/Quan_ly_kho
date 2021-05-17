@@ -30,7 +30,7 @@ const businessRouter = [
         meta: {
             en_name: "Xuống hàng"
         },
-        path: "kho/xuonghangs",
+        path: "xuonghangs/danhsach",
         component: () =>
             import("@/views/dashboard/business/xuonghang/danhsach/index")
     },
