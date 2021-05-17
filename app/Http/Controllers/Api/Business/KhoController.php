@@ -68,16 +68,16 @@ class KhoController extends Controller
             
 $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://mauxanhcuocsong.vn/api/xuonghang_duyet/'.$id.'?nguoi_duyet='.$user->name,
+            CURLOPT_URL => 'https://mauxanhcuocsong.vn/api/xuonghang_duyet/'.$id.'',
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
         CURLOPT_TIMEOUT => 0,
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_CUSTOMREQUEST => 'PUT',
         CURLOPT_POSTFIELDS =>'{
-            "nguoi_duyet" : "asc"
+            "nguoi_duyet" : "'.$user->name.'"
         }',
         CURLOPT_HTTPHEADER => array(
             'Content-Type: application/json'
