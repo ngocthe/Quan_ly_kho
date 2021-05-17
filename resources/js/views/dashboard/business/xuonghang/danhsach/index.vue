@@ -56,6 +56,13 @@ export default {
                 search: "",
                        page: 1,
                 per_page: 50,
+                ngay: [
+                    new Date(
+                        new Date().getFullYear(),
+                        new Date().getMonth()-1,1
+                    ).toLocaleDateString("en-CA"),
+                    new Date().toLocaleDateString("en-CA")
+                ],
             },
             form: {
                 id: undefined,

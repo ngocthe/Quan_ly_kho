@@ -24,11 +24,11 @@
 
             </v-btn>
              <v-chip
-            v-else
-                x-small
-                @click="$emit('handle-edit', item)"
-                color="primary"
-            >
+                    v-else
+                  class="ma-2"
+                   color="green"
+                 text-color="white"
+                    >
                 
                Đã duyệt 
 

@@ -2,6 +2,9 @@
     <v-row>
         <v-col md="8" cols="12" class="pb-0">
             <v-row>
+                 <v-col cols="12" md="6" lg="4" class="pb-0">
+                    <DateRangePicker :value.sync="params.ngay"
+                /></v-col>
                 <v-col cols="6" md="6" lg="4" class="pb-0">
                     <v-text-field
                         :label="$t('form_search_label')"
