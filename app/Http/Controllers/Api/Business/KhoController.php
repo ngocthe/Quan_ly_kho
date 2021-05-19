@@ -43,10 +43,13 @@ class KhoController extends Controller
 
     function xuongHang(Request $request){
         $search = $request->query('search');
+        $page = $request->query('page');
+        $per_page = $request->query('per_page');
+
         $curl = curl_init();
         $ngay = $request->query('ngay', [Carbon::now()->toDateString(), Carbon::now()->toDateString()]);
             curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://mauxanhcuocsong.vn/api/xuonghang_admin?ngay%5B%5D='. $ngay[0].'&ngay%5B%5D='. $ngay[1].'&search='.$search.'',
+            CURLOPT_URL => 'https://mauxanhcuocsong.vn/api/xuonghang_admin?ngay%5B%5D='. $ngay[0].'&ngay%5B%5D='. $ngay[1].'&search='.$search.'&page='.$page.'&per_page='.$per_page.'',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
