@@ -40,7 +40,7 @@
             <v-autocomplete
                 v-model="item.phe_lieu_id"
                 :items="options.phelieus"
-                item-text="ten"
+                item-text="ma"
                 item-value="id"
                 style="width:100%"
                 dense

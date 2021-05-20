@@ -27,14 +27,19 @@ class PhanLoaiController extends Controller
         $ngay = $request->query('ngay', [Carbon::now()->toDateString(), Carbon::now()->toDateString()]);
         $khach_hang_id = $request->query('khach_hang_id');
         $kho_id = $request->query('kho_id');
+        $phe_lieu_id = $request->query('phe_lieu_id');
+
         $query = PhanLoai::query()->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1])->with(['kho','khachHang','chitiets']);
         if ($search) {
         }
         if(isset( $kho_id )){
             $query->where('kho_id',$kho_id);
         }
-        if(isset( $nvbh_id )){
+        if(isset( $khach_hang_id )){
             $query->where('khach_hang_id',$khach_hang_id);
+        }
+        if(isset( $phe_lieu_id )){
+            $query->where('phe_lieu_id',$phe_lieu_id);
         }
         return PhanLoaiResource::collection($request->all ? $query->get(): $query->paginate($perPage));
     }

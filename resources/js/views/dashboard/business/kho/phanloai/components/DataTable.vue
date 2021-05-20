@@ -95,8 +95,12 @@ export default {
                     value: "khach_hang.ten",
                 },
                  {
-                    text: 'Xe',
-                    value: "xe.bks",
+                    text: 'Phiếu liệu xuất',
+                    value: "phe_lieu.ma",
+                },
+                  {
+                    text: 'Số lượng xuất',
+                    value: "so_luong",
                 },
                     {
                     text: 'Kho',
