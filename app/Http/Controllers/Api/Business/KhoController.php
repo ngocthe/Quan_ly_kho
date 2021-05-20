@@ -8,6 +8,8 @@ use App\Helpers\Response;
 use App\Http\Requests\KhoRequest;
 use App\Http\Resources\KhoResource;
 use App\Models\Kho;
+use App\Models\ChiTietKho;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -111,10 +113,31 @@ $curl = curl_init();
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Kho $kho)
+    public function update(Request $request, $id)
     {
         $kho->update($request->all());
-        return Response::updated();
+        DB::beginTransaction();
+        try {
+            $nhapkho = Kho::where('id',$id)->update([
+                'ma' => $request->ngay,
+                'ten' => $request->ca,
+            ]);
+            ChiTietKho::where('kho_id',$id)->delete();
+            foreach($request->chitiets as $item){
+                        ChiTietKho::create([
+                           'kho_id'=>$id,
+                          'phe_lieu_id'=>$item['phe_lieu_id'],
+                            'dvt'=>$item['dvt'],
+                            'khoi_luong'=>$item['khoi_luong'],
+                        ]);
+            }
+
+            DB::commit();
+            return Response::updated();
+        } catch (Exception $e) {
+            DB::rollBack();
+            return Response::error($e->getMessage());
+        }
     }
     /**
      * Remove the specified resource from storage.
