@@ -115,12 +115,13 @@ $curl = curl_init();
      */
     public function update(Request $request, $id)
     {
-        $kho->update($request->all());
         DB::beginTransaction();
         try {
             $nhapkho = Kho::where('id',$id)->update([
-                'ma' => $request->ngay,
-                'ten' => $request->ca,
+                'ma' => $request->ma,
+                'ten' => $request->ten,
+                'dia_chi' => $request->dia_chi,
+
             ]);
             ChiTietKho::where('kho_id',$id)->delete();
             foreach($request->chitiets as $item){

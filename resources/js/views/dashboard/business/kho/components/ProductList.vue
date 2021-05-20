@@ -104,7 +104,7 @@ export default {
 
     methods: {
         addPheLieu() {
-            this.products.push({
+            this.chitiets.push({
                 id: Math.random(),
                 phe_lieu_id: "",
                 dvt: 1,
