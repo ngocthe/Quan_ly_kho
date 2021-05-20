@@ -31,7 +31,7 @@ class NhapKhoController extends Controller
         if(isset( $kho_id )){
             $query->where('kho_id',$kho_id);
         }
-        if(isset( $nvbh_id )){
+        if(isset( $khach_hang_id )){
             $query->where('khach_hang_id',$khach_hang_id);
         }
         return NhapKhoResource::collection($request->all ? $query->get(): $query->paginate($perPage));
