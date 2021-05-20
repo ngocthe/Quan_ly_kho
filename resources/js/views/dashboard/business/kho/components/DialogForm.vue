@@ -56,6 +56,8 @@
                                 <ProductList
                                     :chitiets="form.chitiets"
                                     :editing="true"
+                                    :options="options"
+
                                 />
                             </v-col>
                         </v-row>
