@@ -50,13 +50,13 @@ class PhanLoaiController extends Controller
         DB::beginTransaction();
         try {
             $ctkho1= ChiTietKho::where('phe_lieu_id',$request->phe_lieu_id)->where('kho_id',$request->kho_id)->first();
-            if(!isset($ctkho1)||$ctkho1->khoi_luong<$request->so_luong){
-              return response()->json([
-                'code'    => 500,
-                'message' => 'Khối lượng trong kho không đủ!',
-                'result'  => []
-            ], 500, []);
-            }
+            // if(!isset($ctkho1)||$ctkho1->khoi_luong<$request->so_luong){
+            //   return response()->json([
+            //     'code'    => 500,
+            //     'message' => 'Khối lượng trong kho không đủ!',
+            //     'result'  => []
+            // ], 500, []);
+            // }
 
             $phanloai = PhanLoai::create([
                 'ngay' => $request->ngay,
