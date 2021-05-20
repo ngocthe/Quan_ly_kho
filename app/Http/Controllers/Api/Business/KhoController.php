@@ -9,6 +9,7 @@ use App\Http\Requests\KhoRequest;
 use App\Http\Resources\KhoResource;
 use App\Models\Kho;
 use App\Models\ChiTietKho;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
