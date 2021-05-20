@@ -85,7 +85,7 @@
 </template>
 <script>
 export default {
-    props: ["chitiets", "editing"],
+    props: ["chitiets", "editing","options"],
     computed: {
         headers() {
             return [
