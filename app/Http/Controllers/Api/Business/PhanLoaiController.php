@@ -11,7 +11,10 @@ use App\Models\ChiTietKho;
 use App\Models\ChiTietPhanLoai;
 use App\Models\PhanLoai;
 use Carbon\Carbon;
+use App\Models\ThuKho;
+
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class PhanLoaiController extends Controller
 {
@@ -31,6 +34,11 @@ class PhanLoaiController extends Controller
 
         $query = PhanLoai::query()->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1])->with(['kho','khachHang','chitiets']);
         if ($search) {
+        }
+        $user = Auth::user();
+        $thukho = ThuKho::query()->where('user_id',$user->id)->first();
+        if(isset($thukho)){
+            $query->where('kho_id',$thukho->kho_id);
         }
         if(isset( $kho_id )){
             $query->where('kho_id',$kho_id);

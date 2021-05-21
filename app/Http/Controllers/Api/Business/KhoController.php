@@ -8,9 +8,10 @@ use App\Helpers\Response;
 use App\Http\Requests\KhoRequest;
 use App\Http\Resources\KhoResource;
 use App\Models\Kho;
+use App\Models\ThuKho;
+
 use App\Models\ChiTietKho;
 use Illuminate\Support\Facades\DB;
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -29,6 +30,11 @@ class KhoController extends Controller
         $nvbh_id = $request->query('nhan_vien_ban_hang_id');
         $thu_kho_id = $request->query('thu_kho_id');
         $query = Kho::query()->with(['thuKho','nvbh','chitiets']);
+        $user = Auth::user();
+        $thukho = ThuKho::query()->where('user_id',$user->id)->first();
+        if(isset($thukho)){
+            $query->where('id',$thukho->kho_id);
+        }
         if ($search) {
             $query->where('ma','ilike', '%' . $search . '%');
             $query->orWhere('ten','ilike', '%' . $search . '%');
@@ -48,11 +54,14 @@ class KhoController extends Controller
         $search = $request->query('search');
         $page = $request->query('page');
         $per_page = $request->query('per_page');
-
+        $user = Auth::user();
+        $thukho = ThuKho::query()->where('user_id',$user->id)->first();
+        $kho_id=null;
+        if(isset($thukho))$kho_id=$thukho->kho->kho_link_id;
         $curl = curl_init();
         $ngay = $request->query('ngay', [Carbon::now()->toDateString(), Carbon::now()->toDateString()]);
             curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://mauxanhcuocsong.vn/api/xuonghang_admin?ngay%5B%5D='. $ngay[0].'&ngay%5B%5D='. $ngay[1].'&search='.$search.'&page='.$page.'&per_page='.$per_page.'',
+            CURLOPT_URL => 'https://mauxanhcuocsong.vn/api/xuonghang_admin?ngay%5B%5D='. $ngay[0].'&ngay%5B%5D='. $ngay[1].'&search='.$search.'&page='.$page.'&per_page='.$per_page.'&kho_id='.$kho_id.'',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -67,12 +76,26 @@ class KhoController extends Controller
         $response = curl_exec($curl);
         curl_close($curl);
         $data= json_decode($response,true);
-        return ["data"=>$data['result']['data'],"meta"=>$data['result']];
+        $c=[];
+        foreach($data['result']['data'] as $item){
+            $t=false;
+            foreach($item['kho_xuong_hangs'] as $it){
+                if($it['kho_id'] ==$kho_id){
+                    $t= $it['duyet'];
+                }
+            }
+            $item['duyet'] =  $t;
+            $c[]=$item;
+        }
+        return ["data"=>$c,"meta"=>$data['result']];
     }
 
     public function duyetXuongHang($id){
-            $user =Auth::user();
-            
+    
+            $user = Auth::user();
+            $thukho = ThuKho::query()->where('user_id',$user->id)->first();
+            $kho_id=null;
+            if(isset($thukho))$kho_id=$thukho->kho->kho_link_id;
 $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://mauxanhcuocsong.vn/api/xuonghang_duyet/'.$id.'',
@@ -84,7 +107,8 @@ $curl = curl_init();
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'PUT',
         CURLOPT_POSTFIELDS =>'{
-            "nguoi_duyet" : "'.$user->name.'"
+            "nguoi_duyet" : "'.$user->name.'",
+            "kho_id" : "'.$kho_id.'"
         }',
         CURLOPT_HTTPHEADER => array(
             'Content-Type: application/json'

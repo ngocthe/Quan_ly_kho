@@ -10,7 +10,12 @@ use App\Http\Resources\NhapKhoResource;
 use App\Models\ChiTietKho;
 use App\Models\ChiTietNhapKho;
 use App\Models\NhapKho;
+use App\Models\Kho;
+use App\Models\ThuKho;
+use Carbon\Carbon;
+
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class NhapKhoController extends Controller
 {
@@ -24,8 +29,15 @@ class NhapKhoController extends Controller
         $perPage = $request->query('per_page', 20);
         $search = $request->query('search');
         $khach_hang_id = $request->query('khach_hang_id');
+        $ngay = $request->query('ngay', [Carbon::now()->toDateString(), Carbon::now()->toDateString()]);
+
         $kho_id = $request->query('kho_id');
-        $query = NhapKho::query()->with(['kho','khachHang','xe','chitiets']);
+        $query = NhapKho::query()->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1])->with(['kho','khachHang','xe','chitiets']);
+        $user = Auth::user();
+        $thukho = ThuKho::query()->where('user_id',$user->id)->first();
+        if(isset($thukho)){
+            $query->where('kho_id',$thukho->kho_id);
+        }
         if ($search) {
         }
         if(isset( $kho_id )){

@@ -14,7 +14,7 @@
  
         <template v-slot:item.actions="{ item }">
             <v-btn
-            v-if="!item.duyet_kho"
+            v-if="!item.duyet"
                 x-small
                 @click="duyetXuongHang(item)"
                 color="primary"
@@ -62,7 +62,7 @@ export default {
         headers() {
             return [
                 { text: 'Số phiếu', value: "id" },
-                { text: 'Kho', value: "kho.ten" },
+                // { text: 'Kho', value: "kho.ten" },
                 { text: 'Ngày', value: "ngay" },
                 { text: 'Ca', value: "ca" },
 		         { text:'Khách hàng', value: "ten_khach_hang" },
