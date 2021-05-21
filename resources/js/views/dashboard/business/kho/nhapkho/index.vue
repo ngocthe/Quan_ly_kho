@@ -13,8 +13,8 @@
                 <DataTable
                     :form="form"
                     :table-data="tableData"
-                    @handle-edit="showDialogForm2('edit', $event)"
-                    @handle-create="showDialogForm2('create')"
+                    @handle-edit="showDialogForm('edit', $event)"
+                    @handle-create="showDialogForm('create')"
                     @handle-delete="getData()"
                     @handle-export="exportData"
                 />

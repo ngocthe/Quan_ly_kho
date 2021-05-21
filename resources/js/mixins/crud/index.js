@@ -14,7 +14,7 @@ const indexMixin = (index, options) => ({
             options: {},
             defaultForm: {},
             form: {
-                id: undefined
+                id: undefined,
             }
         };
     },
@@ -61,6 +61,9 @@ const indexMixin = (index, options) => ({
                 }
             } else {
                 this.form = JSON.parse(JSON.stringify(this.defaultForm));
+                if(this.form.ngay){
+                    this.form.ngay = new Date().toLocaleDateString("en-CA")
+                }
                 this.form.id = undefined;
                 this.editing = false;
             }
