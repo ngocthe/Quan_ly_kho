@@ -13,8 +13,8 @@
                 <DataTable
                     :form="form"
                     :table-data="tableData"
-                    @handle-edit="showDialogForm('edit', $event)"
-                    @handle-create="showDialogForm('create')"
+                    @handle-edit="showDialogForm2('edit', $event)"
+                    @handle-create="showDialogForm2('create')"
                     @handle-delete="getData()"
                     @handle-export="exportData"
                 />
@@ -129,6 +129,20 @@ export default {
         };
     },
     methods: {
+         showDialogForm2(mode, id = null) {
+            const data = this.notes.find(item => item.id === id);
+            if (mode == "edit") {
+                this.editing = true;
+                for (let field in this.form) {
+                    this.form[field] = data[field];
+                }
+            } else {
+                this.form = JSON.parse(JSON.stringify(this.defaultForm));
+                this.form.id = undefined;
+                this.editing = false;
+            }
+            this.showDialog = true;
+        },
         // exportDataReport() {
         //     this.to(
         //         `/reports/export?date[]=${this.defaultParams.date[0]}&date[]=${this.defaultParams.date[1]}`
