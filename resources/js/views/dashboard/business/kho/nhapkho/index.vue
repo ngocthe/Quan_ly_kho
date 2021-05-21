@@ -126,18 +126,29 @@ export default {
                 tai_khoan_co_id:null,
                 chitiets:[]
             },
+            formDef: {
+                id: undefined,
+                ngay: new Date().toLocaleDateString("en-CA"),
+                ca: 1,
+                 khach_hang_id:null,
+                xe_id:null,
+                kho_id:null,
+                so_phieu:null,
+                tai_khoan_no_id:null,
+                tai_khoan_co_id:null,
+                chitiets:[]
+            },
         };
     },
     methods: {
          showDialogForm2(mode, id = null) {
-            const data = this.notes.find(item => item.id === id);
             if (mode == "edit") {
-                this.editing = true;
-                for (let field in this.form) {
-                    this.form[field] = data[field];
-                }
+                // this.editing = true;
+                // for (let field in this.form) {
+                //     this.form[field] = data[field];
+                // }
             } else {
-                this.form = JSON.parse(JSON.stringify(this.defaultForm));
+                this.form = JSON.parse(JSON.stringify(this.formDef));
                 this.form.id = undefined;
                 this.editing = false;
             }
