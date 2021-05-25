@@ -58,12 +58,20 @@ class KhoController extends Controller
         $per_page = $request->query('per_page');
         $user = Auth::user();
         $thukho = ThuKho::query()->where('user_id',$user->id)->first();
-        $kho_id=null;
-        if(isset($thukho))$kho_id=$thukho->kho->kho_link_id;
+        $kho_url='';
+        $kho_id=[];
+        if(isset($thukho)){
+            $kho_ids=ThuKhoKho::where('thu_kho_id',$thukho->id)->pluck('kho_id');
+            $kho_id = Kho::whereIn('id',$kho_ids)->pluck('kho_link_id');
+            foreach($kho_id as $i){
+                $e =$i."";
+                $kho_url=  $kho_url.'&kho_id[]='.$e.'';
+            }
+        }
         $curl = curl_init();
         $ngay = $request->query('ngay', [Carbon::now()->toDateString(), Carbon::now()->toDateString()]);
             curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://mauxanhcuocsong.vn/api/xuonghang_admin?ngay%5B%5D='. $ngay[0].'&ngay%5B%5D='. $ngay[1].'&search='.$search.'&page='.$page.'&per_page='.$per_page.'&kho_id='.$kho_id.'',
+            CURLOPT_URL => 'https://mauxanhcuocsong.vn/api/xuonghang_admin?ngay%5B%5D='. $ngay[0].'&ngay%5B%5D='. $ngay[1].'&search='.$search.'&page='.$page.'&per_page='.$per_page.''.$kho_url.'',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -82,7 +90,7 @@ class KhoController extends Controller
         foreach($data['result']['data'] as $item){
             $t=false;
             foreach($item['kho_xuong_hangs'] as $it){
-                if($it['kho_id'] ==$kho_id){
+                if(in_array($it['kho_id'],$kho_id->toArray())){
                     $t= $it['duyet'];
                 }
             }
@@ -96,9 +104,12 @@ class KhoController extends Controller
     
             $user = Auth::user();
             $thukho = ThuKho::query()->where('user_id',$user->id)->first();
-            $kho_id=null;
-            if(isset($thukho))$kho_id=$thukho->kho->kho_link_id;
-$curl = curl_init();
+            $kho_id=[];
+            if(isset($thukho)){
+                $kho_ids=ThuKhoKho::where('thu_kho_id',$thukho->id)->pluck('kho_id');
+                $kho_id = Kho::whereIn('id',$kho_ids)->pluck('kho_link_id');
+            }
+            $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://mauxanhcuocsong.vn/api/xuonghang_duyet/'.$id.'',
         CURLOPT_RETURNTRANSFER => true,

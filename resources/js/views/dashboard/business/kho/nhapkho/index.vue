@@ -114,21 +114,10 @@ export default {
                 xe_id:null,
                 per_page: 20,
             },
+            
             form: {
                 id: undefined,
-                ngay: new Date().toLocaleDateString("en-CA"),
-                ca: 1,
-                 khach_hang_id:null,
-                xe_id:null,
-                kho_id:null,
-                so_phieu:null,
-                tai_khoan_no_id:null,
-                tai_khoan_co_id:null,
-                chitiets:[]
-            },
-            formDef: {
-                id: undefined,
-                ngay: new Date().toLocaleDateString("en-CA"),
+                ngay: new Date(),
                 ca: 1,
                  khach_hang_id:null,
                 xe_id:null,
