@@ -72,6 +72,7 @@ class NhapKhoController extends Controller
                 'tai_khoan_co_id' => $request->tai_khoan_co_id,
             ]);
             foreach($request->chitiets as $item){
+                if(isset($item['phe_lieu_id'])){
                 ChiTietNhapKho::create([
                  'nhap_kho_id'=>$nhapkho->id,
                  'phe_lieu_id'=>$item['phe_lieu_id'],
@@ -93,6 +94,7 @@ class NhapKhoController extends Controller
                         ]);
                     }
             }
+        }
 
             DB::commit();
             return Response::created();
@@ -133,6 +135,7 @@ class NhapKhoController extends Controller
             }
             ChiTietNhapKho::where('nhap_kho_id',$nhapkho->id)->delete();
             foreach($info['chitiets'] as $item){
+                if(isset($item['phe_lieu_id'])){
                 ChiTietNhapKho::create([
                  'nhap_kho_id'=>$nhapkho->id,
                  'phe_lieu_id'=>$item['phe_lieu_id'],
@@ -153,7 +156,7 @@ class NhapKhoController extends Controller
                             'khoi_luong'=>$item['so_luong_thuc_te'],
                         ]);
                     }
-
+                }
             }
 
             $nhapkho = NhapKho::where('id',$id)->update([

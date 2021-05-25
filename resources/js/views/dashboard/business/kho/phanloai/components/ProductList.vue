@@ -36,9 +36,10 @@
                 </v-btn> -->
             </v-toolbar>
         </template>
-         <template v-slot:item.phe_lieu_id="{ item }">
+         <template v-slot:item.phe_lieu_id="{ item ,index}">
             <v-autocomplete
                 v-model="item.phe_lieu_id"
+                @change="them(index)"
                 :items="options.phelieus"
                 item-text="ma"
                 item-value="id"
@@ -116,6 +117,12 @@ export default {
     },
 
     methods: {
+        them(index){
+                var so = index+1;
+            if(this.chitiets.length==so){
+                this.addPheLieu()
+            }
+            console.log(so)},
         addPheLieu() {
             console.log(this.kho_id)
             this.chitiets.push({

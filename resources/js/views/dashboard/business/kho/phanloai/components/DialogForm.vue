@@ -61,7 +61,7 @@
                                      <v-autocomplete
                                     v-model="form.phe_lieu_id"
                                     :items="options.phelieus"
-                                    item-text="ten"
+                                    item-text="ma"
                                     dense
                                     item-value="id"
                                     :label="'Phế liệu'"

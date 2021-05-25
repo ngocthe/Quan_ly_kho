@@ -87,6 +87,7 @@ class PhanLoaiController extends Controller
             $ctkho1->khoi_luong =  $ctkho1->khoi_luong-$request->so_luong;
                         $ctkho1->save();
             foreach($request->chitiets as $item){
+                if(isset($item['phe_lieu_id'])){
                 ChiTietPhanLoai::create([
                  'phan_loai_id'=>$phanloai->id,
                  'phe_lieu_id'=>$item['phe_lieu_id'],
@@ -107,6 +108,7 @@ class PhanLoaiController extends Controller
                         ]);
                     }
             }
+        }
 
             DB::commit();
             return Response::created();

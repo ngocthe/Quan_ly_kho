@@ -46,7 +46,7 @@
                                 <v-col cols="12" sm="4">
                                      <v-autocomplete
                                     v-model="form.doi_tac_id"
-                                    :items="options.doi_tac"
+                                    :items="options.doitacs"
                                     item-text="ten"
                                     dense
                                     item-value="id"
