@@ -48,6 +48,7 @@ class NhapKhoController extends Controller
         if(isset( $khach_hang_id )){
             $query->where('khach_hang_id',$khach_hang_id);
         }
+        $query->orderBy('updated_at','desc');
         return NhapKhoResource::collection($request->all ? $query->get(): $query->paginate($perPage));
     }
 

@@ -51,6 +51,7 @@ class PhanLoaiController extends Controller
         if(isset( $phe_lieu_id )){
             $query->where('phe_lieu_id',$phe_lieu_id);
         }
+        $query->orderBy('updated_at','desc');
         return PhanLoaiResource::collection($request->all ? $query->get(): $query->paginate($perPage));
     }
 

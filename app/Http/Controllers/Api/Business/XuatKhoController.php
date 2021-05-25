@@ -34,6 +34,7 @@ class XuatKhoController extends Controller
         if(isset( $nvbh_id )){
             $query->where('doi_tac_id',$doi_tac_id);
         }
+        $query->orderBy('updated_at','desc');
         return XuatKhoResource::collection($request->all ? $query->get(): $query->paginate($perPage));
     }
 
@@ -67,7 +68,7 @@ class XuatKhoController extends Controller
                 ]);
                 $ctkho=ChiTietKho::where('phe_lieu_id',$item['phe_lieu_id'])->where('kho_id',$request->kho_id)->first();
                     if(isset($ctkho)){
-                        $ctkho->khoi_luong =  $ctkho->khoi_luong+$item['so_luong_thuc_te'];
+                        $ctkho->khoi_luong =  $ctkho->khoi_luong-$item['so_luong_thuc_te'];
                         $ctkho->save();
                     }else{
                         ChiTietKho::create([
