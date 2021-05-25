@@ -9,6 +9,7 @@ use App\Http\Requests\KhoRequest;
 use App\Http\Resources\KhoResource;
 use App\Models\Kho;
 use App\Models\ThuKho;
+use App\Models\ThuKhoKho;
 
 use App\Models\ChiTietKho;
 use Illuminate\Support\Facades\DB;
@@ -33,7 +34,8 @@ class KhoController extends Controller
         $user = Auth::user();
         $thukho = ThuKho::query()->where('user_id',$user->id)->first();
         if(isset($thukho)){
-            $query->where('id',$thukho->kho_id);
+            $khoIDs= ThuKhoKho::where('thu_kho_id',$thukho->id)->pluck('kho_id');
+            $query->whereIn('id', $khoIDs);
         }
         if ($search) {
             $query->where('ma','ilike', '%' . $search . '%');

@@ -40,7 +40,8 @@
                             </v-col>
                              <v-col cols="12" sm="6">
                                 <v-autocomplete
-                                    v-model="form.kho_id"
+                                multiple    
+                                    v-model="form.kho_ids"
                                     :items="options.khos"
                                     item-text="ten"
                                     dense

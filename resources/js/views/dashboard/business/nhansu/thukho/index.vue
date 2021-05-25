@@ -75,6 +75,8 @@ export default {
                 email:"",
                 cmnd:"",
                 kho_id:null,
+                  kho_ids:[],
+
             },
         };
     },

@@ -8,6 +8,8 @@ use App\Helpers\Response;
 use App\Http\Requests\ThuKhoRequest;
 use App\Http\Resources\ThuKhoResource;
 use App\Models\ThuKho;
+use App\Models\ThuKhoKho;
+
 use App\Models\System\Role;
 use App\Models\System\User;
 use Illuminate\Http\Request;
@@ -24,7 +26,7 @@ class ThuKhoController extends Controller
     {
         $perPage = $request->query('per_page', 20);
         $search = $request->query('search');
-        $query = ThuKho::query()->with('kho');
+        $query = ThuKho::query()->with('khos');
         if ($search) {
             $query->where('sdt','ilike', '%' . $search . '%');
             $query->orWhere('ten','ilike', '%' . $search . '%');
@@ -44,7 +46,16 @@ class ThuKhoController extends Controller
     {
         DB::beginTransaction();
         try{
-         $ThuKho = ThuKho::create($request->all());
+         $ThuKho = ThuKho::create([
+            'cmnd' => $request->cmnd,
+            'email' => $request->email,
+            'ten' => $request->ten,
+            'sdt'=>$request->sdt,
+         ]);
+         foreach($request->kho_ids as $kho_id){
+             ThuKhoKho::create(['kho_id'=>$kho_id,'thu_kho_id'=>$ThuKho->id]);
+         } 
+         
         $user = User::create([
          'name'=>$request->ten,
          'username'=>$request->sdt,
@@ -70,9 +81,17 @@ class ThuKhoController extends Controller
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ThuKho $thukho)
+    public function update(Request $request, $id)
     {
-        $thukho->update($request->all());
+       ThuKho::where('id',$id)->update([
+            'cmnd' => $request->cmnd,
+            'email' => $request->email,
+            'ten' => $request->ten,
+            'sdt'=>$request->sdt,
+         ]);
+         foreach($request->kho_ids as $kho_id){
+             ThuKhoKho::create(['kho_id'=>$kho_id,'thu_kho_id'=>$id]);
+         } 
         return Response::updated();
     }
     /**

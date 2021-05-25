@@ -12,6 +12,7 @@ use App\Models\ChiTietNhapKho;
 use App\Models\NhapKho;
 use App\Models\Kho;
 use App\Models\ThuKho;
+use App\Models\ThuKhoKho;
 use Carbon\Carbon;
 
 use Illuminate\Support\Facades\DB;
@@ -36,7 +37,8 @@ class NhapKhoController extends Controller
         $user = Auth::user();
         $thukho = ThuKho::query()->where('user_id',$user->id)->first();
         if(isset($thukho)){
-            $query->where('kho_id',$thukho->kho_id);
+            $khoIDs= ThuKhoKho::where('thu_kho_id',$thukho->id)->pluck('kho_id');
+            $query->whereIn('kho_id', $khoIDs);
         }
         if ($search) {
         }

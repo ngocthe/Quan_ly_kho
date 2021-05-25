@@ -37,7 +37,11 @@
                 </v-btn> 
             </v-toolbar>
         </template>
- 
+       <template v-slot:item.kho="{ item }">
+                <span v-for="(i) in item.khos">
+                    <span>{{i.ten}}</span>
+                </span>
+           </template>
         <template v-slot:item.actions="{ item }">
             <v-btn
                 x-small
@@ -84,7 +88,7 @@ export default {
                 { text: 'Số điện thoại', value: "sdt" },
                 { text: 'Email', value: "email" },
 		         { text:'CMND', value: "cmnd" },
-                    { text:'Kho', value: "kho.ten" },
+                    { text:'Kho', value: "kho" },
                 {
                     text: this.$t("actions"),
                     value: "actions",

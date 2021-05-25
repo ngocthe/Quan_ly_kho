@@ -14,6 +14,17 @@ class ThuKhoResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+          return [
+            'cmnd' => $this->cmnd,
+            'email' => $this->email,
+            'ten' => $this->ten,
+
+            'id' => $this->id,
+            'kho_id' => $this->kho_id,
+            'khos'=>$this->khos,
+            'sdt'=>$this->sdt,
+            'user_id'=>$this->user_id,
+            'kho_ids' => $this->khos->pluck('id')
+        ];
     }
 }
