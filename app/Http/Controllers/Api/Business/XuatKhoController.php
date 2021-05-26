@@ -59,7 +59,7 @@ class XuatKhoController extends Controller
             ]);
             foreach($request->chitiets as $item){
                 ChiTietXuatKho::create([
-                 'nhap_kho_id'=>$XuatKho->id,
+                 'xuat_kho_id'=>$XuatKho->id,
                  'phe_lieu_id'=>$item['phe_lieu_id'],
                  'dvt'=>$item['dvt'],
                 'so_luong_thuc_te'=>$item['so_luong_thuc_te'],
