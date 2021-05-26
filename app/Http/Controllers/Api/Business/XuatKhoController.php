@@ -63,20 +63,13 @@ class XuatKhoController extends Controller
                  'phe_lieu_id'=>$item['phe_lieu_id'],
                  'dvt'=>$item['dvt'],
                 'so_luong_thuc_te'=>$item['so_luong_thuc_te'],
-                'so_luong_chung_tu'=>$item['so_luong_chung_tu'],
+                'so_luong_de_xuat'=>$item['so_luong_de_xuat'],
                 'don_gia'=>$item['don_gia'],
                 ]);
                 $ctkho=ChiTietKho::where('phe_lieu_id',$item['phe_lieu_id'])->where('kho_id',$request->kho_id)->first();
                     if(isset($ctkho)){
                         $ctkho->khoi_luong =  $ctkho->khoi_luong-$item['so_luong_thuc_te'];
                         $ctkho->save();
-                    }else{
-                        ChiTietKho::create([
-                           'kho_id'=>$request->kho_id,
-                          'phe_lieu_id'=>$item['phe_lieu_id'],
-                            'dvt'=>$item['dvt'],
-                            'khoi_luong'=>$item['so_luong_thuc_te'],
-                        ]);
                     }
             }
 
