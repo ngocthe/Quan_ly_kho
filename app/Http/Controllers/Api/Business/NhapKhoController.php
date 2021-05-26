@@ -9,7 +9,12 @@ use App\Http\Requests\NhapKhoRequest;
 use App\Http\Resources\NhapKhoResource;
 use App\Models\ChiTietKho;
 use App\Models\ChiTietNhapKho;
+use App\Models\ChiTietXuatKho;
+
 use App\Models\NhapKho;
+use App\Models\XuatKho;
+use App\Models\PhanLoai;
+
 use App\Models\Kho;
 use App\Models\ThuKho;
 use App\Models\ThuKhoKho;
@@ -51,6 +56,89 @@ class NhapKhoController extends Controller
         $query->orderBy('updated_at','desc');
         return NhapKhoResource::collection($request->all ? $query->get(): $query->paginate($perPage));
     }
+
+
+    public function histories(Request $request)
+    {
+        $perPage = $request->query('per_page', 20);
+        $search = $request->query('search');
+        $khach_hang_id = $request->query('khach_hang_id');
+        $ngay = $request->query('ngay', [Carbon::now()->toDateString(), Carbon::now()->toDateString()]);
+        $loai = $request->get('loai');
+        $kho_id = $request->query('kho_id');
+        $nhapkhoQuery = NhapKho::query()->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1]);
+        $phanloaiQuery = PhanLoai::query()->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1]);
+        $xuatkhoQuery = XuatKho::query()->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1]);
+        $user = Auth::user();
+        $thukho = ThuKho::query()->where('user_id',$user->id)->first();
+        if(isset($thukho)){
+            $khoIDs= ThuKhoKho::where('thu_kho_id',$thukho->id)->pluck('kho_id');
+            $nhapkhoQuery->whereIn('kho_id', $khoIDs);
+            $xuatkhoQuery->whereIn('kho_id', $khoIDs);
+            $phanloaiQuery->whereIn('kho_id', $khoIDs);
+
+        }
+        $nhapkhos = $nhapkhoQuery->get();
+        $phanloaikhos = $phanloaiQuery->get();
+        $xuatkhos = $xuatkhoQuery->get();
+         $data=[];
+        $dataxuats = ChiTietXuatKho::whereIn('xuat_kho_id',$xuatkhos->pluck('id'))->get();    
+        $datanhaps = ChiTietNhapKho::whereIn('nhap_kho_id',$nhapkhos->pluck('id'))->get();    
+        foreach($datanhaps as $nhap){
+            $nhapkho = $nhapkhos->where('id',$nhap->nhap_kho_id)->first();
+            $data[]=[
+                'phe_lieu_id'=>$nhap->phe_lieu_id,
+                'phe_lieu'=>$nhap->pheLieu->ma,
+                'so_luong'=>$nhap->so_luong_thuc_te,
+                'khach_hang'=>$nhapkho->khachHang->ten,
+                'dvt'=>$nhap->dvt,
+                'loai'=>'Nhập mua hàng',
+                'ngay'=>$nhapkho->ngay,
+                'kho'=>$nhapkho->kho->ten,
+            ];
+        }
+        return ['data'=>$data];
+        foreach( $phanloaikhos as $pl){
+            $data[]=[
+                'phe_lieu_id'=>$pl->phe_lieu_id,
+                'phe_lieu'=>$pl->pheLieu->ma,
+                'so_luong'=>$pl->so_luong,
+                'khach_hang'=>$pl->khachHang->ten,
+                'dvt'=>$nhap->pheLieu->don_vi,
+                'loai'=>'Xuất phân loại',
+                'ngay'=>$pl->ngay,
+                'kho'=>$pl->kho->ten,
+            ];
+            foreach($pl->chitiets as $ct){
+                $data[]=[
+                    'phe_lieu_id'=>$ct->phe_lieu_id,
+                    'phe_lieu'=>$ct->pheLieu->ma,
+                    'so_luong'=>$ct->so_luong,
+                    'khach_hang'=>$pl->khachHang->ten,
+                    'dvt'=>$ct->dvt,
+                    'loai'=>'Nhập phân loại',
+                    'ngay'=>$pl->ngay,
+                    'kho'=>$ct->kho->ten,
+                ]; 
+            }
+        }
+
+        foreach($dataxuats as $nhap){
+            $nhapkho = $xuatkhos->where('id',$nhap->xuat_kho_id)->first();
+            $data[]=[
+                'phe_lieu_id'=>$nhap->phe_lieu_id,
+                'phe_lieu'=>$nhap->pheLieu->ma,
+                'so_luong'=>$nhap->so_luong_thuc_te,
+                'khach_hang'=>'',
+                'dvt'=>$nhap->dvt,
+                'loai'=>'Xuất bán hàng',
+                'ngay'=>$nhapkho->ngay,
+                'kho'=>$nhapkho->kho->ten,
+            ];
+        }
+       return ['data'=>$data];
+    }
+
 
     /**
      * Store a newly created resource in storage.

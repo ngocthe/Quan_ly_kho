@@ -11,4 +11,8 @@ class ChiTietNhapKho extends Model
     {
         return $this->belongsTo('App\Models\PheLieu', 'phe_lieu_id');
     }
+    public function nhapKho()
+    {
+        return $this->belongsTo('App\Models\NhapKho', 'nhap_kho_id');
+    }
 }
