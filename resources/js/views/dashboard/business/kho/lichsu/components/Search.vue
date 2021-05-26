@@ -41,18 +41,7 @@
                                     :label="'Loại'"
                                 ></v-autocomplete>
                 </v-col>
-                <v-col cols="6" md="6" lg="4" class="pb-0">
-                    <v-autocomplete
-                                    v-model="params.khach_hang_id"
-                                    @change="$emit('handle-search')"
-                                    :items="options.khachhangs"
-                                    item-text="ten"
-                                    clearable
-                                    dense
-                                    item-value="id"
-                                    :label="'Khách hàng'"
-                                ></v-autocomplete>
-                </v-col>
+              
                  
               
             </v-row>
