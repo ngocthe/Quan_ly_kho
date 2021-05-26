@@ -50,7 +50,6 @@ class XuatKhoController extends Controller
         try {
             $XuatKho = XuatKho::create([
                 'ngay' => $request->ngay,
-                'ca' => $request->ca,
                 'doi_tac_id' => $request->doi_tac_id,
                 'kho_id' => $request->kho_id,
                 'xe_id' => $request->xe_id,
