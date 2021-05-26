@@ -58,18 +58,20 @@ class XuatKhoController extends Controller
                 'tai_khoan_co_id' => $request->tai_khoan_co_id,
             ]);
             foreach($request->chitiets as $item){
-                ChiTietXuatKho::create([
-                 'xuat_kho_id'=>$XuatKho->id,
-                 'phe_lieu_id'=>$item['phe_lieu_id'],
-                 'dvt'=>$item['dvt'],
-                'so_luong_thuc_te'=>$item['so_luong_thuc_te'],
-                'so_luong_de_xuat'=>$item['so_luong_de_xuat'],
-                'don_gia'=>$item['don_gia'],
-                ]);
-                $ctkho=ChiTietKho::where('phe_lieu_id',$item['phe_lieu_id'])->where('kho_id',$request->kho_id)->first();
-                    if(isset($ctkho)){
-                        $ctkho->khoi_luong =  $ctkho->khoi_luong-$item['so_luong_thuc_te'];
-                        $ctkho->save();
+                if(isset($item['phe_lieu_id']))
+                   { ChiTietXuatKho::create([
+                    'xuat_kho_id'=>$XuatKho->id,
+                    'phe_lieu_id'=>$item['phe_lieu_id'],
+                    'dvt'=>$item['dvt'],
+                    'so_luong_thuc_te'=>$item['so_luong_thuc_te'],
+                    'so_luong_de_xuat'=>$item['so_luong_de_xuat'],
+                    'don_gia'=>$item['don_gia'],
+                    ]);
+                    $ctkho=ChiTietKho::where('phe_lieu_id',$item['phe_lieu_id'])->where('kho_id',$request->kho_id)->first();
+                        if(isset($ctkho)){
+                            $ctkho->khoi_luong =  $ctkho->khoi_luong-$item['so_luong_thuc_te'];
+                            $ctkho->save();
+                        }
                     }
             }
 
@@ -107,22 +109,26 @@ class XuatKhoController extends Controller
         try{
             foreach($XuatKho->chitiets as $item1){
                 $ctkho_old = ChiTietKho::where('phe_lieu_id',$item1['phe_lieu_id'])->where('kho_id',$XuatKho->kho_id)->first();
-                $ctkho_old->khoi_luong =  $ctkho_old->khoi_luong-$item1['so_luong_thuc_te'];
+                if(isset($ctkho_old)){
+                     $ctkho_old->khoi_luong =  $ctkho_old->khoi_luong+$item1['so_luong_thuc_te'];
                         $ctkho_old->save();
+                    }
             }
-            ChiTietXuatKho::where('nhap_kho_id',$XuatKho->id)->delete();
+            ChiTietXuatKho::where('xuat_kho_id',$XuatKho->id)->delete();
             foreach($info['chitiets'] as $item){
+                if(isset($item['phe_lieu_id']))
+                {
                 ChiTietXuatKho::create([
-                 'nhap_kho_id'=>$XuatKho->id,
+                 'xuat_kho_id'=>$XuatKho->id,
                  'phe_lieu_id'=>$item['phe_lieu_id'],
                  'dvt'=>$item['dvt'],
                 'so_luong_thuc_te'=>$item['so_luong_thuc_te'],
-                'so_luong_chung_tu'=>$item['so_luong_chung_tu'],
+                'so_luong_de_xuat'=>$item['so_luong_de_xuat'],
                 'don_gia'=>$item['don_gia'],
                 ]);
                 $ctkho=ChiTietKho::where('phe_lieu_id',$item['phe_lieu_id'])->where('kho_id',$request->kho_id)->first();
                     if(isset($ctkho)){
-                        $ctkho->khoi_luong =  $ctkho->khoi_luong+$item['so_luong_thuc_te'];
+                        $ctkho->khoi_luong =  $ctkho->khoi_luong-$item['so_luong_thuc_te'];
                         $ctkho->save();
                     }else{
                         ChiTietKho::create([
@@ -132,12 +138,11 @@ class XuatKhoController extends Controller
                             'khoi_luong'=>$item['so_luong_thuc_te'],
                         ]);
                     }
-
+                }
             }
 
             $XuatKho = XuatKho::where('id',$id)->update([
                 'ngay' => $request->ngay,
-                'ca' => $request->ca,
                 'doi_tac_id' => $request->doi_tac_id,
                 'kho_id' => $request->kho_id,
                 'xe_id' => $request->xe_id,
@@ -166,10 +171,12 @@ class XuatKhoController extends Controller
         try{
             foreach($XuatKho->chitiets as $item1){
                 $ctkho_old = ChiTietKho::where('phe_lieu_id',$item1['phe_lieu_id'])->where('kho_id',$XuatKho->kho_id)->first();
-                $ctkho_old->khoi_luong =  $ctkho_old->khoi_luong-$item1['so_luong_thuc_te'];
+                if(isset( $ctkho_old ))
+                { $ctkho_old->khoi_luong =  $ctkho_old->khoi_luong+$item1['so_luong_thuc_te'];
                         $ctkho_old->save();
+                    }
             }
-            ChiTietXuatKho::where('nhap_kho_id',$XuatKho->id)->delete();
+            ChiTietXuatKho::where('xuat_kho_id',$XuatKho->id)->delete();
             $XuatKho->delete();
             DB::commit();
             return Response::updated();

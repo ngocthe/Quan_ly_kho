@@ -85,8 +85,11 @@ class PhanLoaiController extends Controller
                 'so_luong' => $request->so_luong,
 
             ]);
-            $ctkho1->khoi_luong =  $ctkho1->khoi_luong-$request->so_luong;
-                        $ctkho1->save();
+            if(isset($ctkho1))
+                {
+                    $ctkho1->khoi_luong =  $ctkho1->khoi_luong-$request->so_luong;
+                $ctkho1->save();
+            }
             foreach($request->chitiets as $item){
                 if(isset($item['phe_lieu_id'])){
                 ChiTietPhanLoai::create([
@@ -137,59 +140,82 @@ class PhanLoaiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function update(Request $request, $id)
-    // {
-    //     $info = $request->all();
-    //     $PhanLoai = PhanLoai::find($id);
-    //     DB::beginTransaction();
-    //     try{
-    //         foreach($PhanLoai->chitiets as $item1){
-    //             $ctkho_old = ChiTietKho::where('phe_lieu_id',$item1['phe_lieu_id'])->where('kho_id',$PhanLoai->kho_id)->first();
-    //             $ctkho_old->khoi_luong =  $ctkho_old->khoi_luong-$item1['so_luong_thuc_te'];
-    //                     $ctkho_old->save();
-    //         }
-    //         ChiTietPhanLoai::where('nhap_kho_id',$PhanLoai->id)->delete();
-    //         foreach($info['chitiets'] as $item){
-    //             ChiTietPhanLoai::create([
-    //              'nhap_kho_id'=>$PhanLoai->id,
-    //              'phe_lieu_id'=>$item['phe_lieu_id'],
-    //              'dvt'=>$item['dvt'],
-    //             'so_luong_thuc_te'=>$item['so_luong_thuc_te'],
-    //             'so_luong_chung_tu'=>$item['so_luong_chung_tu'],
-    //             'don_gia'=>$item['don_gia'],
-    //             ]);
-    //             $ctkho=ChiTietKho::where('phe_lieu_id',$item['phe_lieu_id'])->where('kho_id',$request->kho_id)->first();
-    //                 if(isset($ctkho)){
-    //                     $ctkho->khoi_luong =  $ctkho->khoi_luong+$item['so_luong_thuc_te'];
-    //                     $ctkho->save();
-    //                 }else{
-    //                     ChiTietKho::create([
-    //                        'kho_id'=>$request->kho_id,
-    //                       'phe_lieu_id'=>$item['phe_lieu_id'],
-    //                         'dvt'=>$item['dvt'],
-    //                         'khoi_luong'=>$item['so_luong_thuc_te'],
-    //                     ]);
-    //                 }
+    public function update(Request $request, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $phanloai = PhanLoai::find($id);
+            $ctkho_old= ChiTietKho::where('phe_lieu_id', $phanloai->phe_lieu_id)->where('kho_id', $phanloai->kho_id)->first();
+            $ctkho1= ChiTietKho::where('phe_lieu_id',$request->phe_lieu_id)->where('kho_id',$request->kho_id)->first();
+            // if(!isset($ctkho1)||$ctkho1->khoi_luong<$request->so_luong){
+            //   return response()->json([
+            //     'code'    => 500,
+            //     'message' => 'Khối lượng trong kho không đủ!',
+            //     'result'  => []
+            // ], 500, []);
+            // }
 
-    //         }
+            $phanloai->update([
+                'ngay' => $request->ngay,
+                'phe_lieu_id' => $request->phe_lieu_id,
+                'khach_hang_id' => $request->khach_hang_id,
+                'noi_dung' => $request->noi_dung,
+                'so_phieu' => $request->so_phieu,
+                'nguoi_can' => $request->nguoi_can,
+                'so_luong' => $request->so_luong,
 
-    //         $PhanLoai = PhanLoai::where('id',$id)->update([
-    //             'ngay' => $request->ngay,
-    //             'ca' => $request->ca,
-    //             'khach_hang_id' => $request->khach_hang_id,
-    //             'kho_id' => $request->kho_id,
-    //             'xe_id' => $request->xe_id,
-    //             'tai_khoan_no_id' => $request->tai_khoan_no_id,
-    //             'tai_khoan_co_id' => $request->tai_khoan_co_id,
-    //         ]);
-    //         DB::commit();
-    //         return Response::updated();
-    //     }catch(\Exception $e){
-    //         DB::rollBack();
-    //         dd($e);
-    //     }
+            ]);
+            if(isset($ctkho_old))
+                {
+                    $ctkho_old->khoi_luong =  $ctkho_old->khoi_luong+$phanloai->so_luong;
+                    $ctkho1->save();
+            }
+            if(isset($ctkho1))
+            {
+            $ctkho1->khoi_luong =  $ctkho1->khoi_luong-$request->so_luong;
+                $ctkho1->save();
+            }
+                  foreach($phanloai->chitiets as $item){
+                    $ctkho=ChiTietKho::where('phe_lieu_id',$item['phe_lieu_id'])->where('kho_id',$item['kho_id'])->first();
+                    if(isset($ctkho)){
+                            $ctkho->khoi_luong =  $ctkho->khoi_luong-$item['so_luong'];
+                            $ctkho->save();
+                            }
+                        }
+                ChiTietPhanLoai::where('phan_loai_id',$phanloai->id)->delete();
 
-    // }
+            foreach($request->chitiets as $item){
+                if(isset($item['phe_lieu_id'])){
+                ChiTietPhanLoai::create([
+                 'phan_loai_id'=>$phanloai->id,
+                 'phe_lieu_id'=>$item['phe_lieu_id'],
+                 'dvt'=>$item['dvt'],
+                'so_luong'=>$item['so_luong'],
+                'kho_id'=>$item['kho_id']
+                ]);
+                $ctkho=ChiTietKho::where('phe_lieu_id',$item['phe_lieu_id'])->where('kho_id',$item['kho_id'])->first();
+                    if(isset($ctkho)){
+                        $ctkho->khoi_luong =  $ctkho->khoi_luong+$item['so_luong'];
+                        $ctkho->save();
+                    }else{
+                        ChiTietKho::create([
+                           'kho_id'=>$item['kho_id'],
+                            'phe_lieu_id'=>$item['phe_lieu_id'],
+                            'dvt'=>$item['dvt'],
+                            'khoi_luong'=>$item['so_luong'],
+                        ]);
+                    }
+            }
+        }
+
+            DB::commit();
+            return Response::created();
+        } catch (Exception $e) {
+            DB::rollBack();
+            return Response::error($e->getMessage());
+        }
+
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -202,12 +228,19 @@ class PhanLoaiController extends Controller
         $PhanLoai = PhanLoai::find($id);
         DB::beginTransaction();
         try{
+            $ctkho_old1 = ChiTietKho::where('phe_lieu_id',$PhanLoai->phe_lieu_id)->where('kho_id',$PhanLoai->kho_id)->first();
+            if(isset( $ctkho_old1 ))
+            { $ctkho_old1->khoi_luong =  $ctkho_old1->khoi_luong+$PhanLoai->so_luong;
+                $ctkho_old1->save();
+            }
             foreach($PhanLoai->chitiets as $item1){
                 $ctkho_old = ChiTietKho::where('phe_lieu_id',$item1['phe_lieu_id'])->where('kho_id',$PhanLoai->kho_id)->first();
-                $ctkho_old->khoi_luong =  $ctkho_old->khoi_luong-$item1['so_luong_thuc_te'];
+                if(isset( $ctkho_old ))
+                    { $ctkho_old->khoi_luong =  $ctkho_old->khoi_luong-$item1['so_luong_thuc_te'];
                         $ctkho_old->save();
+                    }
             }
-            ChiTietPhanLoai::where('nhap_kho_id',$PhanLoai->id)->delete();
+            ChiTietPhanLoai::where('phan_loai_id',$PhanLoai->id)->delete();
             $PhanLoai->delete();
             DB::commit();
             return Response::updated();
