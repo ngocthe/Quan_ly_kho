@@ -16,7 +16,31 @@
                         v-model="params.search"
                     ></v-text-field>
                 </v-col> -->
-               
+               <v-col cols="6" md="6" lg="4" class="pb-0">
+                    <v-autocomplete
+                           v-model="params.phe_lieu_id"
+                                      @change="$emit('handle-search')"
+                                    :items="options.phelieus"
+                                    item-text="ma"
+                                    dense
+                                    clearable
+                                    item-value="id"
+                                    :label="'Phế liệu'"
+                                ></v-autocomplete>
+                </v-col>
+                
+                       <v-col cols="6" md="6" lg="4" class="pb-0">
+                    <v-autocomplete
+                                    v-model="params.loai"
+                                    @change="$emit('handle-search')"
+                                    :items="[{id:1,ten:'Nhập mua hàng'},{id:2,ten:'Nhập phân loại'},{id:3,ten:'Xuất phân loại'},{id:4,ten:'Xuất bán hàng'}]"
+                                    item-text="ten"
+                                    clearable
+                                    dense
+                                    item-value="id"
+                                    :label="'Loại'"
+                                ></v-autocomplete>
+                </v-col>
                 <v-col cols="6" md="6" lg="4" class="pb-0">
                     <v-autocomplete
                                     v-model="params.khach_hang_id"
@@ -29,30 +53,7 @@
                                     :label="'Khách hàng'"
                                 ></v-autocomplete>
                 </v-col>
-                       <v-col cols="6" md="6" lg="4" class="pb-0">
-                    <v-autocomplete
-                                    v-model="params.loai"
-                                    @change="$emit('handle-search')"
-                                    :items="[{id:1,ten:'Nhập mua hàng'},{id:1,ten:'Nhập phân loại'},{id:2,ten:'Xuất phân loại'},{id:4,ten:'Xuất bán hàng'}]"
-                                    item-text="ten"
-                                    clearable
-                                    dense
-                                    item-value="id"
-                                    :label="'Loại'"
-                                ></v-autocomplete>
-                </v-col>
-                 <v-col cols="6" md="6" lg="4" class="pb-0">
-                    <v-autocomplete
-                           v-model="params.phe_lieu_id"
-                                      @change="$emit('handle-search')"
-                                    :items="options.phelieus"
-                                    item-text="ma"
-                                    dense
-                                    clearable
-                                    item-value="id"
-                                    :label="'Phế liệu'"
-                                ></v-autocomplete>
-                </v-col>
+                 
               
             </v-row>
         </v-col>
