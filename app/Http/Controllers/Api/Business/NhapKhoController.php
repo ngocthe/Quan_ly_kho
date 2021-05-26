@@ -91,7 +91,7 @@ class NhapKhoController extends Controller
         $phanloaikhos = $phanloaiQuery->get();
         $xuatkhos = $xuatkhoQuery->get();
          $data=[];
-        $chitietxuatQuery= ChiTietXuatKho::whereIn('xuat_kho_id',$xuatkhos->pluck('id'))->get();    
+        $chitietxuatQuery= ChiTietXuatKho::whereIn('xuat_kho_id',$xuatkhos->pluck('id'));    
         $chitietnhapQuery= ChiTietNhapKho::whereIn('nhap_kho_id',$nhapkhos->pluck('id'));    
         if(isset($phe_lieu_id)){
             $chitietnhapQuery->where('phe_lieu_id', $phe_lieu_id);
