@@ -39,11 +39,8 @@
                                     dense
                                     item-value="id"
                                     :label="'Loại'"
-                                ></v-autocomplete>
+                        ></v-autocomplete>
                 </v-col>
-              
-                 
-              
             </v-row>
         </v-col>
         <v-col cols="12" style="padding-top: 20px" md="4">

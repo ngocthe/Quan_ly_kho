@@ -33,7 +33,7 @@ class PhanLoaiController extends Controller
         $kho_id = $request->query('kho_id');
         $phe_lieu_id = $request->query('phe_lieu_id');
 
-        $query = PhanLoai::query()->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1])->with(['kho','khachHang','chitiets']);
+        $query = PhanLoai::query()->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1])->with(['kho','pheLieu','khachHang','chitiets']);
         if ($search) {
         }
         $user = Auth::user();
