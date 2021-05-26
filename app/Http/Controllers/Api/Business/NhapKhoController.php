@@ -63,9 +63,10 @@ class NhapKhoController extends Controller
         $perPage = $request->query('per_page', 20);
         $search = $request->query('search');
         $khach_hang_id = $request->query('khach_hang_id');
-        $ngay = $request->query('ngay', [Carbon::now()->toDateString(), Carbon::now()->toDateString()]);
-        $loai = $request->get('loai');
+        $phe_lieu_id = $request->query('phe_lieu_id');
         $kho_id = $request->query('kho_id');
+        $ngay = $request->query('ngay', [Carbon::now()->toDateString(), Carbon::now()->toDateString()]);
+        
         $nhapkhoQuery = NhapKho::query()->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1]);
         $phanloaiQuery = PhanLoai::query()->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1]);
         $xuatkhoQuery = XuatKho::query()->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1]);
@@ -76,15 +77,31 @@ class NhapKhoController extends Controller
             $nhapkhoQuery->whereIn('kho_id', $khoIDs);
             $xuatkhoQuery->whereIn('kho_id', $khoIDs);
             $phanloaiQuery->whereIn('kho_id', $khoIDs);
-
         }
+        if(isset($khach_hang_id)){
+            $nhapkhoQuery->where('khach_hang_id', $khach_hang_id);
+            $phanloaiQuery->where('khach_hang_id', $khach_hang_id);
+        }
+        if(isset($kho_id)){
+            $nhapkhoQuery->where('kho_id', $kho_id);
+            $phanloaiQuery->where('kho_id', $kho_id);
+        }
+      
         $nhapkhos = $nhapkhoQuery->get();
         $phanloaikhos = $phanloaiQuery->get();
         $xuatkhos = $xuatkhoQuery->get();
          $data=[];
-        $dataxuats = ChiTietXuatKho::whereIn('xuat_kho_id',$xuatkhos->pluck('id'))->get();    
-        $datanhaps = ChiTietNhapKho::whereIn('nhap_kho_id',$nhapkhos->pluck('id'))->get();    
+        $chitietxuatQuery= ChiTietXuatKho::whereIn('xuat_kho_id',$xuatkhos->pluck('id'))->get();    
+        $chitietnhapQuery= ChiTietNhapKho::whereIn('nhap_kho_id',$nhapkhos->pluck('id'));    
+        if(isset($phe_lieu_id)){
+            $chitietnhapQuery->where('phe_lieu_id', $phe_lieu_id);
+            $chitietxuatQuery->where('phe_lieu_id', $phe_lieu_id);
+        }
+        $dataxuats = $chitietxuatQuery->get();
+        $datanhaps = $chitietnhapQuery->get();
+
         foreach($datanhaps as $nhap){
+            
             $nhapkho = $nhapkhos->where('id',$nhap->nhap_kho_id)->first();
             $data[]=[
                 'phe_lieu_id'=>$nhap->phe_lieu_id,
@@ -97,19 +114,34 @@ class NhapKhoController extends Controller
                 'kho'=>$nhapkho->kho->ten,
             ];
         }
-        return ['data'=>$data];
         foreach( $phanloaikhos as $pl){
-            $data[]=[
-                'phe_lieu_id'=>$pl->phe_lieu_id,
-                'phe_lieu'=>$pl->pheLieu->ma,
-                'so_luong'=>$pl->so_luong,
-                'khach_hang'=>$pl->khachHang->ten,
-                'dvt'=>$nhap->pheLieu->don_vi,
-                'loai'=>'Xuất phân loại',
-                'ngay'=>$pl->ngay,
-                'kho'=>$pl->kho->ten,
-            ];
+            if(isset($phe_lieu_id)){
+                if($pl->phe_lieu_id==$phe_lieu_id){
+                    $data[]=[
+                        'phe_lieu_id'=>$pl->phe_lieu_id,
+                        'phe_lieu'=>$pl->pheLieu->ma,
+                        'so_luong'=>$pl->so_luong,
+                        'khach_hang'=>$pl->khachHang->ten,
+                        'dvt'=>$nhap->pheLieu->don_vi,
+                        'loai'=>'Xuất phân loại',
+                        'ngay'=>$pl->ngay,
+                        'kho'=>$pl->kho->ten,
+                    ];
+                }
+            }else
+                    $data[]=[
+                        'phe_lieu_id'=>$pl->phe_lieu_id,
+                        'phe_lieu'=>$pl->pheLieu->ma,
+                        'so_luong'=>$pl->so_luong,
+                        'khach_hang'=>$pl->khachHang->ten,
+                        'dvt'=>$nhap->pheLieu->don_vi,
+                        'loai'=>'Xuất phân loại',
+                        'ngay'=>$pl->ngay,
+                        'kho'=>$pl->kho->ten,
+                    ];
             foreach($pl->chitiets as $ct){
+                if(isset($phe_lieu_id)){
+                    if($ct->phe_lieu_id==$phe_lieu_id){
                 $data[]=[
                     'phe_lieu_id'=>$ct->phe_lieu_id,
                     'phe_lieu'=>$ct->pheLieu->ma,
@@ -120,6 +152,18 @@ class NhapKhoController extends Controller
                     'ngay'=>$pl->ngay,
                     'kho'=>$ct->kho->ten,
                 ]; 
+                     }}else{
+                $data[]=[
+                    'phe_lieu_id'=>$ct->phe_lieu_id,
+                    'phe_lieu'=>$ct->pheLieu->ma,
+                    'so_luong'=>$ct->so_luong,
+                    'khach_hang'=>$pl->khachHang->ten,
+                    'dvt'=>$ct->dvt,
+                    'loai'=>'Nhập phân loại',
+                    'ngay'=>$pl->ngay,
+                    'kho'=>$ct->kho->ten,
+                ]; 
+            }
             }
         }
 

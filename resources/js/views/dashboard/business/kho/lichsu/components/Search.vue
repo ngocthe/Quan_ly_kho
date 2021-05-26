@@ -33,12 +33,12 @@
                     <v-autocomplete
                                     v-model="params.kho_id"
                                       @change="$emit('handle-search')"
-                                    :items="options.khos"
-                                    item-text="ten"
+                                    :items="options.phelieus"
+                                    item-text="ma"
                                     dense
                                     clearable
                                     item-value="id"
-                                    :label="'Kho'"
+                                    :label="'Phế liệu'"
                                 ></v-autocomplete>
                 </v-col>
             </v-row>
