@@ -51,6 +51,7 @@ class XuatKhoController extends Controller
             $XuatKho = XuatKho::create([
                 'ngay' => $request->ngay,
                 'doi_tac_id' => $request->doi_tac_id,
+                'so_phieu'=>$request->so_phieu,
                 'kho_id' => $request->kho_id,
                 'xe_id' => $request->xe_id,
                 'tai_khoan_no_id' => $request->tai_khoan_no_id,
