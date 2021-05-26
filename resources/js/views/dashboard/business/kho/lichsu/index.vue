@@ -72,16 +72,13 @@ export default {
     data() {
         return {
             defaultParams: {
-                search: "",
-                page: 1,
-                kho_id:null,
+                loai:null,
                 ngay: [
                    new Date().toLocaleDateString("en-CA"),
                     new Date().toLocaleDateString("en-CA")
                 ],
                 khach_hang_id:null,
-                xe_id:null,
-                per_page: 20,
+                phe_lieu_id:null,
             },
             form: {
                 id: undefined,

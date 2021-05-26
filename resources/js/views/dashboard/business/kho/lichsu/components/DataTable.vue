@@ -14,16 +14,7 @@
             <v-toolbar class="custom-toolbar" flat>
                 <v-toolbar-title>Danh sách</v-toolbar-title>
                 <v-spacer></v-spacer>
-                <v-btn
-                    @click="$emit('handle-create')"
-                    class="mx-2"
-                    small
-                    fab
-                    dark
-                    color="indigo"
-                >
-                    <v-icon dark>mdi-plus</v-icon>
-                </v-btn>
+               
                 <!-- <v-btn
                     @click="$emit('handle-export')"
                     class="mx-2"
