@@ -11,7 +11,8 @@
                             <v-col cols="12" sm="4">
                                  <DatePicker
                                     label="Ngày"
-                                    :value.sync="form.ngay"
+                                    :value="form.ngay"
+                                    @updatevalue="form.ngay=$event"
                                 />
                             </v-col>
                             <v-col cols="12" sm="2">

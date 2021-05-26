@@ -34,24 +34,26 @@ export default {
     }),
     watch: {
         dateLocal(val) {
-            this.$emit("update:value", val);
+            this.$emit("updatevalue", val);
             this.$emit("change");
+        },
+        value(val){
+             this.dateLocal = this.value;
         }
     },
     computed: {
-        dateRangeText() {},
         dateRangeText: {
             set(val) {
                 this.dateLocal = "";
             },
             get() {
+                console.log(1212)
                 if (!this.value) return "";
                 return new Date(this.value).toLocaleDateString("en-GB");
             }
         }
     },
     mounted() {
-        this.dateLocal = this.value;
     }
 };
 </script>
