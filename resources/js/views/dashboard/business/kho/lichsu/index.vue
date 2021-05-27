@@ -72,7 +72,7 @@ export default {
     data() {
         return {
             defaultParams: {
-                loai:null,
+                loai:[],
                 ngay: [
                    new Date().toLocaleDateString("en-CA"),
                     new Date().toLocaleDateString("en-CA")

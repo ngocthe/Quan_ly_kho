@@ -104,7 +104,7 @@ class NhapKhoController extends Controller
         foreach($datanhaps as $nhap){
             
             $nhapkho = $nhapkhos->where('id',$nhap->nhap_kho_id)->first();
-                if((isset($loai)&&$loai==1)||!isset($loai)){
+                if((isset($loai)&&in_array(3,$loai))||empty($loai)){
                     $data[]=[
                         'phe_lieu_id'=>$nhap->phe_lieu_id,
                         'phe_lieu'=>$nhap->pheLieu->ma,
@@ -118,7 +118,7 @@ class NhapKhoController extends Controller
              }
         }
         foreach( $phanloaikhos as $pl){
-            if((isset($loai)&&$loai==3)||!isset($loai)){
+            if((isset($loai)&&in_array(3,$loai)||empty($loai)){
             if(isset($phe_lieu_id)){
                 if($pl->phe_lieu_id==$phe_lieu_id){
                     $data[]=[
@@ -145,7 +145,7 @@ class NhapKhoController extends Controller
                     ];
                 }
             foreach($pl->chitiets as $ct){
-                if((isset($loai)&&$loai==2)||!isset($loai)){
+                if((isset($loai)&&in_array(2,$loai))||empty($loai)){
                 if(isset($phe_lieu_id)){
                     if($ct->phe_lieu_id==$phe_lieu_id){
                  $data[]=[
@@ -173,7 +173,7 @@ class NhapKhoController extends Controller
         }
             }
         }
-        if((isset($loai)&&$loai==4)||!isset($loai)){
+        if((isset($loai)&&in_array(4,$loai))||empty($loai)){
         foreach($dataxuats as $nhap){
 
             $nhapkho = $xuatkhos->where('id',$nhap->xuat_kho_id)->first();
