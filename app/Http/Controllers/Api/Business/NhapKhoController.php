@@ -18,6 +18,8 @@ use App\Models\PhanLoai;
 use App\Models\Kho;
 use App\Models\ThuKho;
 use App\Models\ThuKhoKho;
+use App\Models\ChiTietPhanLoai;
+
 use Carbon\Carbon;
 
 use Illuminate\Support\Facades\DB;
@@ -77,7 +79,11 @@ class NhapKhoController extends Controller
             $khoIDs= ThuKhoKho::where('thu_kho_id',$thukho->id)->pluck('kho_id');
             $nhapkhoQuery->whereIn('kho_id', $khoIDs);
             $xuatkhoQuery->whereIn('kho_id', $khoIDs);
-            $phanloaiQuery->whereIn('kho_id', $khoIDs);
+            $chitietphanloais = ChiTietPhanLoai::whereIn('kho_id',$khoIDs)->pluck('phan_loai_id');
+            $phanloaiQuery->where(function($phanloaiQuery) use($khoIDs, $chitietphanloais){
+                $phanloaiQuery->whereIn('id',$chitietphanloais);
+                $phanloaiQuery->orWhereIn('kho_id', $khoIDs);
+            });
         }
         if(isset($khach_hang_id)){
             $nhapkhoQuery->where('khach_hang_id', $khach_hang_id);
