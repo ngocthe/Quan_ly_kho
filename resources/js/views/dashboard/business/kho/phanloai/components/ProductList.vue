@@ -68,7 +68,7 @@
             <template v-slot:item.kho_id="{ item }">
              <v-autocomplete
                 v-model="item.kho_id"
-                :items="options.khos"
+                :items="options.kho2s"
                 item-text="ten"
                 item-value="id"
                 style="width:100%"
@@ -118,11 +118,15 @@ export default {
 
     methods: {
         them(index){
-                var so = index+1;
+         if(!this.editing){ 
+             this.chitiets[index].kho_id =  this.chitiets[index].phe_lieu_id
+                    ? this.options.phelieus.find( product => product.id === this.chitiets[index].phe_lieu_id).kho_id: this.kho_id
+                    }
+          var so = index+1;
             if(this.chitiets.length==so){
                 this.addPheLieu()
             }
-            console.log(so)},
+          },
         addPheLieu() {
             console.log(this.kho_id)
             this.chitiets.push({

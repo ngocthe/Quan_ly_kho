@@ -73,6 +73,13 @@ export default {
                    all: true,
                 },
             },
+             kho2s: {
+                func: getKhos,
+                params: {
+                   all: true,
+                   kho_pl:true
+                },
+            },
         }),
     ],
     components: { DataTable, Search, DialogForm, Pagination },

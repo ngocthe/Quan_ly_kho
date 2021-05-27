@@ -30,10 +30,11 @@ class KhoController extends Controller
         $search = $request->query('search');
         $nvbh_id = $request->query('nhan_vien_ban_hang_id');
         $thu_kho_id = $request->query('thu_kho_id');
+
         $query = Kho::query()->with(['thuKho','nvbh','chitiets']);
         $user = Auth::user();
         $thukho = ThuKho::query()->where('user_id',$user->id)->first();
-        if(isset($thukho)){
+        if(isset($thukho)&&!$request->kho_pl){
             $khoIDs= ThuKhoKho::where('thu_kho_id',$thukho->id)->pluck('kho_id');
             $query->whereIn('id', $khoIDs);
         }
