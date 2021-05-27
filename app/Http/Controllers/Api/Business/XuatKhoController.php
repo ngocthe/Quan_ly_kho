@@ -10,8 +10,11 @@ use App\Http\Resources\XuatKhoResource;
 use App\Models\ChiTietKho;
 use App\Models\ChiTietXuatKho;
 use App\Models\XuatKho;
-use Illuminate\Support\Facades\DB;
+use App\Models\ThuKho;
+use App\Models\ThuKhoKho;
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 class XuatKhoController extends Controller
 {
     /**
@@ -27,6 +30,12 @@ class XuatKhoController extends Controller
         $kho_id = $request->query('kho_id');
         $query = XuatKho::query()->with(['kho','doiTac','xe','chitiets']);
         if ($search) {
+        }
+        $user = Auth::user();
+        $thukho = ThuKho::query()->where('user_id',$user->id)->first();
+        if(isset($thukho)){
+            $khoIDs= ThuKhoKho::where('thu_kho_id',$thukho->id)->pluck('kho_id');
+            $query->whereIn('kho_id', $khoIDs);
         }
         if(isset( $kho_id )){
             $query->where('kho_id',$kho_id);
@@ -48,8 +57,10 @@ class XuatKhoController extends Controller
     {
         DB::beginTransaction();
         try {
+            $user = Auth::user();
             $XuatKho = XuatKho::create([
                 'ngay' => $request->ngay,
+                'created_by'=>$user->id,
                 'doi_tac_id' => $request->doi_tac_id,
                 'so_phieu'=>$request->so_phieu,
                 'kho_id' => $request->kho_id,

@@ -203,9 +203,11 @@ class NhapKhoController extends Controller
     {
         DB::beginTransaction();
         try {
+            $user = Auth::user();
             $nhapkho = NhapKho::create([
                 'ngay' => $request->ngay,
                 'ca' => $request->ca,
+                'created_by'=>$user->id,
                 'so_phieu' => $request->so_phieu,
                 'khach_hang_id' => $request->khach_hang_id,
                 'kho_id' => $request->kho_id,

@@ -73,8 +73,9 @@ class PhanLoaiController extends Controller
             //     'result'  => []
             // ], 500, []);
             // }
-
+            $user = Auth::user();
             $phanloai = PhanLoai::create([
+                'created_by'=>$user->id,
                 'ngay' => $request->ngay,
                 'phe_lieu_id' => $request->phe_lieu_id,
                 'khach_hang_id' => $request->khach_hang_id,
