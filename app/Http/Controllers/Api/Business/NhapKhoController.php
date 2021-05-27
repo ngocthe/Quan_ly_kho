@@ -118,7 +118,7 @@ class NhapKhoController extends Controller
              }
         }
         foreach( $phanloaikhos as $pl){
-            if((isset($loai)&&in_array(3,$loai)||empty($loai)){
+            if((isset($loai)&&in_array(3,$loai))||empty($loai)){
             if(isset($phe_lieu_id)){
                 if($pl->phe_lieu_id==$phe_lieu_id){
                     $data[]=[
