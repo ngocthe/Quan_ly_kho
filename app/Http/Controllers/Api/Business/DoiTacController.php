@@ -22,7 +22,7 @@ class DoiTacController extends Controller
             $query->orWhere('ten','ilike', '%' . $search . '%');
 
         }
-        return DoiTacResource::collection($query->paginate($perPage));
+        return DoiTacResource::collection($request->all?$query->get():$query->paginate($perPage));
     }
 
     /**
