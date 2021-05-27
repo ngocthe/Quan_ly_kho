@@ -173,7 +173,7 @@ class NhapKhoController extends Controller
         }
             }
         }
-        if((empty($loai)&&in_array(4,$loai))||empty($loai)){
+        if((!empty($loai)&&in_array(4,$loai))||empty($loai)){
         foreach($dataxuats as $nhap){
 
             $nhapkho = $xuatkhos->where('id',$nhap->xuat_kho_id)->first();
