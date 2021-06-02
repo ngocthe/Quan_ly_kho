@@ -62,6 +62,7 @@ class KhoController extends Controller
         $phe_lieu_id = $request->query('phe_lieu_id');
         $kho = Kho::find($id);
         $chitiets = $kho->chitiets;
+        $data=[];
         if(isset($phe_lieu_id)){
             $chitiets = $kho->chitiets->where('phe_lieu_id',$phe_lieu_id);
         }
