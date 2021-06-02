@@ -90,6 +90,32 @@ class KhoController extends Controller
         return ['data'=>$data];
     }
 
+    
+    function updateTonKho(Request $request,$id){
+        $kho = Kho::find($id);
+        $chitiets = $kho->chitiets;
+        $data=[];
+        if(isset($phe_lieu_id)){
+            $chitiets = $kho->chitiets->where('phe_lieu_id',$phe_lieu_id);
+        }
+        foreach($chitiets as $item){
+           $tongnhap= ChiTietNhapKho::where('phe_lieu_id',$item->phe_lieu_id)->whereHas('nhapKho',function($query) use ($ngay,$kho){
+                $query->where('kho_id',$kho->id);
+            })->sum('so_luong_thuc_te') + 
+             ChiTietPhanLoai::where('phe_lieu_id',$item->phe_lieu_id)->whereHas('phanLoai',function($query) use ($ngay,$kho){
+                $query->where('kho_id',$kho->id);
+            })->sum('so_luong') ;
+            $tongxuat= ChiTietXuatKho::where('phe_lieu_id',$item->phe_lieu_id)->whereHas('xuatKho',function($query) use ($ngay,$kho){
+                $query->where('kho_id',$kho->id);
+            })->sum('so_luong_thuc_te') +  PhanLoai::where('phe_lieu_id',$item->phe_lieu_id)->where('kho_id',$kho->id)
+               )->sum('so_luong') ;
+    
+              ChiTietKho::where('id',$item->id)->update(['so_luong'=>$tongnhap-$tongxuat]);
+        ];
+        }
+        return ['data'=>[]];
+    }
+
     function xuongHang(Request $request){
         $search = $request->query('search');
         $page = $request->query('page');
