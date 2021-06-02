@@ -208,7 +208,7 @@ export default {
             async getData() {
             try {
                 this.$loader(true);
-                const { data } = await tonkho(this.$store.state.tonkhoId,this.params);
+                const { data } = await tonkho(localStorage.getItem('tonkhoId'),this.params);
                 this.chitiets = data;
                 console.log(data)
             } catch (error) {
@@ -220,7 +220,7 @@ export default {
       
     },
     mounted(){
-        console.log(this.$store.state.tonkhoId)
+        console.log(localStorage.getItem('tonkhoId'))
       this.getData()
     }
 };

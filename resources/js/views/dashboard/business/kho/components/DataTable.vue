@@ -46,15 +46,7 @@
             >
                 <v-icon dark>mdi-book</v-icon>
             </v-btn>
-               <v-btn
-                x-small
-                @click="$emit('handle-edit', item)"
-                fab
-                dark
-                color="primary"
-            >
-                <v-icon dark>mdi-pencil</v-icon>
-            </v-btn>
+       
             <v-btn
                 x-small
                 @click="handleDelete(item.id)"
@@ -111,6 +103,7 @@ export default {
     methods:{
         goToDetailActivity(activity) {
             this.$store.state.tonkhoId = activity.id
+             localStorage.setItem("tonkhoId", activity.id)
             this.$router.push({
                 name: 'Tồn Kho'
             })
