@@ -67,15 +67,15 @@ class KhoController extends Controller
             $chitiets = $kho->chitiets->where('phe_lieu_id',$phe_lieu_id);
         }
         foreach($chitiets as $item){
-           $tongnhap= ChiTietNhapKho::where('phe_lieu_id',$item->phe_lieu_id)->whereHas('nhapKho',function($query) use ($ngay){
-                $query->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1])->where('kho_id',$item->kho_id);
+           $tongnhap= ChiTietNhapKho::where('phe_lieu_id',$item->phe_lieu_id)->whereHas('nhapKho',function($query) use ($ngay,$kho){
+                $query->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1])->where('kho_id',$kho->id);
             })->sum('so_luong_thuc_te') + 
-             ChiTietPhanLoai::where('phe_lieu_id',$item->phe_lieu_id)->whereHas('phanLoai',function($query) use ($ngay){
-                $query->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1])->where('kho_id',$item->kho_id);
+             ChiTietPhanLoai::where('phe_lieu_id',$item->phe_lieu_id)->whereHas('phanLoai',function($query) use ($ngay,$kho){
+                $query->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1])->where('kho_id',$kho->id);
             })->sum('so_luong') ;
-            $tongxuat= ChiTietXuatKho::where('phe_lieu_id',$item->phe_lieu_id)->whereHas('xuatKho',function($query) use ($ngay){
-                $query->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1])->where('kho_id',$item->kho_id);
-            })->sum('so_luong_thuc_te') +  PhanLoai::where('phe_lieu_id',$item->phe_lieu_id)->where('kho_id',$item->kho_id)
+            $tongxuat= ChiTietXuatKho::where('phe_lieu_id',$item->phe_lieu_id)->whereHas('xuatKho',function($query) use ($ngay,$kho){
+                $query->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1])->where('kho_id',$kho->id);
+            })->sum('so_luong_thuc_te') +  PhanLoai::where('phe_lieu_id',$item->phe_lieu_id)->where('kho_id',$kho->id)
                ->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1])->sum('so_luong') ;
             $data[]=[
                 'phe_lieu_id'=>$item->phe_lieu_id,
