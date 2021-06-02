@@ -94,7 +94,7 @@ class KhoController extends Controller
                 'dvt'=>$item->dvt,
                 'xuat'=>$tongxuat,
                 'nhap'=>$tongnhap,
-                'dau_ki'=>$tongnhap_dk-$tongxuat_dk
+                'dau_ki'=>$tongnhap_dk-$tongxuat_dk,
                 'cuoi_ki'=>$tongnhap_dk+$tongnhap-$tongxuat_dk-$tongxuat
 
         ];
