@@ -12,6 +12,11 @@ use App\Models\ThuKho;
 use App\Models\ThuKhoKho;
 
 use App\Models\ChiTietKho;
+use App\Models\ChiTietNhapKho;
+use App\Models\ChiTietXuatKho;
+use App\Models\ChiTietPhanLoai;
+use App\Models\PhanLoai;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -52,6 +57,37 @@ class KhoController extends Controller
         return KhoResource::collection($request->all ? $query->get(): $query->paginate($perPage));
     }
 
+    function tonKho(Request $request,$id){
+        $ngay = $request->query('ngay', [Carbon::now()->toDateString(), Carbon::now()->toDateString()]);
+        $phe_lieu_id = $request->query('phe_lieu_id');
+        $kho = Kho::find($id);
+        $chitiets = $kho->chitiets;
+        if(isset($phe_lieu_id)){
+            $chitiets = $kho->chitiets->where('phe_lieu_id',$phe_lieu_id);
+        }
+        foreach($chitiets as $item){
+           $tongnhap= ChiTietNhapKho::where('phe_lieu_id',$item->phe_lieu_id)->whereHas('nhapKho',function($query) use ($ngay){
+                $query->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1]);
+            })->sum('so_luong_thuc_te') + 
+             ChiTietPhanLoai::where('phe_lieu_id',$item->phe_lieu_id)->whereHas('phanLoai',function($query) use ($ngay){
+                $query->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1]);
+            })->sum('so_luong') ;
+            $tongxuat= ChiTietXuatKho::where('phe_lieu_id',$item->phe_lieu_id)->whereHas('xuatKho',function($query) use ($ngay){
+                $query->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1]);
+            })->sum('so_luong_thuc_te') +  PhanLoai::where('phe_lieu_id',$item->phe_lieu_id)
+               ->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1])->sum('so_luong') ;
+            $data[]=[
+                'phe_lieu_id'=>$item->phe_lieu_id,
+                'phe_lieu'=>$item->pheLieu,
+                'khoi_luong'=>$item->khoi_luong,
+                'dvt'=>$item->dvt,
+                'xuat'=>$tongxuat,
+                'nhap'=>$tongnhap,
+                'dau_ki'=>$item->khoi_luong-$tongnhap+$tongxuat
+        ];
+        }
+        return ['data'=>$data];
+    }
 
     function xuongHang(Request $request){
         $search = $request->query('search');

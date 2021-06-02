@@ -24,6 +24,8 @@ const getters = {
     home_url: state => state.user.home_url,
     loader: state => state.app.loader,
     barImage: state => state.app.barImage,
+    tonkhoId: state => state.app.tonkhoId,
+
     // tiny_drive_token: state => state.user.tiny_drive_token
 };
 export default getters;

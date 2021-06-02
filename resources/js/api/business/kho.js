@@ -30,6 +30,14 @@ export function update(id, data) {
         data
     });
 }
+export function tonkho(id, params) {
+    return request({
+        url: `/tonkhos/${id}`,
+        method: "get",
+        params
+
+    });
+}
 export function duyet(id) {
     return request({
         url: `/xuonghang/duyet/${id}`,

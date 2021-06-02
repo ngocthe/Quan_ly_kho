@@ -26,6 +26,15 @@ const businessRouter = [
             import("@/views/dashboard/business/kho/index")
     },
     {
+        name: "Tồn Kho",
+        meta: {
+            en_name: "Tồn Kho"
+        },
+        path: "kho/tonkhos",
+        component: () =>
+            import("@/views/dashboard/business/kho/components/TonKho")
+    },
+    {
         name: "Xuống hàng",
         meta: {
             en_name: "Xuống hàng"
