@@ -70,8 +70,8 @@ class KhoController extends Controller
            $tongnhap= ChiTietNhapKho::where('phe_lieu_id',$item->phe_lieu_id)->whereHas('nhapKho',function($query) use ($ngay,$kho){
                 $query->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1])->where('kho_id',$kho->id);
             })->sum('so_luong_thuc_te') + 
-             ChiTietPhanLoai::where('phe_lieu_id',$item->phe_lieu_id)->whereHas('phanLoai',function($query) use ($ngay,$kho){
-                $query->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1])->where('kho_id',$kho->id);
+             ChiTietPhanLoai::where('phe_lieu_id',$item->phe_lieu_id)->where('kho_id',$kho->id)->whereHas('phanLoai',function($query) use ($ngay,$kho){
+                $query->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1]);
             })->sum('so_luong') ;
             $tongxuat= ChiTietXuatKho::where('phe_lieu_id',$item->phe_lieu_id)->whereHas('xuatKho',function($query) use ($ngay,$kho){
                 $query->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1])->where('kho_id',$kho->id);
@@ -102,9 +102,7 @@ class KhoController extends Controller
            $tongnhap= ChiTietNhapKho::where('phe_lieu_id',$item->phe_lieu_id)->whereHas('nhapKho',function($query) use ($kho){
                 $query->where('kho_id',$kho->id);
             })->sum('so_luong_thuc_te') + 
-             ChiTietPhanLoai::where('phe_lieu_id',$item->phe_lieu_id)->whereHas('phanLoai',function($query) use ($kho){
-                $query->where('kho_id',$kho->id);
-            })->sum('so_luong') ;
+             ChiTietPhanLoai::where('phe_lieu_id',$item->phe_lieu_id)->where('kho_id',$kho->id)->sum('so_luong') ;
             $tongxuat= ChiTietXuatKho::where('phe_lieu_id',$item->phe_lieu_id)->whereHas('xuatKho',function($query) use ($kho){
                 $query->where('kho_id',$kho->id);
             })->sum('so_luong_thuc_te') +  PhanLoai::where('phe_lieu_id',$item->phe_lieu_id)->where('kho_id',$kho->id)
