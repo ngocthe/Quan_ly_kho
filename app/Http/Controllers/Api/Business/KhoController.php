@@ -108,7 +108,7 @@ class KhoController extends Controller
             $tongxuat= ChiTietXuatKho::where('phe_lieu_id',$item->phe_lieu_id)->whereHas('xuatKho',function($query) use ($ngay,$kho){
                 $query->where('kho_id',$kho->id);
             })->sum('so_luong_thuc_te') +  PhanLoai::where('phe_lieu_id',$item->phe_lieu_id)->where('kho_id',$kho->id)
-               )->sum('so_luong') ;
+               ->sum('so_luong');
     
               ChiTietKho::where('id',$item->id)->update(['so_luong'=>$tongnhap-$tongxuat]);
         ];
