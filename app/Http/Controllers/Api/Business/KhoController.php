@@ -93,6 +93,7 @@ class KhoController extends Controller
     
     function updateTonKho(Request $request,$id){
         $kho = Kho::find($id);
+        $phe_lieu_id= $request->get('phe_lieu_id');
         $chitiets = $kho->chitiets;
         $data=[];
         if(isset($phe_lieu_id)){
