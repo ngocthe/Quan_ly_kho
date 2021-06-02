@@ -175,6 +175,7 @@ export default {
                  { text: "Tồn kho đầu kì", value: "dau_ki", width: 180 },
                    { text: "Tổng nhập", value: "nhap", width: 180 },
                   { text: "Tổng xuất", value: "xuat", width: 180 },
+                  { text: "Tồn kho cuối kì", value: "cuoi_ki", width: 180 },
                 { text: "Tồn kho hiện tại", value: "khoi_luong", width: 180 },
                  {
                     text: this.$t("actions") ,
