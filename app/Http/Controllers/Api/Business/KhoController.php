@@ -110,8 +110,7 @@ class KhoController extends Controller
             })->sum('so_luong_thuc_te') +  PhanLoai::where('phe_lieu_id',$item->phe_lieu_id)->where('kho_id',$kho->id)
                ->sum('so_luong');
     
-              ChiTietKho::where('id',$item->id)->update(['so_luong'=>$tongnhap-$tongxuat]);
-        ];
+              ChiTietKho::where('id',$item->id)->update(['so_luong'=>($tongnhap-$tongxuat)]);
         }
         return ['data'=>[]];
     }
