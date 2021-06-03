@@ -116,6 +116,9 @@
 </template>
 <script>
 import { store, update } from "@/api/business/phanloai";
+
+import { getsophieu} from "@/api/business/kho";
+
 import dialogMixin from "@/mixins/crud/dialog";
 import DatePicker from "@/components/DatePicker";
 import ProductList from "./ProductList";
@@ -141,7 +144,15 @@ export default {
         };
     },
     methods:{
-     
+     async getSoPhieu() {
+                const { data } = await getsophieu('phanloai');
+                this.form.kho_id = data.kho_id;
+                   this.form.so_phieu = data.so_phieu;
+
+                }
+    }, mounted(){
+        console.log(1221);
+        this.getSoPhieu()
     }
 };
 </script>

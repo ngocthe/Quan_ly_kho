@@ -15,7 +15,7 @@
                 <v-toolbar-title>Danh sách</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-btn
-                    @click="$emit('handle-create')"
+                    @click="$emit('handle-create');getSoPhieu()"
                     class="mx-2"
                     small
                     fab
@@ -67,6 +67,8 @@
 <script>
 import { destroy } from "@/api/business/nhapkho";
 import dataTableMixin from "@/mixins/crud/data-table";
+import { getsophieu} from "@/api/business/kho";
+
 export default {
     mixins: [dataTableMixin(destroy)],
     computed: {
@@ -103,5 +105,14 @@ export default {
             ];
         },
     },
+      methods:{
+         async getSoPhieu() {
+                const { data } = await getsophieu('nhapkho');
+                console.log(data)
+                this.form.kho_id = data.kho_id;
+                   this.form.so_phieu = data.so_phieu;
+
+                }
+    }
 };
 </script>

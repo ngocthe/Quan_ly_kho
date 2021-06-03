@@ -137,8 +137,9 @@ export default {
 		tpc:null
         };
     },
-    methods:{
-     
+     methods:{
+    
+    }, mounted(){
     }
 };
 </script>

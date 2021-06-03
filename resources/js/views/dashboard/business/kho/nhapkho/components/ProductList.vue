@@ -61,7 +61,6 @@
             <v-text-field
                 v-model="item.so_luong_thuc_te"
                 type="number"
-                :min="0"
                 dense
             ></v-text-field>
         </template>

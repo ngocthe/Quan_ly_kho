@@ -9,6 +9,9 @@ use App\Http\Requests\KhoRequest;
 use App\Http\Resources\KhoResource;
 use App\Models\Kho;
 use App\Models\ThuKho;
+use App\Models\NhapKho;
+use App\Models\XuatKho;
+
 use App\Models\ThuKhoKho;
 
 use App\Models\ChiTietKho;
@@ -55,6 +58,31 @@ class KhoController extends Controller
             $query->where('nhan_vien_ban_hang_id',$nvbh_id);
         }
         return KhoResource::collection($request->all ? $query->get(): $query->paginate($perPage));
+    }
+
+    function getSoPhieu($type){
+
+        $user = Auth::user();
+        $thukho = ThuKho::query()->where('user_id',$user->id)->first();
+        $kho_id = null;
+        if(isset($thukho)){
+            $kho_k= ThuKhoKho::where('thu_kho_id',$thukho->id)->first();
+            $kho_id= $kho_k->kho_id;
+        }
+        $so=0;
+        if($type=='nhapkho'){
+            $so = NhapKho::query()->count()+1;
+        }  
+        if($type=='xuatkho'){
+            $so = XuatKho::query()->count()+1;
+        }  
+         if($type=='phanloai'){
+            $so = PhanLoai::query()->count()+1;
+        }
+        return ['data'=>[
+            'kho_id'=>$kho_id,
+            'so_phieu'=>$so
+        ]];
     }
 
     function tonKho(Request $request,$id){

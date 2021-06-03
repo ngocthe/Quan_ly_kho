@@ -128,6 +128,7 @@ import { store, update } from "@/api/business/nhapkho";
 import dialogMixin from "@/mixins/crud/dialog";
 import DatePicker from "@/components/DatePicker";
 import ProductList from "./ProductList";
+import { getsophieu} from "@/api/business/kho";
 
 
 //validator import
@@ -149,8 +150,16 @@ export default {
 		tpc:null
         };
     },
-    methods:{
-     
+     methods:{
+     async getSoPhieu() {
+                const { data } = await getsophieu('nhapkho');
+                console.log(data)
+                this.form.kho_id = data.kho_id;
+                   this.form.so_phieu = data.so_phieu;
+
+                }
+    }, mounted(){
+        this.getSoPhieu()
     }
 };
 </script>

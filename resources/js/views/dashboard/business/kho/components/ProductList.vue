@@ -113,7 +113,7 @@ export default {
                 id: Math.random(),
                 phe_lieu_id: "",
                 dvt: 1,
-                khoi_luong: 0,
+                khoi_luong: null,
             });
         },
          handleDelete(id) {

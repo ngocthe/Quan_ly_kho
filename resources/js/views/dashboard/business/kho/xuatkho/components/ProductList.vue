@@ -135,8 +135,8 @@ export default {
                 id: Math.random(),
                 phe_lieu_id:null,
                 dvt: 'Kg',
-                so_luong_de_xuat: 0,
-                so_luong_thuc_te:0,
+                so_luong_de_xuat: null,
+                so_luong_thuc_te:null,
                 don_gia: 0
             });
         },

@@ -133,7 +133,7 @@ export default {
                 id: Math.random(),
                 phe_lieu_id:null,
                 dvt: 'Kg',
-                so_luong: 0,
+                so_luong: null,
                 kho_id:this.kho_id,
             });
         },

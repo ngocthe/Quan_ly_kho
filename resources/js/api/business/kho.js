@@ -30,6 +30,13 @@ export function update(id, data) {
         data
     });
 }
+
+export function getsophieu(id) {
+    return request({
+        url: `/getsophieu/${id}`,
+        method: "get"
+    });
+}
 export function tonkho(id, params) {
     return request({
         url: `/tonkhos/${id}`,

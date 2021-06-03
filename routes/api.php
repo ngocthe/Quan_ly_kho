@@ -66,7 +66,9 @@ Route::group(
         Route::get('histories', 'Api\Business\NhapKhoController@histories');
         Route::get('tonkhos/{id}', 'Api\Business\KhoController@tonKho');
         Route::get('ipdatetonkhos/{id}', 'Api\Business\KhoController@updateTonKho');
+        Route::get('getsophieu/{loai}', 'Api\Business\KhoController@getSoPhieu');
 
+        
         
         
         Route::get('phanloai/export', 'Api\Business\PhanLoaiController@export');
