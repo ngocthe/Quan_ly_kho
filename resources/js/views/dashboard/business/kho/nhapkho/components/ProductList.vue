@@ -95,7 +95,7 @@
                 <v-icon dark>mdi-delete</v-icon>
             </v-btn>
         </template>
-      
+
         <template>
             <v-btn color="primary" @click="$emit('handle-reset')"
                 >Refresh</v-btn
@@ -108,6 +108,7 @@ export default {
     props: ["chitiets", "editing","options"],
     computed: {
         headers() {
+             if(!this.$store.state.user.roles[0]==='Thủ Kho')
             return [
                 { text: "Phế liệu", value: "phe_lieu_id", width: 200 },
                 { text: "Đơn vị", value: "dvt", width: 100 },
@@ -121,8 +122,19 @@ export default {
                     align: "center"
                 }
             ];
+            else
+            return [
+                { text: "Phế liệu", value: "phe_lieu_id", width: 200 },
+                { text: "Đơn vị", value: "dvt", width: 150 },
+                { text: "Số lượng thực", value: "so_luong_thuc_te", width: 200 },
+                 {
+                    text: this.$t("actions") ,
+                    value: "actions" ,
+                    align: "center"
+                }
+            ];
         }
-        
+
     },
 
     methods: {
@@ -138,7 +150,7 @@ export default {
                 id: Math.random(),
                 phe_lieu_id:null,
                 dvt: 'Kg',
-                so_luong_thuc_te: 0,
+                so_luong_thuc_te: null,
                 so_luong_chung_tu:0,
                 don_gia: 0
             });

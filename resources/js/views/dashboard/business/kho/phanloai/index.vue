@@ -15,6 +15,7 @@
                     :table-data="tableData"
                     @handle-edit="showDialogForm('edit', $event)"
                     @handle-create="showDialogForm('create')"
+                    @push-detail="pushDetail()"
                     @handle-delete="getData()"
                     @handle-export="exportExcel($event)"
                 />
@@ -118,6 +119,16 @@ export default {
            window.location.assign(
                 `/api/phanloai/export?ngay[]=`+this.defaultParams.ngay[0]+'&ngay[]='+this.defaultParams.ngay[1]
             );
+        },
+        pushDetail() {
+            if(this.form.chitiets.length==0)
+           this.form.chitiets.push({
+                id: Math.random(),
+                phe_lieu_id:null,
+                dvt: 'Kg',
+                so_luong: null,
+                kho_id:this.kho_id,
+            });
         },
     },
 };

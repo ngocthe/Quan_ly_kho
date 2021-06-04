@@ -72,7 +72,7 @@ import { getsophieu} from "@/api/business/kho";
 export default {
     mixins: [dataTableMixin(destroy)],
     computed: {
-        
+
         headers() {
             return [
                 { text: "Ngày", value: "ngay" },
@@ -107,12 +107,14 @@ export default {
     },
     methods:{
          async getSoPhieu() {
+                this.$emit('push-detail')
+
                 const { data } = await getsophieu('nhapkho');
                 console.log(data)
                 this.form.kho_id = data.kho_id;
                    this.form.so_phieu = data.so_phieu;
+                },
 
-                }
     }
 };
 </script>

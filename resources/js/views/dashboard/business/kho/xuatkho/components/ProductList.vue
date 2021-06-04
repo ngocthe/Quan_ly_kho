@@ -81,7 +81,7 @@
                 dense
             ></v-text-field>
         </template>
-    
+
      <template v-slot:item.actions="{ item }">
             <v-btn
                 x-small
@@ -94,7 +94,7 @@
                 <v-icon dark>mdi-delete</v-icon>
             </v-btn>
         </template>
-      
+
         <template>
             <v-btn color="primary" @click="$emit('handle-reset')"
                 >Refresh</v-btn
@@ -104,9 +104,10 @@
 </template>
 <script>
 export default {
-    props: ["chitiets", "editing","options"],
+    props: ["chitiets", "editing","options","kho_id"],
     computed: {
         headers() {
+            if(!this.$store.state.user.roles[0]==='Thủ Kho')
             return [
                 { text: "Phế liệu", value: "phe_lieu_id", width: 200 },
                 { text: "Đơn vị", value: "dvt", width: 100 },
@@ -119,8 +120,20 @@ export default {
                     align: "center"
                 }
             ];
-        }
-        
+            else
+            return [
+                { text: "Phế liệu", value: "phe_lieu_id" },
+                { text: "Đơn vị", value: "dvt", width: 150 },
+                 { text: "Thực tế", value: "so_luong_thuc_te", width: 200 },
+                 {
+                    text: this.$t("actions") ,
+                    value: "actions" ,
+                    align: "center"
+                }
+            ];
+        },
+
+
     },
 
     methods: {

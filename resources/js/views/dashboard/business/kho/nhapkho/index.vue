@@ -16,6 +16,7 @@
                     @handle-edit="showDialogForm('edit', $event)"
                     @handle-create="showDialogForm('create')"
                     @handle-delete="getData()"
+                     @push-detail="pushDetail()"
                     @handle-export="exportData"
                 />
             </v-col>
@@ -114,7 +115,7 @@ export default {
                 xe_id:null,
                 per_page: 20,
             },
-            
+
             form: {
                 id: undefined,
                 ngay: new Date(),
@@ -143,11 +144,17 @@ export default {
             }
             this.showDialog = true;
         },
-        // exportDataReport() {
-        //     this.to(
-        //         `/reports/export?date[]=${this.defaultParams.date[0]}&date[]=${this.defaultParams.date[1]}`
-        //     );
-        // },
+         pushDetail() {
+            if(this.form.chitiets.length==0)
+           this.form.chitiets.push({
+                 id: Math.random(),
+                phe_lieu_id:null,
+                dvt: 'Kg',
+                so_luong_thuc_te: null,
+                so_luong_chung_tu:0,
+                don_gia: 0
+            });
+        },
     },
 };
 </script>

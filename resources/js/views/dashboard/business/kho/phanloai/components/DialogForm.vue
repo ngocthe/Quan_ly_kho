@@ -4,6 +4,22 @@
             <v-card-title>
                 <span class="headline">{{ title }}</span>
             </v-card-title>
+             <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" outlined text @click="closeDialog">{{
+                    $t("cancel")
+                }}</v-btn>
+                <v-btn
+                    v-if="!editing"
+                    color="blue darken-1"
+                    text
+                    @click="createData"
+                    >{{ $t("create") }}</v-btn
+                >
+                <v-btn v-else color="blue darken-1" outlined text @click="updateData">
+                   Cập nhật
+                </v-btn>
+            </v-card-actions>
             <v-card-text>
                 <v-form ref="form" v-model="valid" lazy-validation>
                     <v-container>
@@ -29,7 +45,7 @@
                                     dense
                                 ></v-text-field>
                             </v-col>
-                         
+
                            <v-col cols="12" sm="4">
                                 <v-autocomplete
                                     v-model="form.khach_hang_id"
@@ -40,7 +56,7 @@
                                     :label="'Khách hàng'"
                                 ></v-autocomplete>
                             </v-col>
-                           
+
                                 <v-col cols="12" sm="4">
                                      <v-autocomplete
                                     v-model="form.kho_id"
@@ -76,9 +92,9 @@
                                     dense
                                 ></v-text-field>
                             </v-col>
-                     
-                         
-                         
+
+
+
                         </v-row>
                          <v-row >
                             <v-col cols="12">
@@ -92,12 +108,12 @@
                         </v-row>
 
                     </v-container>
-                    
+
                 </v-form>
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="closeDialog">{{
+                <v-btn color="blue darken-1" outlined text @click="closeDialog">{{
                     $t("cancel")
                 }}</v-btn>
                 <v-btn
@@ -107,7 +123,7 @@
                     @click="createData"
                     >{{ $t("create") }}</v-btn
                 >
-                <v-btn v-else color="blue darken-1" text @click="updateData">
+                <v-btn v-else color="blue darken-1" outlined text @click="updateData">
                    Cập nhật
                 </v-btn>
             </v-card-actions>

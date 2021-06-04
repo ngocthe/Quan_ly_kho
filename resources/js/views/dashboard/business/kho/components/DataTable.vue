@@ -46,7 +46,7 @@
             >
                 <v-icon dark>mdi-book</v-icon>
             </v-btn>
-       
+
             <v-btn
                 x-small
                 @click="handleDelete(item.id)"
@@ -71,7 +71,7 @@ import dataTableMixin from "@/mixins/crud/data-table";
 export default {
     mixins: [dataTableMixin(destroy)],
     computed: {
-        
+
         headers() {
             return [
                 { text: "Mã", value: "ma" },

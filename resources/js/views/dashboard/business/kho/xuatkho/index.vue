@@ -15,6 +15,7 @@
                     :table-data="tableData"
                     @handle-edit="showDialogForm('edit', $event)"
                     @handle-create="showDialogForm('create')"
+                    @push-detail="pushDetail()"
                     @handle-delete="getData()"
                     @handle-export="exportData"
                 />
@@ -129,11 +130,17 @@ export default {
         };
     },
     methods: {
-        // exportDataReport() {
-        //     this.to(
-        //         `/reports/export?date[]=${this.defaultParams.date[0]}&date[]=${this.defaultParams.date[1]}`
-        //     );
-        // },
+        pushDetail() {
+            if(this.form.chitiets.length==0)
+           this.form.chitiets.push({
+                id: Math.random(),
+                phe_lieu_id:null,
+                dvt: 'Kg',
+                so_luong_de_xuat: null,
+                so_luong_thuc_te:null,
+                don_gia: 0
+            });
+        },
     },
 };
 </script>
