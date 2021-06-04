@@ -13,6 +13,7 @@
                     v-if="!editing"
                     color="blue darken-1"
                     text
+                    outlined
                     @click="createData"
                     >{{ $t("create") }}</v-btn
                 >
@@ -120,6 +121,7 @@
                     v-if="!editing"
                     color="blue darken-1"
                     text
+                    outlined
                     @click="createData"
                     >{{ $t("create") }}</v-btn
                 >

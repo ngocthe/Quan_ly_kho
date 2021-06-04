@@ -18,7 +18,7 @@
                     @click="createData"
                     >{{ $t("create") }}</v-btn
                 >
-                <v-btn v-else color="blue darken-1" text @click="updateData">
+                <v-btn v-else color="blue darken-1" outlined text @click="updateData">
                    Cập nhật
                 </v-btn>
             </v-card-actions>
@@ -135,7 +135,7 @@
                     @click="createData"
                     >{{ $t("create") }}</v-btn
                 >
-                <v-btn v-else color="blue darken-1" text @click="updateData">
+                <v-btn v-else outlined color="blue darken-1" text @click="updateData">
                    Cập nhật
                 </v-btn>
             </v-card-actions>
