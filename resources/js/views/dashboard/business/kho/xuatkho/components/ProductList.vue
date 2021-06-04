@@ -125,6 +125,8 @@ export default {
                 { text: "Phế liệu", value: "phe_lieu_id" },
                 { text: "Đơn vị", value: "dvt", width: 150 },
                  { text: "Thực tế", value: "so_luong_thuc_te", width: 200 },
+                                 { text: "Đơn giá", value: "don_gia", width: 180 },
+
                  {
                     text: this.$t("actions") ,
                     value: "actions" ,
