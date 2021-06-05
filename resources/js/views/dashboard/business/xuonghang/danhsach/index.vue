@@ -12,7 +12,7 @@
             <v-col class="pt-0" cols="12">
                 <DataTable
                     :form="form"
-                    @handle-search="getData(1)"
+                    @handle-search2="getData()"
                     :table-data="tableData"
                     @handle-edit="showDialogForm('edit', $event)"
                     @handle-create="showDialogForm('create')"

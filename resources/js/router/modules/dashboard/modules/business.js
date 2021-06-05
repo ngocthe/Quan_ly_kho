@@ -62,6 +62,15 @@ const businessRouter = [
             import("@/views/dashboard/business/kho/lichsu/index")
     },
     {
+        name: "Nhập phân loại",
+        meta: {
+            en_name: "Nhập phân loại"
+        },
+        path: "kho/nhapphanloais",
+        component: () =>
+            import("@/views/dashboard/business/kho/nhapphanloai/index")
+    },
+    {
         name: "Quản lý xuất kho",
         meta: {
             en_name: "Xuất kho"
@@ -142,6 +151,6 @@ const businessRouter = [
         component: () =>
             import("@/views/dashboard/business/danhmuc/doitac/index")
     },
-   
+
 ];
 export default businessRouter;

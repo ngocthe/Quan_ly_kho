@@ -27,6 +27,19 @@
                 </v-btn> -->
             </v-toolbar>
         </template>
+        <template slot="body.append">
+                            <tr class="pink--text">
+                                <th class="title">Totals</th>
+                                <th class="title">{{ sumField('so_luong') }}</th>
+                                <th class="title"></th>
+                                <th class="title"></th>
+                                <th class="title"></th>
+                                   <th class="title"></th>
+                                <th class="title"></th>
+                                <th class="title"></th>
+
+                            </tr>
+                        </template>
         <template v-slot:item.actions="{ item }">
              <v-btn
                 x-small
@@ -82,16 +95,27 @@ export default {
                     value: "ngay",
                 },
                     {
-                    text: 'Kho',
+                    text: 'Kho xuất',
                     value: "kho",
                 },
-                 {
-                    text: 'Loại',
-                    value: "loai",
+                {
+                    text: this.$t("actions"),
+                    value: "actions",
+                    align: "center",
+                    width: 120,
                 },
-
             ];
         },
     },
+    methods: {
+            sumField(key) {
+  // sum data in given key (property)
+  let total = 0
+  const sum = this.tableData.reduce((accumulator, currentValue) => {
+    return (total += +currentValue[key])
+  }, 0)
+  return sum
+},
+  }
 };
 </script>

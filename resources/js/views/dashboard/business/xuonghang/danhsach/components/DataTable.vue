@@ -10,8 +10,8 @@
         disable-filtering
         class="elevation-1"
     >
-      
- 
+
+
         <template v-slot:item.actions="{ item }">
             <v-btn
             v-if="!item.duyet"
@@ -29,8 +29,8 @@
                    color="orange"
                       text-color="white"
                     >
-                
-               Đã duyệt 
+
+               Đã duyệt
 
              </v-chip>
             <!-- <v-btn
@@ -44,7 +44,7 @@
                 <v-icon dark>mdi-delete</v-icon>
             </v-btn> -->
         </template>
-       
+
         <template v-slot:no-data>
             <v-btn color="primary" @click="$emit('handle-reset')"
                 >Refresh</v-btn
@@ -80,12 +80,12 @@ export default {
     },
     methods:{
       async duyetXuongHang(item){
-                await  axios.put(`/api/xuong_hang/duyet/${item.id}`);
+                // await  axios.put(`/api/xuong_hang/duyet/${item.id}`);
                 this.$snackbar(
                 "Duyệt thành công",
                     "success"
             );
-                this.$emit('handle-search')
+                this.$emit('handle-search2')
 
             // try {
             //     await duyet(item.id);

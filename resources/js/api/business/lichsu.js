@@ -9,4 +9,14 @@ export function index(params) {
 }
 
 
+export function nhapphanloai(params) {
+    return request({
+        url: "/nhapphanloais",
+        method: "get",
+        params
+    });
+}
+
+
+
 
