@@ -80,7 +80,7 @@ export default {
     },
     methods:{
       async duyetXuongHang(item){
-                // await  axios.put(`/api/xuong_hang/duyet/${item.id}`);
+               await  axios.put(`/api/xuong_hang/duyet/${item.id}`);
                 this.$snackbar(
                 "Duyệt thành công",
                     "success"

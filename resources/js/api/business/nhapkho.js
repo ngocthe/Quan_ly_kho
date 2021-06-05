@@ -22,6 +22,12 @@ export function update(id, data) {
         data
     });
 }
+export function duyetpl(id) {
+    return request({
+        url: `/duyetpl/${id}`,
+        method: "put"
+    });
+}
 export function destroy(id) {
     return request({
         url: `/nhapkhos/${id}`,

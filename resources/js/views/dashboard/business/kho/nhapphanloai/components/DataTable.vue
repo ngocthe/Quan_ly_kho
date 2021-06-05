@@ -43,23 +43,14 @@
         <template v-slot:item.actions="{ item }">
              <v-btn
                 x-small
-                @click="$emit('handle-edit', item)"
+                @click="duyet(item)"
                 fab
                 dark
                 color="primary"
             >
-                <v-icon dark>mdi-pencil</v-icon>
+                <v-icon dark>mdi-check</v-icon> Duyệt
             </v-btn>
-            <v-btn
-                x-small
-                @click="handleDelete(item.id)"
-                class="ml-2"
-                fab
-                dark
-                color="error"
-            >
-                <v-icon dark>mdi-delete</v-icon>
-            </v-btn>
+
         </template>
         <template>
             <v-btn color="primary" @click="$emit('handle-reset')"
@@ -69,6 +60,7 @@
     </v-data-table>
 </template>
 <script>
+import axios from "axios";
 import { destroy } from "@/api/business/nhapkho";
 import dataTableMixin from "@/mixins/crud/data-table";
 export default {
@@ -108,6 +100,16 @@ export default {
         },
     },
     methods: {
+        async duyet(item){
+               await  axios.put(`/api/duyetpl/${item.id}`);
+                this.$snackbar(
+                "Duyệt thành công",
+                    "success"
+            );
+                            this.$emit('handle-search2')
+
+            }
+            ,
             sumField(key) {
   // sum data in given key (property)
   let total = 0

@@ -68,6 +68,7 @@ Route::group(
         Route::get('ipdatetonkhos/{id}', 'Api\Business\KhoController@updateTonKho');
         Route::get('getsophieu/{loai}', 'Api\Business\KhoController@getSoPhieu');
         Route::get('nhapphanloais', 'Api\Business\NhapKhoController@nhapphanloai');
+        Route::put('duyetpl/{id}', 'Api\Business\PhanLoaiController@duyetNhapPL');
 
 
 

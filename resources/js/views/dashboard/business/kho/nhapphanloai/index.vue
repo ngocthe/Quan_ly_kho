@@ -14,6 +14,7 @@
                     :form="form"
                     :table-data="tableData"
                     @handle-edit="showDialogForm('edit', $event)"
+                    @handle-search2="getData()"
                     @handle-create="showDialogForm('create')"
                     @handle-delete="getData()"
                     @handle-export="exportData"

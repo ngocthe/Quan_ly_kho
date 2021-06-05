@@ -54,7 +54,11 @@ class PhanLoaiController extends Controller
         $query->orderBy('updated_at','desc');
         return PhanLoaiResource::collection($request->all ? $query->get(): $query->paginate($perPage));
     }
-
+    function duyetNhapPL($id){
+        $user = Auth::user();
+        ChiTietPhanLoai::where('id',$id)->update(['nguoi_duyet_id'=>$user->id,'duyet'=>true]);
+        return Response::updated();
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -254,7 +258,7 @@ class PhanLoaiController extends Controller
     public function export(Request $request)
     {
         $ngay = $request->query('ngay', [Carbon::now()->toDateString(), Carbon::now()->toDateString()]);
-        
+
         $data = PhanLoai::where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1])->get();
         $file = public_path() . '/excel/PHÂN LOẠI.xlsx';
         \Excel::load($file, function ($excel) use ($data) {
