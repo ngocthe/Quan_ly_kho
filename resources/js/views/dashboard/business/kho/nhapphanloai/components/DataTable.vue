@@ -41,15 +41,26 @@
                             </tr>
                         </template>
         <template v-slot:item.actions="{ item }">
-             <v-btn
+            <v-btn
+            v-if="!item.duyet"
                 x-small
                 @click="duyet(item)"
-                fab
-                dark
                 color="primary"
             >
-                <v-icon dark>mdi-check</v-icon> Duyệt
+                <v-icon >mdi-check</v-icon>
+                Duyệt
+
             </v-btn>
+             <v-chip
+                    v-else
+                  class="ma-2"
+                   color="orange"
+                      text-color="white"
+                    >
+
+               Đã duyệt
+
+             </v-chip>
 
         </template>
         <template>
