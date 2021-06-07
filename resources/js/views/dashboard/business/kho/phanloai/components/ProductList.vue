@@ -64,7 +64,7 @@
                 dense
             ></v-text-field>
         </template>
-        
+
             <template v-slot:item.kho_id="{ item }">
              <v-autocomplete
                 v-model="item.kho_id"
@@ -75,7 +75,7 @@
                 dense
             ></v-autocomplete>
         </template>
-      
+
      <template v-slot:item.actions="{ item }">
             <v-btn
                 x-small
@@ -88,7 +88,7 @@
                 <v-icon dark>mdi-delete</v-icon>
             </v-btn>
         </template>
-      
+
         <template>
             <v-btn color="primary" @click="$emit('handle-reset')"
                 >Refresh</v-btn
@@ -113,14 +113,18 @@ export default {
                 }
             ];
         }
-        
+
     },
 
     methods: {
         them(index){
-         if(!this.editing){ 
+         if(!this.editing){
+             if(this.kho_id!=5){
              this.chitiets[index].kho_id =  this.chitiets[index].phe_lieu_id
                     ? this.options.phelieus.find( product => product.id === this.chitiets[index].phe_lieu_id).kho_id: this.kho_id
+                    }
+                    }else{
+                        this.chitiets[index].kho_id =5
                     }
           var so = index+1;
             if(this.chitiets.length==so){
