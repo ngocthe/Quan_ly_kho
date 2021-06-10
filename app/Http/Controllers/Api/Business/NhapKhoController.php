@@ -209,7 +209,7 @@ class NhapKhoController extends Controller
         $phanloais = PhanLoai::query()->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1])->get();
         $query = ChiTietPhanLoai::query()->whereHas('phanLoai',function($query)use($ngay){
             $query->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1]);
-        });
+        })->orderBy('duyet','asc');
         if(isset($thukho)){
             $khoIDs= ThuKhoKho::where('thu_kho_id',$thukho->id)->pluck('kho_id');
             $query->whereIn('kho_id',$khoIDs);
