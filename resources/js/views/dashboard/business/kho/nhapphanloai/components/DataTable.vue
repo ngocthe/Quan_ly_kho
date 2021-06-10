@@ -57,9 +57,7 @@
                    color="orange"
                       text-color="white"
                     >
-
                Đã duyệt
-
              </v-chip>
 
         </template>
@@ -101,6 +99,7 @@ export default {
                     text: 'Kho xuất',
                     value: "kho",
                 },
+
                 {
                     text: this.$t("actions"),
                     value: "actions",

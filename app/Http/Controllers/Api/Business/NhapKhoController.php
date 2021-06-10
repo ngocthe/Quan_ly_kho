@@ -227,7 +227,7 @@ class NhapKhoController extends Controller
                     if($ct->phe_lieu_id==$phe_lieu_id){
                             $data[]=[
                                 'id'=>$ct->id,
-
+                                'duyet'=>$ct->duyet,
                                 'phe_lieu_id'=>$ct->phe_lieu_id,
                                 'phe_lieu'=>$ct->pheLieu->ma,
                                 'so_luong'=>$ct->so_luong,
@@ -240,7 +240,7 @@ class NhapKhoController extends Controller
                     }else{
                         $data[]=[
                             'id'=>$ct->id,
-
+                            'duyet'=>$ct->duyet,
                             'phe_lieu_id'=>$ct->phe_lieu_id,
                             'phe_lieu'=>$ct->pheLieu->ma,
                             'so_luong'=>$ct->so_luong,
