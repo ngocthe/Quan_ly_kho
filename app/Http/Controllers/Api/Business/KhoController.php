@@ -72,10 +72,10 @@ class KhoController extends Controller
         $so=0;
         if($type=='nhapkho'){
             $so = NhapKho::query()->count()+1;
-        }  
+        }
         if($type=='xuatkho'){
             $so = XuatKho::query()->count()+1;
-        }  
+        }
          if($type=='phanloai'){
             $so = PhanLoai::query()->count()+1;
         }
@@ -97,7 +97,7 @@ class KhoController extends Controller
         foreach($chitiets as $item){
            $tongnhap_dk= ChiTietNhapKho::where('phe_lieu_id',$item->phe_lieu_id)->whereHas('nhapKho',function($query) use ($ngay,$kho){
                 $query->where('ngay', '<', $ngay[0])->where('kho_id',$kho->id);
-            })->sum('so_luong_thuc_te') + 
+            })->sum('so_luong_thuc_te') +
              ChiTietPhanLoai::where('phe_lieu_id',$item->phe_lieu_id)->where('kho_id',$kho->id)->whereHas('phanLoai',function($query) use ($ngay,$kho){
                 $query->where('ngay', '<', $ngay[0]);
             })->sum('so_luong') ;
@@ -107,7 +107,7 @@ class KhoController extends Controller
                ->where('ngay', '<', $ngay[0])->sum('so_luong') ;
             $tongnhap= ChiTietNhapKho::where('phe_lieu_id',$item->phe_lieu_id)->whereHas('nhapKho',function($query) use ($ngay,$kho){
                 $query->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1])->where('kho_id',$kho->id);
-            })->sum('so_luong_thuc_te') + 
+            })->sum('so_luong_thuc_te') +
              ChiTietPhanLoai::where('phe_lieu_id',$item->phe_lieu_id)->where('kho_id',$kho->id)->whereHas('phanLoai',function($query) use ($ngay,$kho){
                 $query->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1]);
             })->sum('so_luong') ;
@@ -130,7 +130,7 @@ class KhoController extends Controller
         return ['data'=>$data];
     }
 
-    
+
     function updateTonKho(Request $request,$id){
         $kho = Kho::find($id);
         $phe_lieu_id= $request->get('phe_lieu_id');
@@ -142,7 +142,7 @@ class KhoController extends Controller
         foreach($chitiets as $item){
            $tongnhap= ChiTietNhapKho::where('phe_lieu_id',$item->phe_lieu_id)->whereHas('nhapKho',function($query) use ($kho){
                 $query->where('kho_id',$kho->id);
-            })->sum('so_luong_thuc_te') + 
+            })->sum('so_luong_thuc_te') +
              ChiTietPhanLoai::where('phe_lieu_id',$item->phe_lieu_id)->where('kho_id',$kho->id)->sum('so_luong') ;
             $tongxuat= ChiTietXuatKho::where('phe_lieu_id',$item->phe_lieu_id)->whereHas('xuatKho',function($query) use ($kho){
                 $query->where('kho_id',$kho->id);
@@ -203,7 +203,7 @@ class KhoController extends Controller
     }
 
     public function duyetXuongHang($id){
-    
+
             $user = Auth::user();
             $thukho = ThuKho::query()->where('user_id',$user->id)->first();
             $kho_id=[];
@@ -231,7 +231,7 @@ class KhoController extends Controller
         ));
         $response = curl_exec($curl);
         return$response;
-        
+
 
     }
     /**

@@ -112,6 +112,7 @@ export default {
     },
     methods: {
         async duyet(item){
+            console.log(item)
                await  axios.put(`/api/duyetpl/${item.id}`);
                 this.$snackbar(
                 "Duyệt thành công",
