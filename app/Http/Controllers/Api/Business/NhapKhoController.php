@@ -195,6 +195,7 @@ class NhapKhoController extends Controller
             ];
         }
     }
+    return ['data'=>$data];
 }
 
     public function nhapphanloai(Request $request)
