@@ -49,6 +49,9 @@
                 <template v-slot:item.so_luong_dau_ra="{ item }">
                     {{item.chitiets.reduce((total, arg) => total + (+arg.so_luong), 0)}}
                 </template>
+                    <template v-slot:item.tieu_hao="{ item }">
+                    {{item.so_luong - (+item.chitiets.reduce((total, arg) => total + (+arg.so_luong), 0))}}
+                </template>
         <template v-slot:item.actions="{ item }">
 
              <v-btn
@@ -109,6 +112,10 @@ export default {
                 },{
                     text:'Số lượng đầu ra',
                     value:'so_luong_dau_ra'
+                },
+                {
+                    text:'Tiêu hao',
+                    value:'tieu_hao'
                 },
                     {
                     text: 'Kho',
