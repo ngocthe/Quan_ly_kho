@@ -8,6 +8,14 @@ export function index(params, responseType = "json") {
         responseType
     });
 }
+export function index_admin(params, responseType = "json") {
+    return request({
+        url: "/nhapKhoAdmin",
+        method: "get",
+        params,
+        responseType
+    });
+}
 export function store(data) {
     return request({
         url: "/nhapkhos",

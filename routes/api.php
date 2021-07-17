@@ -69,10 +69,11 @@ Route::group(
         Route::get('getsophieu/{loai}', 'Api\Business\KhoController@getSoPhieu');
         Route::get('nhapphanloais', 'Api\Business\NhapKhoController@nhapphanloai');
         Route::put('duyetpl/{id}', 'Api\Business\PhanLoaiController@duyetNhapPL');
+        Route::get('nhapKhoAdmin', 'Api\Business\NhapKhoController@nhapKhoAdmin');
 
 
 
-
+        
         Route::get('phanloai/export', 'Api\Business\PhanLoaiController@export');
         Route::get('xuong_hang', 'Api\Business\KhoController@xuongHang');
         Route::put('xuong_hang/duyet/{id}', 'Api\Business\KhoController@duyetXuongHang');

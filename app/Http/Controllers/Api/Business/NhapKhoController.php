@@ -198,6 +198,48 @@ class NhapKhoController extends Controller
     return ['data'=>$data];
 }
 
+public function nhapKhoAdmin(Request $request)
+{
+    $perPage = $request->query('per_page', 20);
+    $search = $request->query('search');
+    $khach_hang_id = $request->query('khach_hang_id');
+    $phe_lieu_id = $request->query('phe_lieu_id');
+    $ngay = $request->query('ngay', [Carbon::now()->toDateString(), Carbon::now()->toDateString()]);
+
+    $nhapkhoQuery = NhapKho::query()->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1]);
+    if(isset($khach_hang_id)){
+        $nhapkhoQuery->where('khach_hang_id', $khach_hang_id);
+    }
+    if(isset($kho_id)){
+        $nhapkhoQuery->where('kho_id', $kho_id);
+    }
+    $nhapkhos = $nhapkhoQuery->get();
+     $data=[];
+    $chitietnhapQuery= ChiTietNhapKho::whereIn('nhap_kho_id',$nhapkhos->pluck('id'));
+    if(isset($phe_lieu_id)){
+        $chitietnhapQuery->where('phe_lieu_id', $phe_lieu_id);
+    }
+    $datanhaps = $chitietnhapQuery->get();
+    foreach($datanhaps as $nhap){
+        $nhapkho = $nhapkhos->where('id',$nhap->nhap_kho_id)->first();
+            if((!empty($loai)&&in_array(1,$loai))||empty($loai)){
+                $data[]=[
+                    'id'=>$nhap->id,
+                    'ngay'=>$nhapkho->ngay,
+                    'ca'=>$nhapkho->ca,
+                    'khach_hang'=>$nhapkho->khachHang->ten,
+                    'bks'=>isset($nhapkho->xe)?$nhapkho->xe->bks:null,
+                    'phe_lieu'=>$nhap->pheLieu->ma,
+                    'dvt'=>$nhap->dvt,
+                    'so_luong_thuc_te'=>$nhap->so_luong_thuc_te,
+                    'so_luong_bien_ban'=>$nhap->so_luong_bien_ban,
+                    'kho'=>$nhapkho->kho->ten,
+                ];
+         }
+    }
+return ['data'=>$data];
+}
+
     public function nhapphanloai(Request $request)
     {
         $khach_hang_id = $request->query('khach_hang_id');
