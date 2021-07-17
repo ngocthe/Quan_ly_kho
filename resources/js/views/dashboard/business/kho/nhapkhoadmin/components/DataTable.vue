@@ -90,6 +90,10 @@ export default {
                     text: 'Xe',
                     value: "bks",
                 },
+                 {
+                    text: 'Phế liệu',
+                    value: "phe_lieu",
+                },
                     {
                     text: 'ĐVT',
                     value: "dvt",
@@ -111,12 +115,12 @@ export default {
                     value: "kho",
                 },
               
-                {
-                    text: this.$t("actions"),
-                    value: "actions",
-                    align: "center",
-                    width: 120,
-                },
+                // {
+                //     text: this.$t("actions"),
+                //     value: "actions",
+                //     align: "center",
+                //     width: 120,
+                // },
             ];
         },
     },
