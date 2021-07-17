@@ -20,14 +20,7 @@
                     @handle-export="exportData"
                 />
             </v-col>
-            <v-col cols="12">
-                <Pagination
-                    :length="pagination.last_page"
-                    :params="params"
-                    @handle-change-page="getData"
-                    @handle-change-per-page="getData(1)"
-                />
-            </v-col>
+           
         </v-row>
         <DialogForm
             @created="getData(1)"

@@ -26,6 +26,12 @@
                 </v-btn> -->
             </v-toolbar>
         </template>
+        <template v-slot:item.so_luong_bien_ban="{ item }">
+            <v-input type="number" v-model="item.so_luong_bien_ban"/>
+        </template>
+         <template v-slot:item.chenh_lech="{ item }">
+            {{+item.so_luong_thuc_te - (item.so_luong_bien_ban?item.so_luong_bien_ban:0)}}
+        </template>
         <template v-slot:item.actions="{ item }">
              <v-btn
                 x-small
