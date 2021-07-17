@@ -47,7 +47,7 @@
             </v-toolbar>
         </template>
                 <template v-slot:item.so_luong_dau_ra="{ item }">
-                    {{item.chitiets.reduce((total, arg) => total + arg.so_luong, 0)}}
+                    {{item.chitiets.reduce((total, arg) => total + (+arg.so_luong), 0)}}
                 </template>
         <template v-slot:item.actions="{ item }">
 
