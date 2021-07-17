@@ -47,7 +47,7 @@
                                 ></v-text-field>
                             </v-col>
 
-                           <v-col cols="12" sm="4">
+                           <v-col cols="12" sm="6">
                                 <v-autocomplete
                                     v-model="form.khach_hang_id"
                                     :items="options.khachhangs"
@@ -58,7 +58,7 @@
                                 ></v-autocomplete>
                             </v-col>
 
-                                <v-col cols="12" sm="4">
+                                <v-col cols="12" sm="6">
                                      <v-autocomplete
                                     v-model="form.kho_id"
                                     :items="options.khos"
@@ -68,13 +68,13 @@
                                     :label="'Kho'"
                                 ></v-autocomplete>
                             </v-col>
-                            <v-col cols="12" sm="4">
+                            <!-- <v-col cols="12" sm="4">
                                  <v-text-field
                                     v-model="form.noi_dung"
                                     :label="'Nội dung'"
                                     dense
                                 ></v-text-field>
-                            </v-col>
+                            </v-col> -->
                                 <v-col cols="12" sm="6">
                                      <v-autocomplete
                                     v-model="form.phe_lieu_id"
