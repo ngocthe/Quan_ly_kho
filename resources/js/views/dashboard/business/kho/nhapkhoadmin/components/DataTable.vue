@@ -108,7 +108,7 @@ export default {
                 },
                     {
                     text: 'Kho',
-                    value: "kho.ten",
+                    value: "kho",
                 },
               
                 {
