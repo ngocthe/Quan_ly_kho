@@ -84,14 +84,14 @@ class ChuyenKhoController extends Controller
                             $ctkho->khoi_luong =  $ctkho->khoi_luong-$item['so_luong'];
                             $ctkho->save();
                         }
-                    }
-                    $ctkho2=ChiTietKho::where('phe_lieu_id',$item['phe_lieu_id'])->where('kho_id',$request->den_kho_id)->first();
+                        $ctkho2=ChiTietKho::where('phe_lieu_id',$item['phe_lieu_id'])->where('kho_id',$request->den_kho_id)->first();
                         if(isset($ctkho2)){
                             $ctkho2->khoi_luong =  $ctkho2->khoi_luong+$item['so_luong'];
                             $ctkho2->save();
                         }
                     }
-            }
+                 
+                    }
 
             DB::commit();
             return Response::created();
