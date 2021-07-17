@@ -65,7 +65,6 @@ class ChuyenKhoController extends Controller
             $user = Auth::user();
             $ChuyenKho = ChuyenKho::create([
                 'ngay' => $request->ngay,
-                'created_by'=>$user->id,
                 'nguoi_tao_phieu' => $user->id,
                 'so_phieu'=>$request->so_phieu,
                 'tu_kho_id' => $request->kho_id,
