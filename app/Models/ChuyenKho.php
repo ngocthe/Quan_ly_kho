@@ -21,4 +21,8 @@ class ChuyenKho extends Model
     {
         return $this->belongsTo('App\Models\Kho', 'den_kho_id');
     }
+    public function nguoiTao()
+    {
+        return $this->belongsTo('App\Models\User', 'nguoi_tao_phieu');
+    }
 }

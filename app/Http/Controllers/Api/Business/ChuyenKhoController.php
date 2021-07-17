@@ -26,23 +26,28 @@ class ChuyenKhoController extends Controller
     {
         $perPage = $request->query('per_page', 20);
         $search = $request->query('search');
-        $doi_tac_id = $request->query('doi_tac_id');
-        $kho_id = $request->query('kho_id');
-        $query = ChuyenKho::query()->with(['kho','doiTac','xe','chitiets']);
+        $den_kho_id = $request->query('den_kho_id');
+        $tu_kho_id = $request->query('tu_kho_id');
+        $query = ChuyenKho::query()->with(['tuKho','denKho','nguoiTao','chitiets']);
         if ($search) {
         }
         $user = Auth::user();
         $thukho = ThuKho::query()->where('user_id',$user->id)->first();
         if(isset($thukho)){
             $khoIDs= ThuKhoKho::where('thu_kho_id',$thukho->id)->pluck('kho_id');
-            $query->whereIn('kho_id', $khoIDs);
+            $query->where(function($query) use($khoIDs){
+                $query->whereIn('tu_kho_id', $khoIDs);
+                $query->orWhereIn('den_kho_id', $khoIDs);
+
+            });
         }
-        if(isset( $kho_id )){
-            $query->where('kho_id',$kho_id);
+        if(isset( $tu_kho_id )){
+            $query->where('tu_kho_id',$kho_id);
         }
-        if(isset( $nvbh_id )){
-            $query->where('doi_tac_id',$doi_tac_id);
+        if(isset( $de_kho_id )){
+            $query->where('de_kho_id',$kho_id);
         }
+       
         $query->orderBy('updated_at','desc');
         return ChuyenKhoResource::collection($request->all ? $query->get(): $query->paginate($perPage));
     }
@@ -61,27 +66,29 @@ class ChuyenKhoController extends Controller
             $ChuyenKho = ChuyenKho::create([
                 'ngay' => $request->ngay,
                 'created_by'=>$user->id,
-                'doi_tac_id' => $request->doi_tac_id,
+                'nguoi_tao_phieu' => $user->id,
                 'so_phieu'=>$request->so_phieu,
-                'kho_id' => $request->kho_id,
-                'xe_id' => $request->xe_id,
-                'tai_khoan_no_id' => $request->tai_khoan_no_id,
-                'tai_khoan_co_id' => $request->tai_khoan_co_id,
+                'tu_kho_id' => $request->kho_id,
+                'den_kho_id' => $request->xe_id,
             ]);
             foreach($request->chitiets as $item){
                 if(isset($item['phe_lieu_id']))
                    { ChiTietChuyenKho::create([
-                    'xuat_kho_id'=>$ChuyenKho->id,
+                    'chuyen_kho_id'=>$ChuyenKho->id,
                     'phe_lieu_id'=>$item['phe_lieu_id'],
                     'dvt'=>$item['dvt'],
-                    'so_luong_thuc_te'=>$item['so_luong_thuc_te'],
-                    'so_luong_de_xuat'=>$item['so_luong_de_xuat'],
-                    'don_gia'=>$item['don_gia'],
+                    'so_luong'=>$item['so_luong'],
                     ]);
-                    $ctkho=ChiTietKho::where('phe_lieu_id',$item['phe_lieu_id'])->where('kho_id',$request->kho_id)->first();
+                    $ctkho=ChiTietKho::where('phe_lieu_id',$item['phe_lieu_id'])->where('kho_id',$request->tu_kho_id)->first();
                         if(isset($ctkho)){
-                            $ctkho->khoi_luong =  $ctkho->khoi_luong-$item['so_luong_thuc_te'];
+                            $ctkho->khoi_luong =  $ctkho->khoi_luong-$item['so_luong'];
                             $ctkho->save();
+                        }
+                    }
+                    $ctkho2=ChiTietKho::where('phe_lieu_id',$item['phe_lieu_id'])->where('kho_id',$request->den_kho_id)->first();
+                        if(isset($ctkho2)){
+                            $ctkho2->khoi_luong =  $ctkho2->khoi_luong+$item['so_luong'];
+                            $ctkho2->save();
                         }
                     }
             }
