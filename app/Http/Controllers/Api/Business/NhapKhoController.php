@@ -232,7 +232,7 @@ public function nhapKhoAdmin(Request $request)
                     'phe_lieu'=>$nhap->pheLieu->ma,
                     'dvt'=>$nhap->dvt,
                     'so_luong_thuc_te'=>$nhap->so_luong_thuc_te,
-                    'so_luong_bien_ban'=>$nhap->so_luong_bien_ban,
+                    'so_luong_chung_tu'=>$nhap->so_luong_chung_tu,
                     'kho'=>$nhapkho->kho->ten,
                 ];
          }
@@ -426,13 +426,17 @@ return ['data'=>$data];
         }
 
     }
-
+function updateSL(Request $request,$id){
+    ChiTietNhapKho::where('id',$id)->update(['so_luong_chung_tu'=>$request->so_luong_chung_tu]);
+    return Response::updated();
+}
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function destroy($id)
     {
         $nhapkho = NhapKho::find($id);

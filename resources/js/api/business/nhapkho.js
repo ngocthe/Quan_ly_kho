@@ -30,6 +30,14 @@ export function update(id, data) {
         data
     });
 }
+export function updateSL(id, data) {
+    return request({
+        url: `/updateSL/${id}`,
+        method: "put",
+        data
+    });
+}
+
 export function duyetpl(id) {
     return request({
         url: `/duyetpl/${id}`,

@@ -26,11 +26,17 @@
                 </v-btn> -->
             </v-toolbar>
         </template>
-        <template v-slot:item.so_luong_bien_ban="{ item }">
-            <v-input type="number" v-model="item.so_luong_bien_ban"/>
+        <template v-slot:item.so_luong_chung_tu="{ item }">
+              <v-text-field
+                v-model="item.so_luong_chung_tu"
+                @change="updateSL(item.id,item.so_luong_chung_tu)"
+                type="number"
+                :min="0"
+                dense
+            ></v-text-field>
         </template>
          <template v-slot:item.chenh_lech="{ item }">
-            {{+item.so_luong_thuc_te - (item.so_luong_bien_ban?item.so_luong_bien_ban:0)}}
+            {{+item.so_luong_thuc_te - (item.so_luong_chung_tu?item.so_luong_chung_tu:0)}}
         </template>
         <template v-slot:item.actions="{ item }">
              <v-btn
@@ -40,9 +46,9 @@
                 dark
                 color="primary"
             >
-                <v-icon dark>mdi-pencil</v-icon>
+                <v-icon dark>mdi-check</v-icon>
             </v-btn>
-            <v-btn
+            <!-- <v-btn
                 x-small
                 @click="handleDelete(item.id)"
                 class="ml-2"
@@ -51,7 +57,7 @@
                 color="error"
             >
                 <v-icon dark>mdi-delete</v-icon>
-            </v-btn>
+            </v-btn> -->
         </template>
         <template>
             <v-btn color="primary" @click="$emit('handle-reset')"
@@ -61,7 +67,7 @@
     </v-data-table>
 </template>
 <script>
-import { destroy } from "@/api/business/nhapkho";
+import { destroy ,updateSL} from "@/api/business/nhapkho";
 import dataTableMixin from "@/mixins/crud/data-table";
 import { getsophieu} from "@/api/business/kho";
 
@@ -78,7 +84,7 @@ export default {
                 },
                  {
                     text: 'Khách hàng',
-                    value: "khach_hang.ten",
+                    value: "khach_hang",
                 },
                  {
                     text: 'Xe',
@@ -94,7 +100,7 @@ export default {
                 },
                   {
                     text: 'SL biên bản',
-                    value: "so_luong_bien_ban",
+                    value: "so_luong_chung_tu",
                 },
                  {
                     text: 'Chênh lệch',
@@ -115,6 +121,16 @@ export default {
         },
     },
       methods:{
+          
+          updateSL(id,so_luong_chung_tu){
+               this.$loader(true);
+              await updateSL(id,{so_luong_chung_tu:so_luong_chung_tu});
+               this.$loader(false);
+            this.$snackbar(
+                this.editing ? "Cập nhật thành công" : "Thêm mới thành công",
+                "success"
+            );
+          },
          async getSoPhieu() {
              this.$emit('push-detail')
                 const { data } = await getsophieu('nhapkho');
