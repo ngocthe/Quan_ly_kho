@@ -98,10 +98,7 @@ export default {
                 page: 1,
                 kho_id:null,
                 ngay: [
-                    new Date(
-                        new Date().getFullYear(),
-                        new Date().getMonth()-1,1
-                    ).toLocaleDateString("en-CA"),
+                     new Date().toLocaleDateString("en-CA"),
                     new Date().toLocaleDateString("en-CA")
                 ],
                 khach_hang_id:null,
