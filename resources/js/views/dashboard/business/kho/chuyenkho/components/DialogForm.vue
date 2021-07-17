@@ -54,10 +54,10 @@
                                      <v-autocomplete
                                     v-model="form.den_kho_id"
                                     :items="options.khod"
-                                    item-text="Đến kho"
+                                    item-text="ten"
                                     dense
                                     item-value="id"
-                                    :label="'Xe'"
+                                    :label="'Đến kho'"
                                 ></v-autocomplete>
                             </v-col>
                             <v-col cols="12" sm="6">
