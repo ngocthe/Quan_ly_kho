@@ -70,7 +70,7 @@ Route::group(
         Route::get('nhapphanloais', 'Api\Business\NhapKhoController@nhapphanloai');
         Route::put('duyetpl/{id}', 'Api\Business\PhanLoaiController@duyetNhapPL');
         Route::get('nhapKhoAdmin', 'Api\Business\NhapKhoController@nhapKhoAdmin');
-        Route::get('updateSL/{id}', 'Api\Business\NhapKhoController@updateSL');
+        Route::put('updateSL/{id}', 'Api\Business\NhapKhoController@updateSL');
 
         
 
