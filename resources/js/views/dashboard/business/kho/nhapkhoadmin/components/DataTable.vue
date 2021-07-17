@@ -122,7 +122,7 @@ export default {
     },
       methods:{
           
-          updateSL(id,so_luong_chung_tu){
+          async updateSL(id,so_luong_chung_tu){
                this.$loader(true);
               await updateSL(id,{so_luong_chung_tu:so_luong_chung_tu});
                this.$loader(false);
