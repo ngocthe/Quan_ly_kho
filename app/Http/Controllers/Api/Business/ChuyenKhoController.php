@@ -67,8 +67,10 @@ class ChuyenKhoController extends Controller
                 'ngay' => $request->ngay,
                 'nguoi_tao_phieu' => $user->id,
                 'so_phieu'=>$request->so_phieu,
-                'tu_kho_id' => $request->kho_id,
-                'den_kho_id' => $request->xe_id,
+                'tu_kho_id' => $request->tu_kho_id,
+                'den_kho_id' => $request->den_kho_id,
+                'ghi_chu' => $request->ghi_chu,
+
             ]);
             foreach($request->chitiets as $item){
                 if(isset($item['phe_lieu_id']))
