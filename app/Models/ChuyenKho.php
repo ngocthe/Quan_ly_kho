@@ -23,6 +23,6 @@ class ChuyenKho extends Model
     }
     public function nguoiTao()
     {
-        return $this->belongsTo('App\Models\User', 'nguoi_tao_phieu');
+        return $this->belongsTo('App\Models\System\User', 'nguoi_tao_phieu');
     }
 }
