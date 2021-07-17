@@ -63,6 +63,8 @@ Route::group(
         Route::apiResource('nhapkhos', 'Api\Business\NhapKhoController');
         Route::apiResource('phanloais', 'Api\Business\PhanLoaiController');
         Route::apiResource('xuatkhos', 'Api\Business\XuatKhoController');
+        Route::apiResource('chuyenkhos', 'Api\Business\ChuyenKhoController');
+
         Route::get('histories', 'Api\Business\NhapKhoController@histories');
         Route::get('tonkhos/{id}', 'Api\Business\KhoController@tonKho');
         Route::get('ipdatetonkhos/{id}', 'Api\Business\KhoController@updateTonKho');
