@@ -331,6 +331,35 @@ return ['data'=>$data];
                 'so_luong_chung_tu'=>$item['so_luong_chung_tu'],
                 'don_gia'=>$item['don_gia'],
                 ]);
+                $user = Auth::user();
+                if(!empty($item['phanloais'])){
+                    if(isset($item['phanloais'][0]['phe_lieu_id'])&&($item['phanloais'][0]['so_luong']>0)){
+                        $phanloai = PhanLoai::create([
+                            'created_by'=>$user->id,
+                            'ngay' => $request->ngay,
+                            'phe_lieu_id'=>$item['phe_lieu_id'],
+                            'khach_hang_id' => $request->khach_hang_id,
+                            'kho_id' => $request->kho_id,
+                            'noi_dung' => $request->noi_dung,
+                            'so_phieu' => PhanLoai::max('id')+1,
+                            'nguoi_can' => null,
+                            'so_luong' =>$item['so_luong_thuc_te'],
+            
+                        ]);
+                    
+                        foreach($item['phanloais'] as $item2){
+                            if(isset($item2['phe_lieu_id']))
+                            ChiTietPhanLoai::create([
+                             'phan_loai_id'=>$phanloai->id,
+                             'phe_lieu_id'=>$item2['phe_lieu_id'],
+                             'dvt'=>$item2['dvt'],
+                            'so_luong'=>$item2['so_luong'],
+                            'kho_id'=>$request->kho_id,
+                            ]);
+                                
+                        }
+                    }
+                }
                 $ctkho=ChiTietKho::where('phe_lieu_id',$item['phe_lieu_id'])->where('kho_id',$request->kho_id)->first();
                     if(isset($ctkho)){
                         $ctkho->khoi_luong =  $ctkho->khoi_luong+$item['so_luong_thuc_te'];
@@ -348,6 +377,43 @@ return ['data'=>$data];
 
             DB::commit();
             return Response::created();
+        } catch (Exception $e) {
+            DB::rollBack();
+            return Response::error($e->getMessage());
+        }
+    }
+
+    public function phanloai($request)
+    {
+        DB::beginTransaction();
+        try {
+            $user = Auth::user();
+            $phanloai = PhanLoai::create([
+                'created_by'=>$user->id,
+                'ngay' => $request->ngay,
+                'phe_lieu_id' => $request->phe_lieu_id,
+                'khach_hang_id' => $request->khach_hang_id,
+                'kho_id' => $request->kho_id,
+                'noi_dung' => $request->noi_dung,
+                'so_phieu' => $request->so_phieu,
+                'nguoi_can' => $request->nguoi_can,
+                'so_luong' => $request->so_luong,
+
+            ]);
+        
+            foreach($request->chitiets as $item){
+                if(isset($item['phe_lieu_id'])){
+                ChiTietPhanLoai::create([
+                 'phan_loai_id'=>$phanloai->id,
+                 'phe_lieu_id'=>$item['phe_lieu_id'],
+                 'dvt'=>$item['dvt'],
+                'so_luong'=>$item['so_luong'],
+                'kho_id'=>$item['kho_id']
+                ]);
+                    
+            }
+        }
+            DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
             return Response::error($e->getMessage());

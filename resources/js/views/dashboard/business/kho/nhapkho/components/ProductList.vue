@@ -119,7 +119,7 @@
                             : ""
                         }}</td>
                           <td><v-text-field
-                            v-model="dessert.so_luong_chung_tu"
+                            v-model="dessert.so_luong"
                             type="number"
                             :min="0"
                             dense
