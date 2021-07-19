@@ -126,7 +126,8 @@ export default {
                 so_phieu:null,
                 tai_khoan_no_id:null,
                 tai_khoan_co_id:null,
-                chitiets:[]
+                chitiets:[
+                ]
             },
         };
     },
@@ -152,7 +153,15 @@ export default {
                 dvt: 'Kg',
                 so_luong_thuc_te: null,
                 so_luong_chung_tu:0,
-                don_gia: 0
+                don_gia: 0,
+                phanloais:[{
+                     id: Math.random(),
+                     phe_lieu_id:null,
+                        dvt: 'Kg',
+                        so_luong: null
+                }
+                ]
+
             });
         },
     },

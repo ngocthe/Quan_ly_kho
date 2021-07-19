@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-model="showDialog" persistent  :height="editing ? 'calc(100vh - 550px)' : null" max-width="65vw">
+    <v-dialog v-model="showDialog" persistent  :height="editing ? 'calc(100vh - 550px)' : null" max-width="85vw">
         <v-card :loading="loading">
             <v-card-title>
                 <span class="headline">{{ title }}</span>
