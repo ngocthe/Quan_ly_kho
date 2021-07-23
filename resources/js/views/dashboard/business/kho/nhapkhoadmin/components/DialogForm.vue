@@ -54,10 +54,15 @@
                                 ></v-text-field>
                             </v-col>
                               <v-col cols="12" sm="4">
-                                <v-text-field
-                                    value="Phân loại thẳng"
+                                <v-autocomplete
+                                    v-model="form.kho_id"
+                                    :items="options.khos"
+                                    item-text="ten"
+                                    disabled
                                     dense
-                                ></v-text-field>
+                                    item-value="id"
+                                    :label="'Kho'"
+                                ></v-autocomplete>
                             </v-col>
 
                                 <v-col cols="12" sm="4">
