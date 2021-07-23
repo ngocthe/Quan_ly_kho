@@ -233,7 +233,49 @@ public function nhapKhoAdmin(Request $request)
                     'dvt'=>$nhap->dvt,
                     'so_luong_thuc_te'=>$nhap->so_luong_thuc_te,
                     'so_luong_chung_tu'=>$nhap->so_luong_chung_tu,
+                    'hang_cong'=>isset($nhap->hang_cong)?$nhap->hang_cong:0,
+                    'hang_gui'=>isset($nhap->hang_gui)?$nhap->hang_gui:0,
                     'kho'=>$nhapkho->kho->ten,
+                ];
+         }
+    }
+return ['data'=>$data];
+}
+
+
+public function nhapKhoAdmin2(Request $request)
+{
+    $perPage = $request->query('per_page', 20);
+    $search = $request->query('search');
+    $khach_hang_id = $request->query('khach_hang_id');
+    $phe_lieu_id = $request->query('phe_lieu_id');
+    $ngay = $request->query('ngay');
+
+    $nhapkhoQuery = NhapKho::query()->where('ngay', '=', $ngay);
+    if(isset($khach_hang_id)){
+        $nhapkhoQuery->where('khach_hang_id', $khach_hang_id);
+    }
+    $nhapkhos = $nhapkhoQuery->get();
+     $data=[];
+    $chitietnhapQuery= ChiTietNhapKho::whereIn('nhap_kho_id',$nhapkhos->pluck('id'));
+    if(isset($phe_lieu_id)){
+        $chitietnhapQuery->where('phe_lieu_id', $phe_lieu_id);
+    }
+    $datanhaps = $chitietnhapQuery->get();
+    foreach($datanhaps as $nhap){
+        $nhapkho = $nhapkhos->where('id',$nhap->nhap_kho_id)->first();
+            if((!empty($loai)&&in_array(1,$loai))||empty($loai)){
+                $data[]=[
+                    'id'=>$nhap->id,
+                    'ngay'=>$nhapkho->ngay,
+                    'ca'=>$nhapkho->ca,
+                    'khach_hang'=>$nhapkho->khachHang->ten,
+                    'bks'=>isset($nhapkho->xe)?$nhapkho->xe->bks:null,
+                    'phe_lieu'=>$nhap->pheLieu->ma,
+                    'dvt'=>$nhap->dvt,
+                    'so_luong_thuc_te'=>$nhap->so_luong_thuc_te,
+                    'kho'=>$nhapkho->kho->ten,
+                    'chon'=>false
                 ];
          }
     }
@@ -332,34 +374,34 @@ return ['data'=>$data];
                 'don_gia'=>$item['don_gia'],
                 ]);
                 $user = Auth::user();
-                if(!empty($item['phanloais'])){
-                    if(isset($item['phanloais'][0]['phe_lieu_id'])&&($item['phanloais'][0]['so_luong']>0)){
-                        $phanloai = PhanLoai::create([
-                            'created_by'=>$user->id,
-                            'ngay' => $request->ngay,
-                            'phe_lieu_id'=>$item['phe_lieu_id'],
-                            'khach_hang_id' => $request->khach_hang_id,
-                            'kho_id' => $request->kho_id,
-                            'noi_dung' => $request->noi_dung,
-                            'so_phieu' => PhanLoai::max('id')+1,
-                            'nguoi_can' => null,
-                            'so_luong' =>$item['so_luong_thuc_te'],
+                // if(!empty($item['phanloais'])){
+                //     if(isset($item['phanloais'][0]['phe_lieu_id'])&&($item['phanloais'][0]['so_luong']>0)){
+                //         $phanloai = PhanLoai::create([
+                //             'created_by'=>$user->id,
+                //             'ngay' => $request->ngay,
+                //             'phe_lieu_id'=>$item['phe_lieu_id'],
+                //             'khach_hang_id' => $request->khach_hang_id,
+                //             'kho_id' => $request->kho_id,
+                //             'noi_dung' => $request->noi_dung,
+                //             'so_phieu' => PhanLoai::max('id')+1,
+                //             'nguoi_can' => null,
+                //             'so_luong' =>$item['so_luong_thuc_te'],
             
-                        ]);
+                //         ]);
                     
-                        foreach($item['phanloais'] as $item2){
-                            if(isset($item2['phe_lieu_id']))
-                            ChiTietPhanLoai::create([
-                             'phan_loai_id'=>$phanloai->id,
-                             'phe_lieu_id'=>$item2['phe_lieu_id'],
-                             'dvt'=>$item2['dvt'],
-                            'so_luong'=>$item2['so_luong'],
-                            'kho_id'=>$request->kho_id,
-                            ]);
+                //         foreach($item['phanloais'] as $item2){
+                //             if(isset($item2['phe_lieu_id']))
+                //             ChiTietPhanLoai::create([
+                //              'phan_loai_id'=>$phanloai->id,
+                //              'phe_lieu_id'=>$item2['phe_lieu_id'],
+                //              'dvt'=>$item2['dvt'],
+                //             'so_luong'=>$item2['so_luong'],
+                //             'kho_id'=>$request->kho_id,
+                //             ]);
                                 
-                        }
-                    }
-                }
+                //         }
+                //     }
+                // }
                 $ctkho=ChiTietKho::where('phe_lieu_id',$item['phe_lieu_id'])->where('kho_id',$request->kho_id)->first();
                     if(isset($ctkho)){
                         $ctkho->khoi_luong =  $ctkho->khoi_luong+$item['so_luong_thuc_te'];

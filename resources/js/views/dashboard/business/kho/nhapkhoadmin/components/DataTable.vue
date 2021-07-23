@@ -14,6 +14,16 @@
             <v-toolbar class="custom-toolbar" flat>
                 <v-toolbar-title>Danh sách</v-toolbar-title>
                 <v-spacer></v-spacer>
+                     <v-btn
+                    @click="$emit('handle-create');getSoPhieu()"
+                    class="mx-2"
+                    small
+                    fab
+                    dark
+                    color="indigo"
+                >
+                    <v-icon dark>mdi-plus</v-icon>
+                </v-btn>
                 <!-- <v-btn
                     @click="$emit('handle-export')"
                     class="mx-2"
@@ -35,8 +45,26 @@
                 dense
             ></v-text-field>
         </template>
+         <template v-slot:item.hang_gui="{ item }">
+              <v-text-field
+                v-model="item.hang_gui"
+                @change="updateSLG(item.id,item.hang_gui)"
+                type="number"
+                :min="0"
+                dense
+            ></v-text-field>
+        </template>
+         <template v-slot:item.hang_cong="{ item }">
+              <v-text-field
+                v-model="item.hang_cong"
+                @change="updateSLC(item.id,item.hang_cong)"
+                type="number"
+                :min="0"
+                dense
+            ></v-text-field>
+        </template>
          <template v-slot:item.chenh_lech="{ item }">
-            {{+item.so_luong_thuc_te - (item.so_luong_chung_tu?item.so_luong_chung_tu:0)}}
+            {{+item.so_luong_thuc_te - (item.so_luong_chung_tu?(parseFloat(item.so_luong_chung_tu)+(parseFloat(item.hang_gui))+(parseFloat(item.hang_cong))):0)}}
         </template>
         <template v-slot:item.actions="{ item }">
              <v-btn
@@ -105,6 +133,14 @@ export default {
                   {
                     text: 'SL biên bản',
                     value: "so_luong_chung_tu",
+                },
+                {
+                    text: 'Hàng gửi',
+                    value: "hang_gui",
+                },
+                   {
+                    text: 'Hàng cộng',
+                    value: "hang_cong",
                 },
                  {
                     text: 'Chênh lệch',

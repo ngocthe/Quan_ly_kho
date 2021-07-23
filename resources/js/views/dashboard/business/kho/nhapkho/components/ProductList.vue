@@ -8,9 +8,6 @@
         calculate-widths
         hide-default-footer
         disable-filtering
-         :single-expand="singleExpand"
-      :expanded.sync="expanded"
-       show-expand
         class="elevation-1"
     >
         <template v-slot:top>
@@ -87,58 +84,7 @@
                        {{ (item.so_luong_thuc_te - item.so_luong_chung_tu) | money }}
         </template>
  
-      <template v-slot:expanded-item="{ item,index}">
-        <td :colspan="5">
-          <v-simple-table class="styled-table" >
-                <template v-slot:default>
-                  <thead>
-                    <tr>
-                      <th>Phế liệu</th>
-                      <th>ĐVT</th>
-                      <th>Số lượng</th>
-                      <th>Hành động</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="(dessert,index2) in item.phanloais" :key="dessert.name">
-                      <td> <v-autocomplete
-                         @change="them2(index2,item.id)"
-                          v-model="dessert.phe_lieu_id"
-                         :items="options.phelieus"
-                             item-text="ma"
-                            item-value="id"
-                            style="width:100%"
-                            dense
-                    ></v-autocomplete>
-                    </td>
-                      <td>{{ 
-                            dessert.phe_lieu_id
-                            ? options.phelieus.find(
-                                product => product.id === dessert.phe_lieu_id
-                            ).don_vi
-                            : ""
-                        }}</td>
-                          <td><v-text-field
-                            v-model="dessert.so_luong"
-                            type="number"
-                            :min="0"
-                            dense
-                         ></v-text-field></td>
-                      <td>  <v-btn
-                            x-small
-                            @click="handleDelete2(item.id,dessert.id)"
-                            class="ml-2"
-                            dark
-                            color="error"
-                        >
-                         Xoá
-                      </v-btn></td>
-                    </tr>
-                  </tbody>
-                </template>
-            </v-simple-table>
-        </td>
-      </template>
+     
         <template v-slot:item.actions="{ item }">
             <v-btn
                 x-small

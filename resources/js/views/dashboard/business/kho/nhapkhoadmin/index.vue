@@ -112,10 +112,16 @@ export default {
                 ca: 1,
                  khach_hang_id:null,
                 xe_id:null,
-                kho_id:null,
+                kho_id:19,
                 so_phieu:null,
                 tai_khoan_no_id:null,
                 tai_khoan_co_id:null,
+                phe_lieu_id:null,
+                dvt:null,
+                so_luong_thuc_te:0,
+                so_luong_chung_tu:null,
+                hang_gui:null,
+                hang_cong:null,
                 chitiets:[]
             },
         };
@@ -137,11 +143,13 @@ export default {
          pushDetail() {
             if(this.form.chitiets.length==0)
            this.form.chitiets.push({
-                 id: Math.random(),
+                id: Math.random(),
                 phe_lieu_id:null,
                 dvt: 'Kg',
                 so_luong_thuc_te: null,
                 so_luong_chung_tu:0,
+                hang_gui:0,
+                hang_cong:0,
                 don_gia: 0
             });
         },

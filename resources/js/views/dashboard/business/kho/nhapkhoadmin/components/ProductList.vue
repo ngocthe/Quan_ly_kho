@@ -12,88 +12,21 @@
     >
         <template v-slot:top>
             <v-toolbar class="custom-toolbar" flat>
-                <v-toolbar-title>Danh sách phế liệu</v-toolbar-title>
+                <v-toolbar-title>Chọn hàng nhập phân loại thẳng tương ứng</v-toolbar-title>
                <v-spacer></v-spacer>
-                <v-btn
-                    @click="addPheLieu"
-                    class="mx-2"
-                    small
-                    fab
-                    dark
-                    color="indigo"
-                >
-                    <v-icon dark>mdi-plus</v-icon>
-                </v-btn>
-                <!-- <v-btn
-                    @click="$emit('handle-export')"
-                    class="mx-2"
-                    small
-                    fab
-                    dark
-                    color="indigo"
-                >
-                    <v-icon dark>mdi-download</v-icon>
-                </v-btn> -->
+        
             </v-toolbar>
         </template>
 
-         <template v-slot:item.phe_lieu_id="{ item,index }">
-            <v-autocomplete
-            @change="them(index)"
-                v-model="item.phe_lieu_id"
-                :items="options.phelieus"
-                item-text="ma"
-                item-value="id"
-                style="width:100%"
-                dense
-            ></v-autocomplete>
-        </template>
-        <template v-slot:item.dvt="{ item }">
-            {{
-                item.phe_lieu_id
-                    ? options.phelieus.find(
-                          product => product.id === item.phe_lieu_id
-                      ).don_vi
-                    : ""
-            }}
-        </template>
-        <template v-slot:item.so_luong_thuc_te="{ item }">
-            <v-text-field
-                v-model="item.so_luong_thuc_te"
-                type="number"
-                dense
-            ></v-text-field>
-        </template>
-        <template v-slot:item.so_luong_chung_tu="{ item }">
-            <v-text-field
-                v-model="item.so_luong_chung_tu"
-                type="number"
-                :min="0"
-                dense
-            ></v-text-field>
-        </template>
-            <template v-slot:item.don_gia="{ item }">
-            <v-text-field
-                v-model="item.don_gia"
-                type="number"
-                :min="0"
-                dense
-            ></v-text-field>
-        </template>
-       <template v-slot:item.chenh_lech="{ item }">
-                       {{ (item.so_luong_thuc_te - item.so_luong_chung_tu) | money }}
-        </template>
+     
      <template v-slot:item.actions="{ item }">
-            <v-btn
+            <v-checkbox
                 x-small
-                @click="handleDelete(item.id)"
+                v-model="item.chon"
+                @change="item.chon?$emit('cong',item.so_luong_thuc_te):$emit('tru',item.so_luong_thuc_te)"
                 class="ml-2"
-                fab
-                dark
-                color="error"
             >
-                <v-icon dark>mdi-delete</v-icon>
-            </v-btn>
+            </v-checkbox>
         </template>
 
         <template>
@@ -108,31 +41,18 @@ export default {
     props: ["chitiets", "editing","options"],
     computed: {
         headers() {
-             if(!this.$store.state.user.roles[0]==='Thủ Kho')
             return [
-                { text: "Phế liệu", value: "phe_lieu_id", width: 200 },
+                { text: "Phế liệu", value: "phe_lieu", width: 200 },
+                 { text: "BKS", value: "bks", width: 100 },
                 { text: "Đơn vị", value: "dvt", width: 100 },
                 { text: "Số lượng thực", value: "so_luong_thuc_te", width: 180 },
-                 { text: "Số lượng biên bản", value: "so_luong_chung_tu", width: 180 },
-                { text: "Đơn giá", value: "don_gia", width: 180 },
-                { text: "Chênh lệch", value: "chenh_lech", width: 100 },
                  {
-                    text: this.$t("actions") ,
+                    text: '' ,
                     value: "actions" ,
                     align: "center"
                 }
             ];
-            else
-            return [
-                { text: "Phế liệu", value: "phe_lieu_id", width: 200 },
-                { text: "Đơn vị", value: "dvt", width: 150 },
-                { text: "Số lượng thực", value: "so_luong_thuc_te", width: 200 },
-                 {
-                    text: this.$t("actions") ,
-                    value: "actions" ,
-                    align: "center"
-                }
-            ];
+
         }
 
     },

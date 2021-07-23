@@ -1,9 +1,10 @@
 <template>
     <v-row>
-        <v-col md="8" cols="12" class="pb-0">
+        <v-col md="10" cols="12" class="pb-0">
             <v-row>
-                 <v-col cols="12" md="6" lg="4" class="pb-0">
+                 <v-col cols="12" md="4" lg="4" class="pb-0">
                     <DateRangePicker :value.sync="params.ngay"
+                      @change="$emit('handle-search')"
                 /></v-col>
                 <!-- <v-col cols="6" md="6" lg="4" class="pb-0">
                     <v-text-field
@@ -17,7 +18,7 @@
                     ></v-text-field>
                 </v-col> -->
                
-                <v-col cols="6" md="6" lg="4" class="pb-0">
+                <v-col cols="6" md="3" lg="3" class="pb-0">
                     <v-autocomplete
                                     v-model="params.khach_hang_id"
                                     @change="$emit('handle-search')"
@@ -29,29 +30,21 @@
                                     :label="'Khách hàng'"
                                 ></v-autocomplete>
                 </v-col>
-                 <v-col cols="6" md="6" lg="4" class="pb-0">
+                 <v-col cols="6" md="3" lg="3" class="pb-0">
                     <v-autocomplete
-                                    v-model="params.kho_id"
-                                      @change="$emit('handle-search')"
-                                    :items="options.khos"
-                                    item-text="ten"
-                                    dense
-                                    clearable
-                                    item-value="id"
-                                    :label="'Kho'"
-                                ></v-autocomplete>
+                        v-model="params.kho_id"
+                            @change="$emit('handle-search')"
+                        :items="options.khos"
+                        item-text="ten"
+                        dense
+                        clearable
+                        item-value="id"
+                        :label="'Kho'"
+                    ></v-autocomplete>
                 </v-col>
             </v-row>
         </v-col>
-        <v-col cols="12" style="padding-top: 20px" md="4">
-            <v-btn
-                class="float-md-right mr-md-0"
-                @click="$emit('handle-search')"
-                color="primary"
-                medium
-                
-                >{{ $t("form_search_label") }}</v-btn
-            >
+        <v-col cols="12" style="padding-top: 20px" md="2">
             <v-btn
                 class="float-md-right mr-4"
                 @click="$emit('handle-reset')"

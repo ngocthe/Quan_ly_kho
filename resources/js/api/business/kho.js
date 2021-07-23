@@ -8,6 +8,15 @@ export function index(params, responseType = "json") {
         responseType
     });
 }
+
+
+export function getPL(params) {
+    return request({
+        url: "/nhapKhoAdmin2",
+        method: "get",
+        params
+    });
+}
 export function xuonghang(params, responseType = "json") {
     return request({
         url: "/xuong_hang",

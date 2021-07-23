@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-model="showDialog" persistent  :height="editing ? 'calc(100vh - 550px)' : null" max-width="65vw">
+    <v-dialog v-model="showDialog" persistent  :height="editing ? 'calc(100vh - 550px)' : null" max-width="85vw">
         <v-card :loading="loading">
             <v-card-title>
                 <span class="headline">{{ title }}</span>
@@ -15,7 +15,7 @@
                     color="blue darken-1"
                     text
                     outlined
-                    @click="createData"
+                    @click="createData2()"
                     >{{ $t("create") }}</v-btn
                 >
                 <v-btn v-else color="blue darken-1" outlined text @click="updateData">
@@ -29,6 +29,7 @@
                             <v-col cols="12" sm="4">
                                  <DatePicker
                                     label="Ngày"
+                                    @change="getDataPL()"
                                     :value="form.ngay"
                                     @updatevalue="form.ngay=$event"
                                 />
@@ -52,25 +53,15 @@
                                     dense
                                 ></v-text-field>
                             </v-col>
-                                     <v-col cols="12" sm="2">
+                              <v-col cols="12" sm="4">
                                 <v-autocomplete
-                                    v-model="form.tai_khoan_co_id"
-                                    :items="options.tkcos"
-                                    item-text="so_tk"
+                                    v-model="form.kho_id"
+                                    :items="options.khos"
+                                    item-text="ten"
+                                    disabled
                                     dense
                                     item-value="id"
-                                    :label="'Có'"
-                                ></v-autocomplete>
-                            </v-col>
-
-                           <v-col cols="12" sm="2">
-                                <v-autocomplete
-                                    v-model="form.tai_khoan_no_id"
-                                    :items="options.tknos"
-                                    item-text="so_tk"
-                                    dense
-                                    item-value="id"
-                                    :label="'Nợ'"
+                                    :label="'Kho'"
                                 ></v-autocomplete>
                             </v-col>
 
@@ -79,6 +70,7 @@
                                     v-model="form.khach_hang_id"
                                     :items="options.khachhangs"
                                     item-text="ten"
+                                    @change="getDataPL()"
                                     dense
                                     item-value="id"
                                     :label="'Khách hàng'"
@@ -94,24 +86,69 @@
                                     :label="'Xe'"
                                 ></v-autocomplete>
                             </v-col>
-                            <v-col cols="12" sm="4">
-                                <v-autocomplete
-                                    v-model="form.kho_id"
-                                    :items="options.khos"
-                                    item-text="ten"
-                                    dense
-                                    item-value="id"
-                                    :label="'Kho'"
-                                ></v-autocomplete>
+                        </v-row>
+                        <v-row >
+                             <v-col cols="12">Thông tin nhập</v-col>
+                            <v-col cols="2">
+                            <label>Phế liệu</label>
+                            <v-autocomplete
+                            @change="form.dvt=options.phelieus.find(
+                          product => product.id === form.phe_lieu_id
+                                    ).don_vi"
+                                v-model="form.phe_lieu_id"
+                                :items="options.phelieus"
+                                item-text="ma"
+                                item-value="id"
+                                style="width:100%"
+                                dense
+                            ></v-autocomplete>
                             </v-col>
-
-
-
+                              <v-col cols="2">
+                              <label>ĐVT</label>
+                            <v-text-field v-model="form.dvt" 
+                            disabled
+                                dense>
+                            </v-text-field>
+                              </v-col>
+                          <v-col cols="2">
+                              <label>SL thực tế</label>
+                            <v-text-field
+                                v-model="form.so_luong_thuc_te"
+                                type="number"
+                                dense
+                            ></v-text-field>
+                            </v-col>
+                         <v-col cols="2">
+                              <label>SL biên bản</label>
+                            <v-text-field
+                                v-model="form.so_luong_chung_tu"
+                                type="number"
+                                dense
+                            ></v-text-field>
+                            </v-col>
+                                 <v-col cols="2">
+                                      <label>SL hàng gửi</label>
+                            <v-text-field
+                                v-model="form.hang_gui"
+                                type="number"
+                                dense
+                            ></v-text-field>
+                            </v-col>
+                         <v-col cols="2">
+                             <label>SL hàng cộng</label>
+                            <v-text-field
+                                v-model="form.hang_cong"
+                                type="number"
+                                dense
+                            ></v-text-field>
+                            </v-col>
                         </v-row>
                          <v-row >
                             <v-col cols="12">
                                 <ProductList
-                                    :chitiets="form.chitiets"
+                                    @cong="cong($event)"
+                                   @tru="tru($event)"
+                                    :chitiets="chitiets"
                                     :editing="editing"
                                     :options="options"
                                 />
@@ -132,7 +169,7 @@
                     v-if="!editing"
                     color="blue darken-1"
                     text
-                    @click="createData"
+                    @click="createData2()"
                     >{{ $t("create") }}</v-btn
                 >
                 <v-btn v-else outlined color="blue darken-1" text @click="updateData">
@@ -147,7 +184,7 @@ import { store, update } from "@/api/business/nhapkho";
 import dialogMixin from "@/mixins/crud/dialog";
 import DatePicker from "@/components/DatePicker";
 import ProductList from "./ProductList";
-import { getsophieu} from "@/api/business/kho";
+import { getsophieu,getPL} from "@/api/business/kho";
 
 
 //validator import
@@ -166,18 +203,34 @@ export default {
             rules: {},
             years:[],
                months:[],
-		tpc:null
+		tpc:null,
+        chitiets:[]
         };
     },
      methods:{
-     async getSoPhieu() {
+         createData2(){
+             console.log(this.chitiets);
+         },
+    async getDataPL(){
+        const { data } = await getPL({ngay:this.form.ngay, khach_hang_id:this.form.khach_hang_id});
+                console.log(data)
+                this.chitiets = data;
+                },
+                cong(e){
+                        this.form.so_luong_thuc_te= parseFloat(this.form.so_luong_thuc_te)+parseFloat(e)
+                },
+                 tru(e){
+                        this.form.so_luong_thuc_te= parseFloat(this.form.so_luong_thuc_te)-parseFloat(e)
+                },
+
+    async getSoPhieu() {
                 const { data } = await getsophieu('nhapkho');
                 console.log(data)
                 this.form.kho_id = data.kho_id;
                    this.form.so_phieu = data.so_phieu;
-
-                }
-    }, mounted(){
+    }
+     },
+     mounted(){
         this.getSoPhieu()
     }
 };
