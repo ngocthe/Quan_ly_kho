@@ -55,8 +55,8 @@
                             </v-col>
                               <v-col cols="12" sm="4">
                                 <v-text-field
-                                    v-model="form.kho_id"
                                     value="Phân loại thẳng"
+                                    dense
                                 ></v-text-field>
                             </v-col>
 
