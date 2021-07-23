@@ -10,6 +10,14 @@ export function index(params, responseType = "json") {
 }
 
 
+
+export function addNhapKhoAdmin(data) {
+    return request({
+        url: "/adminnhapkhos",
+        method: "post",
+        data
+    });
+}
 export function getPL(params) {
     return request({
         url: "/nhapKhoAdmin2",

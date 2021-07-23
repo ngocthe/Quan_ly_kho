@@ -58,6 +58,7 @@
                                     v-model="form.kho_id"
                                     :items="options.khos"
                                     item-text="ten"
+                                    disabled
                                     dense
                                     item-value="id"
                                     :label="'Kho'"
@@ -134,12 +135,9 @@
                             ></v-text-field>
                             </v-col>
                          <v-col cols="2">
-                             <label>SL hàng cộng</label>
-                            <v-text-field
-                                v-model="form.hang_cong"
-                                type="number"
-                                dense
-                            ></v-text-field>
+                             <label>SL cộng</label><br>
+                             <span style="font-weight:bold; margin-top:15px">{{parseFloat(form.so_luong_thuc_te)-parseFloat(form.so_luong_chung_tu)-parseFloat(form.hang_gui)}}</span>
+                            
                             </v-col>
                         </v-row>
                          <v-row >
@@ -183,7 +181,7 @@ import { store, update } from "@/api/business/nhapkho";
 import dialogMixin from "@/mixins/crud/dialog";
 import DatePicker from "@/components/DatePicker";
 import ProductList from "./ProductList";
-import { getsophieu,getPL} from "@/api/business/kho";
+import { getsophieu,getPL,addNhapKhoAdmin} from "@/api/business/kho";
 
 
 //validator import
@@ -207,8 +205,17 @@ export default {
         };
     },
      methods:{
-         createData2(){
-             console.log(this.chitiets);
+       async  createData2(){
+             try {
+             const { data } = await addNhapKhoAdmin({form:this.form, chitiets:this.chitiets});
+                this.$snackbar(
+                 "Thêm mới thành công",
+                "success"
+            );
+            //    this.$emit('created');
+            } catch (error) {
+                this.loading = false;
+            }
          },
     async getDataPL(){
         const { data } = await getPL({ngay:this.form.ngay, khach_hang_id:this.form.khach_hang_id});
@@ -224,9 +231,8 @@ export default {
 
     async getSoPhieu() {
                 const { data } = await getsophieu('nhapkho');
-                console.log(data)
-                this.form.kho_id = data.kho_id;
                    this.form.so_phieu = data.so_phieu;
+                   this.form.kho_id=19
     }
      },
      mounted(){

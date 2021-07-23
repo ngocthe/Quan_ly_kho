@@ -233,15 +233,85 @@ public function nhapKhoAdmin(Request $request)
                     'dvt'=>$nhap->dvt,
                     'so_luong_thuc_te'=>$nhap->so_luong_thuc_te,
                     'so_luong_chung_tu'=>$nhap->so_luong_chung_tu,
-                    'hang_cong'=>isset($nhap->hang_cong)?$nhap->hang_cong:0,
+                    'hang_cong'=>0,
                     'hang_gui'=>isset($nhap->hang_gui)?$nhap->hang_gui:0,
                     'kho'=>$nhapkho->kho->ten,
+                    'kho_id'=>$nhapkho->kho_id,
+                    'khach_hang_id'=>$nhapkho->khach_hang_id,
+
+
                 ];
          }
     }
 return ['data'=>$data];
 }
+function addNhapKhoAdmin(Request $request){
+    $form = $request->form;
+    $chitiets = $request->chitiets;
+    DB::beginTransaction();
+    try {
+        $user = Auth::user();
+        $nhapkho = NhapKho::create([
+            'ngay' => $form['ngay'],
+            'ca' => $form['ca'],
+            'created_by'=>$user->id,
+            'so_phieu' => $form['so_phieu'],
+            'khach_hang_id' => $form['khach_hang_id'],
+            'kho_id' => $form['kho_id'],
+            'xe_id' => $form['xe_id'],
+        ]);
+            ChiTietNhapKho::create([
+             'nhap_kho_id'=>$nhapkho->id,
+             'phe_lieu_id'=>$form['phe_lieu_id'],
+             'dvt'=>$form['dvt'],
+            'so_luong_thuc_te'=>$form['so_luong_thuc_te'],
+            'so_luong_chung_tu'=>$form['so_luong_chung_tu'],
+            'hang_gui'=>$form['hang_gui'],
+            ]);
+            if(!empty($chitiets)){
+                    $phanloai = PhanLoai::create([
+                        'created_by'=>$user->id,
+                        'ngay' => $form['ngay'],
+                        'phe_lieu_id'=>$form['phe_lieu_id'],
+                        'khach_hang_id' => $form['khach_hang_id'],
+                        'kho_id' => $form['kho_id'],
+                        'so_phieu' => PhanLoai::max('id')+1,
+                        'nguoi_can' => null,
+                        'so_luong' =>$form['so_luong_thuc_te']]);
+                    foreach($chitiets as $item2){
+                        if($item2['chon']==true){
+                        $ctnhapkho = ChiTietNhapKho::find($item2['id']);
+                        ChiTietPhanLoai::create([
+                         'phan_loai_id'=>$phanloai->id,
+                         'phe_lieu_id'=>$ctnhapkho['phe_lieu_id'],
+                         'dvt'=>$ctnhapkho['dvt'],
+                        'so_luong'=>$ctnhapkho['so_luong_thuc_te'],
+                        'kho_id'=>$ctnhapkho->nhapKho->kho_id,
+                        ]);
+                        $ctnhapkho->delete();
+                    }
+                    }
+                }
+            $ctkho=ChiTietKho::where('phe_lieu_id',$form['phe_lieu_id'])->where('kho_id',$form['kho_id'])->first();
+                if(isset($ctkho)){
+                    $ctkho->khoi_luong =  $ctkho->khoi_luong+$form['so_luong_thuc_te'];
+                    $ctkho->save();
+                }else{
+                    ChiTietKho::create([
+                       'kho_id'=>$form['kho_id'],
+                      'phe_lieu_id'=>$form['phe_lieu_id'],
+                        'dvt'=>$form['dvt'],
+                        'khoi_luong'=>$form['so_luong_thuc_te'],
+                    ]);
+                }
 
+        DB::commit();
+        return Response::created();
+    } catch (Exception $e) {
+        DB::rollBack();
+        return Response::error($e->getMessage());
+    }
+}
 
 public function nhapKhoAdmin2(Request $request)
 {
@@ -535,7 +605,7 @@ return ['data'=>$data];
 
     }
 function updateSL(Request $request,$id){
-    ChiTietNhapKho::where('id',$id)->update(['so_luong_chung_tu'=>$request->so_luong_chung_tu]);
+    ChiTietNhapKho::where('id',$id)->update(['so_luong_chung_tu'=>$request->so_luong_chung_tu,'hang_gui'=>$request->hang_gui]);
     return Response::updated();
 }
     /**

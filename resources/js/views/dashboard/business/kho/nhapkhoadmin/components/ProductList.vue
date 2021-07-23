@@ -43,19 +43,20 @@ export default {
         headers() {
             return [
                 { text: "Phế liệu", value: "phe_lieu", width: 200 },
-                 { text: "BKS", value: "bks", width: 100 },
-                { text: "Đơn vị", value: "dvt", width: 100 },
+                 { text: "BKS", value: "bks", width: 200 },
+                { text: "Đơn vị", value: "dvt", width: 120 },
                 { text: "Số lượng thực", value: "so_luong_thuc_te", width: 180 },
-                 {
-                    text: '' ,
-                    value: "actions" ,
-                    align: "center"
-                }
-            ];
+                { text: "Kho", value: "kho", width: 180 },
+                    {
+                                        text: '' ,
+                                        value: "actions" ,
+                                        align: "center"
+                                    }
+                                ];
 
-        }
+                            }
 
-    },
+                        },
 
     methods: {
             them(index){

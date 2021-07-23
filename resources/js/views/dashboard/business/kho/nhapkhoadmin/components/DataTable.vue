@@ -39,7 +39,7 @@
         <template v-slot:item.so_luong_chung_tu="{ item }">
               <v-text-field
                 v-model="item.so_luong_chung_tu"
-                @change="updateSL(item.id,item.so_luong_chung_tu)"
+                @change="updateSL(item.id,item.so_luong_chung_tu,item.hang_gui)"
                 type="number"
                 :min="0"
                 dense
@@ -48,23 +48,15 @@
          <template v-slot:item.hang_gui="{ item }">
               <v-text-field
                 v-model="item.hang_gui"
-                @change="updateSLG(item.id,item.hang_gui)"
+                @change="updateSL(item.id,item.so_luong_chung_tu,item.hang_gui)"
                 type="number"
                 :min="0"
                 dense
             ></v-text-field>
         </template>
-         <template v-slot:item.hang_cong="{ item }">
-              <v-text-field
-                v-model="item.hang_cong"
-                @change="updateSLC(item.id,item.hang_cong)"
-                type="number"
-                :min="0"
-                dense
-            ></v-text-field>
-        </template>
+         
          <template v-slot:item.chenh_lech="{ item }">
-            {{+item.so_luong_thuc_te - (item.so_luong_chung_tu?(parseFloat(item.so_luong_chung_tu)+(parseFloat(item.hang_gui))+(parseFloat(item.hang_cong))):0)}}
+            {{+item.so_luong_thuc_te - (item.so_luong_chung_tu?(parseFloat(item.so_luong_chung_tu)+(parseFloat(item.hang_gui))):0)}}
         </template>
         <template v-slot:item.actions="{ item }">
              <v-btn
@@ -138,10 +130,6 @@ export default {
                     text: 'Hàng gửi',
                     value: "hang_gui",
                 },
-                   {
-                    text: 'Hàng cộng',
-                    value: "hang_cong",
-                },
                  {
                     text: 'Chênh lệch',
                     value: "chenh_lech",
@@ -162,9 +150,9 @@ export default {
     },
       methods:{
           
-          async updateSL(id,so_luong_chung_tu){
+          async updateSL(id,so_luong_chung_tu,hang_gui){
                this.$loader(true);
-              await updateSL(id,{so_luong_chung_tu:so_luong_chung_tu});
+              await updateSL(id,{so_luong_chung_tu:so_luong_chung_tu,hang_gui:hang_gui});
                this.$loader(false);
             this.$snackbar(
                 this.editing ? "Cập nhật thành công" : "Thêm mới thành công",
@@ -175,7 +163,7 @@ export default {
              this.$emit('push-detail')
                 const { data } = await getsophieu('nhapkho');
                 console.log(data)
-                this.form.kho_id = data.kho_id;
+                this.form.kho_id = 19;
                    this.form.so_phieu = data.so_phieu;
 
                 }

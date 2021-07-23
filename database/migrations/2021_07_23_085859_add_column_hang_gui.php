@@ -13,10 +13,8 @@ class AddColumnHangGui extends Migration
      */
     public function up()
     {
-        Schema::table('nhap_khos', function (Blueprint $table) {
+        Schema::table('chi_tiet_nhap_khos', function (Blueprint $table) {
             $table->double('hang_gui')->default(0);
-            $table->double('hang_cong')->default(0);
-
         });
     }
 
@@ -27,6 +25,8 @@ class AddColumnHangGui extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('nhap_khos', function (Blueprint $table) {
+            $table->dropColumn('hang_gui');
+        });
     }
 }

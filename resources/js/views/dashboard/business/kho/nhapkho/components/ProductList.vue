@@ -147,7 +147,6 @@ export default {
                  { text: "Số lượng biên bản", value: "so_luong_chung_tu", width: 180 },
                 { text: "Đơn giá", value: "don_gia", width: 180 },
                 { text: "Chênh lệch", value: "chenh_lech", width: 100 },
-                 { text: '', value: 'data-table-expand' },
                 
             ];
             else
@@ -155,7 +154,6 @@ export default {
                 { text: "Phế liệu", value: "phe_lieu_id", width: 200 },
                 { text: "Đơn vị", value: "dvt", width: 150 },
                 { text: "Số lượng thực", value: "so_luong_thuc_te", width: 200 },
-                 { text: 'Phân loại', value: 'data-table-expand' , width: 200},
                  {
                     text: this.$t("actions") ,
                     value: "actions" ,
