@@ -58,7 +58,6 @@
                                     v-model="form.kho_id"
                                     :items="options.khos"
                                     item-text="ten"
-                                    disabled
                                     dense
                                     item-value="id"
                                     :label="'Kho'"
