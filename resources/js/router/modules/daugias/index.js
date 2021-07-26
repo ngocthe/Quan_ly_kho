@@ -1,6 +1,5 @@
-const pagesRouter = {
-    path: "/pages",
-    component: () => import("@/layouts/pages/Index"),
+const daugiasRouter = {
+    path: "/daugias",
     children: [
         {
             name: "Lock",
@@ -35,4 +34,4 @@ const pagesRouter = {
         }
     ]
 };
-export default pagesRouter;
+export default daugiasRouter;

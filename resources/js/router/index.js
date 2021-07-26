@@ -1,10 +1,13 @@
 import Vue from "vue";
 import Router from "vue-router";
 import pagesRouter from "./modules/pages/index";
+import daugiasRouter from "./modules/daugias/index";
+
 import dashboardRouter from "./modules/dashboard/index";
 Vue.use(Router);
 export const asyncRoutes = dashboardRouter;
 export const routes = [
+    daugiasRouter,
     pagesRouter,
     // {
     //     path: "/",
@@ -15,6 +18,11 @@ export const routes = [
         path: "/pdf",
         name: "PDF",
         component: () => import("@/views/pdf/index.vue")
+    },
+    {
+        path: "/dgsp",
+        name: "Đấu giá",
+        component: () => import("@/views/DauGia.vue")
     },
     {
         path: "/logout",
