@@ -364,6 +364,7 @@ public function nhapKhoAdmin2(Request $request)
 
     public function nhapphanloai(Request $request)
     {
+        $so=$request->so;
         $khach_hang_id = $request->query('khach_hang_id');
         $phe_lieu_id = $request->query('phe_lieu_id');
         $ngay = $request->query('ngay', [Carbon::now()->toDateString(), Carbon::now()->toDateString()]);
@@ -385,12 +386,12 @@ public function nhapKhoAdmin2(Request $request)
         }
         $chitietphanloais=$query->get();
         if($request->export){
-            $file = public_path() . '/excel/NhapPhanLoai.xlsx';
+            $file = public_path() . '/excel/NPL.xlsx';
             $data= $chitietphanloais->where('duyet',true);
-        \Excel::load($file, function ($excel) use ($data,$thukho,$phanloais) {
-            $excel->sheet('Sheet1', function ($sheet) use ($data,$thukho,$phanloais) {
+        \Excel::load($file, function ($excel) use ($data,$thukho,$phanloais,$so) {
+            $excel->sheet('Sheet1', function ($sheet) use ($data,$thukho,$phanloais,$so) {
                 $t=2;
-                $so=3502;
+                
                 foreach ($data as $key => $value) {
                     $pl = $phanloais->where('id',$value->phan_loai_id)->first();
                     $sheet->row($t+$key, [
@@ -398,7 +399,7 @@ public function nhapKhoAdmin2(Request $request)
                         '0',
                         $pl->ngay,
                         $pl->ngay,
-                        'NK2004/'.($so+1),
+                        'NK2004/'.($so+$key),
                         $thukho->ten,
                         $thukho->ten,
                         $thukho->ten,
@@ -412,7 +413,6 @@ public function nhapKhoAdmin2(Request $request)
                         '1561',
                         '15411',
                         $value->pheLieu->don_vi,
-                        $value->so_phieu,
                         $value->so_luong,
                         '',
                         null,
@@ -420,59 +420,13 @@ public function nhapKhoAdmin2(Request $request)
                         null,
                         null,
                         null,
-                        null,
                         'CPPHANLOAI'
                     ]);
-                    $sheet->cell('A' . ($key + 2), function ($cell) {
-                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
-                    });
-                    $sheet->cell('B' . ($key + 2), function ($cell) {
-                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
-                    });
-                    $sheet->cell('C' . ($key + 2), function ($cell) {
-                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
-                    });
-                    $sheet->cell('D' . ($key + 2), function ($cell) {
-                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
-                    });
-                    $sheet->cell('E' . ($key + 2), function ($cell) {
-                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
-                    });
-                    $sheet->cell('F' . ($key + 2), function ($cell) {
-                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
-                    });
-                    $sheet->cell('G' . ($key + 2), function ($cell) {
-                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
-                    });
-                    $sheet->cell('H' . ($key + 2), function ($cell) {
-                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
-                    });
-                    $sheet->cell('I' . ($key + 2), function ($cell) {
-                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
-                    });
-                    $sheet->cell('J' . ($key + 2), function ($cell) {
-                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
-                    });
-                    $sheet->cell('K' . ($key + 2), function ($cell) {
-                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
-                    });
-                    $sheet->cell('L' . ($key + 2), function ($cell) {
-                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
-                    });
-                    $sheet->cell('M' . ($key + 2), function ($cell) {
-                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
-                    });
-                    $sheet->cell('N' . ($key + 2), function ($cell) {
-                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
-                    });
-                    $sheet->cell('O' . ($key + 2), function ($cell) {
-                        $cell->setBorder('thin', 'thin', 'thin', 'thin');
-                    });
+                    
                 }
             });
         })->download('xlsx');
         return [];
-        dd(1);
         }
          $data=[];
             foreach( $chitietphanloais as $ct){

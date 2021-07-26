@@ -17,7 +17,7 @@
                     @handle-search2="getData()"
                     @handle-create="showDialogForm('create')"
                     @handle-delete="getData()"
-                    @handle-export="exportData"
+                    @handle-export="exportExcel($event)"
                 />
 
             </v-col>
@@ -109,6 +109,11 @@ export default {
                 this.editing = false;
             }
             this.showDialog = true;
+        },
+          exportExcel(e) {
+           window.location.assign(
+                `/api/nhapphanloais/?export=true&ngay[]=`+this.params.ngay[0]+'&ngay[]='+this.params.ngay[1]+'&so='+e
+            );
         },
         // exportDataReport() {
         //     this.to(

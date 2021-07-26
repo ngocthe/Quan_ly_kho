@@ -14,17 +14,17 @@
             <v-toolbar class="custom-toolbar" flat>
                 <v-toolbar-title>Danh sách</v-toolbar-title>
                 <v-spacer></v-spacer>
-
-                <!-- <v-btn
-                    @click="$emit('handle-export')"
+                <v-text-field type="number" dense style="width:10px !important; margin-top:10px" v-model="so" label="Nhập số CT"></v-text-field>
+                <v-btn
+                    @click="$emit('handle-export',so)"
                     class="mx-2"
                     small
-                    fab
                     dark
                     color="indigo"
                 >
                     <v-icon dark>mdi-download</v-icon>
-                </v-btn> -->
+                    Xuất theo mẫu misa
+                </v-btn>
             </v-toolbar>
         </template>
         <template slot="body.append">
@@ -74,8 +74,12 @@ import { destroy } from "@/api/business/nhapkho";
 import dataTableMixin from "@/mixins/crud/data-table";
 export default {
     mixins: [dataTableMixin(destroy)],
+     data() {
+        return {
+            so:0
+        }},
     computed: {
-
+  
         headers() {
             return [
                 { text: "Phế liệu", value: "phe_lieu" },
