@@ -42,6 +42,18 @@
                         :label="'Kho'"
                     ></v-autocomplete>
                 </v-col>
+                <v-col cols="6" md="3" lg="3" class="pb-0">
+                    <v-autocomplete
+                        v-model="params.ghi_so"
+                            @change="$emit('handle-search')"
+                        :items="[{id:0,ten:'Chưa ghi sổ'},{id:1,ten:'Đã ghi sổ'}]"
+                        item-text="ten"
+                        dense
+                        clearable
+                        item-value="id"
+                        :label="'Trạng thái'"
+                    ></v-autocomplete>
+                </v-col>
             </v-row>
         </v-col>
         <v-col cols="12" style="padding-top: 20px" md="2">

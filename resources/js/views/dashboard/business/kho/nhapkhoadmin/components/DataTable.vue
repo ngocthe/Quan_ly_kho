@@ -1,9 +1,12 @@
 <template>
     <v-data-table
         :headers="getHeaders()"
+              v-model="selected"
         :items="tableData"
         disable-pagination
         fixed-header
+              @input="enterSelect($event)"
+        show-select
         disable-sort
         calculate-widths
         hide-default-footer
@@ -14,28 +17,32 @@
             <v-toolbar class="custom-toolbar" flat>
                 <v-toolbar-title>Danh sách</v-toolbar-title>
                 <v-spacer></v-spacer>
+                   <v-btn
+                v-if="selected.length>0"
+                    @click="ghiSo()"
+                    class="mx-2"
+                    small
+                    dark
+                    color="indigo"
+                >
+                    <v-icon dark>mdi-pencil</v-icon>
+                    Ghi sổ
+                </v-btn>
                      <v-btn
                     @click="$emit('handle-create');getSoPhieu()"
                     class="mx-2"
+                    
                     small
-                    fab
                     dark
                     color="indigo"
                 >
                     <v-icon dark>mdi-plus</v-icon>
+                    Thêm phiếu
                 </v-btn>
-                <!-- <v-btn
-                    @click="$emit('handle-export')"
-                    class="mx-2"
-                    small
-                    fab
-                    dark
-                    color="indigo"
-                >
-                    <v-icon dark>mdi-download</v-icon>
-                </v-btn> -->
+             
             </v-toolbar>
         </template>
+
         <template v-slot:item.so_luong_chung_tu="{ item }">
               <v-text-field
                 v-model="item.so_luong_chung_tu"
@@ -87,7 +94,7 @@
     </v-data-table>
 </template>
 <script>
-import { destroy ,updateSL} from "@/api/business/nhapkho";
+import { destroy ,updateSL,ghiso} from "@/api/business/nhapkho";
 import dataTableMixin from "@/mixins/crud/data-table";
 import { getsophieu} from "@/api/business/kho";
 
@@ -148,6 +155,9 @@ export default {
             ];
         },
     },
+     data: () => ({
+  
+    selected: []}),
       methods:{
           
           async updateSL(id,so_luong_chung_tu,hang_gui){
@@ -166,7 +176,34 @@ export default {
                 this.form.kho_id = 19;
                    this.form.so_phieu = data.so_phieu;
 
-                }
+                },
+        toggleAll() {
+            console.log(this.selected);
+            if (this.selected.length) this.selected = []
+            else this.selected = this.desserts.slice()
+            },
+    changeSort(column) {
+            if (this.pagination.sortBy === column) {
+                this.pagination.descending = !this.pagination.descending
+            } else {
+                this.pagination.sortBy = column
+                this.pagination.descending = false
+            }
+    },
+    enterSelect(values) {
+        this.selected=values
+      if (values.length == this.itemsPerPage) {
+        alert('selected all')
+      }
+    },
+    async  ghiSo(){
+        await ghiso({data:this.selected})
+         this.$snackbar(
+                "Ghi sổ thành công" ,
+                "success"
+            );
+        this.$emit('handle-ghiso')
+    }
     }
 };
 </script>

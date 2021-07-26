@@ -16,6 +16,14 @@ export function index_admin(params, responseType = "json") {
         responseType
     });
 }
+export function ghiso(data) {
+    return request({
+        url: "/ghiso",
+        method: "post",
+        data
+    });
+}
+
 export function store(data) {
     return request({
         url: "/nhapkhos",

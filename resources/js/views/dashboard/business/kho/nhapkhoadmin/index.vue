@@ -15,7 +15,8 @@
                     :table-data="tableData"
                     @handle-edit="showDialogForm('edit', $event)"
                     @handle-create="showDialogForm('create')"
-                    @handle-delete="getData()"
+                    @handle-delete="getData()"           
+                     @handle-ghiso="getData()"
                      @push-detail="pushDetail()"
                     @handle-export="exportData"
                 />
@@ -96,6 +97,7 @@ export default {
             defaultParams: {
                 search: "",
                 page: 1,
+                ghi_so:0,
                 kho_id:null,
                 ngay: [
                      new Date().toLocaleDateString("en-CA"),

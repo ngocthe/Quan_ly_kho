@@ -204,6 +204,8 @@ public function nhapKhoAdmin(Request $request)
     $search = $request->query('search');
     $khach_hang_id = $request->query('khach_hang_id');
     $phe_lieu_id = $request->query('phe_lieu_id');
+    $ghi_so = $request->query('ghi_so',false);
+
     $ngay = $request->query('ngay', [Carbon::now()->toDateString(), Carbon::now()->toDateString()]);
 
     $nhapkhoQuery = NhapKho::query()->where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1]);
@@ -213,11 +215,18 @@ public function nhapKhoAdmin(Request $request)
     if(isset($kho_id)){
         $nhapkhoQuery->where('kho_id', $kho_id);
     }
+  
     $nhapkhos = $nhapkhoQuery->get();
      $data=[];
     $chitietnhapQuery= ChiTietNhapKho::whereIn('nhap_kho_id',$nhapkhos->pluck('id'));
     if(isset($phe_lieu_id)){
         $chitietnhapQuery->where('phe_lieu_id', $phe_lieu_id);
+    }
+    if($ghi_so==1){
+        $chitietnhapQuery->where('ghi_so',true);
+    }else{
+        $chitietnhapQuery->where('ghi_so',false);
+
     }
     $datanhaps = $chitietnhapQuery->get();
     foreach($datanhaps as $nhap){
@@ -238,6 +247,7 @@ public function nhapKhoAdmin(Request $request)
                     'kho'=>$nhapkho->kho->ten,
                     'kho_id'=>$nhapkho->kho_id,
                     'khach_hang_id'=>$nhapkho->khach_hang_id,
+                    'ghi_so'=>$nhap->ghi_so,
 
 
                 ];
@@ -606,6 +616,13 @@ return ['data'=>$data];
     }
 function updateSL(Request $request,$id){
     ChiTietNhapKho::where('id',$id)->update(['so_luong_chung_tu'=>$request->so_luong_chung_tu,'hang_gui'=>$request->hang_gui]);
+    return Response::updated();
+}
+function ghiSo(Request $request){
+    $data= $request->data;
+    foreach($data as $item){
+        ChiTietNhapKho::where('id',$item['id'])->update(['ghi_so'=>true]);
+    }
     return Response::updated();
 }
     /**
