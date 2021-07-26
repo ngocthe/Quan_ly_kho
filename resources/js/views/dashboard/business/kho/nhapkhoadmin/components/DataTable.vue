@@ -175,8 +175,7 @@ export default {
                 console.log(data)
                 this.form.kho_id = 19;
                    this.form.so_phieu = data.so_phieu;
-
-                },
+            },
         toggleAll() {
             console.log(this.selected);
             if (this.selected.length) this.selected = []
