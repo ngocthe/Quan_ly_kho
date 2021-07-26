@@ -472,6 +472,7 @@ public function nhapKhoAdmin2(Request $request)
             });
         })->download('xlsx');
         return [];
+        dd(1);
         }
          $data=[];
             foreach( $chitietphanloais as $ct){
