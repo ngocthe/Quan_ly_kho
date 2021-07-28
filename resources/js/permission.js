@@ -7,7 +7,7 @@ import getPageTitle from "@/utils/get-page-title";
 
 NProgress.configure({ showSpinner: false }); // NProgress Configuration
 
-const whiteList = ["/pages/login"]; // no redirect whitelist
+const whiteList = ["/dgsp"]; // no redirect whitelist
 
 router.beforeEach(async (to, from, next) => {
     // start progress bar
@@ -18,16 +18,16 @@ router.beforeEach(async (to, from, next) => {
     // determine whether the user has logged in
     const isAuth = getAuth();
     if (isAuth) {
-        if (to.path === "/pages/login") {
+        if (to.path === "/dgsp") {
             // if is logged in, redirect to the home page
             next({ path: "/" });
         } else if (to.path === "/logout") {
             store
                 .dispatch("user/logout")
                 .then(res => {
-                    next({ path: "/pages/login" });
+                    next({ path: "/dgsp" });
                 })
-                .catch(error => next({ path: "/pages/login" }));
+                .catch(error => next({ path: "/dgsp" }));
         } else {
             //determine whether the user has obtained his permission roles through getInfo
             const hasRoles =
@@ -73,7 +73,7 @@ router.beforeEach(async (to, from, next) => {
             // other pages that do not have permission to access are redirected to the login page.
             // if (to.path != "/home") next(`/account/login?redirect=${to.path}`);
             //else
-            next("/pages/login");
+            next("/dgsp");
         }
     }
 });

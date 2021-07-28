@@ -25,7 +25,7 @@
                 v-for="(item, i) in menu"
                 :key="i"
               >
-                <v-list-item-title>{{ item.title }}</v-list-item-title>
+                <v-list-item-title><v-btn color="primary" >{{item.title}}</v-btn></v-list-item-title>
               </v-list-item>
             </v-list>
           </v-menu>
@@ -209,9 +209,7 @@ export default {
             {src:'https://thumuaphelieudong.com/upload/sanpham/phelieuinox4-1528183151.jpg'}
         ],
       menu: [
-        { icon: '', title: 'Link A' },
-        { icon: 'info', title: 'Link B' },
-        { icon: 'warning', title: 'Link C' }
+        { icon: 'mdi-login', title: 'Đăng nhập' },
       ]
     }
   },
@@ -241,6 +239,9 @@ export default {
     menuItems () {
       return this.menu
     }
+  },
+  mounted(){
+    console.log(this.$route.query.madg)
   }
   
 }
