@@ -27,7 +27,7 @@
             </v-toolbar>
         </template>
         <template>
-            <span >QUẢN LÝ KHO</span>
+            <span >QUẢN LÝ ĐẤU GIÁ</span>
         </template>
         <template v-slot:item.active="{ item }">
             <v-chip v-if="item.active" color="success" dark>{{

@@ -1,6 +1,6 @@
 <template>
 <div id="app">
-  <v-app id="inspire" >
+  <v-app id="inspire" v-if="madaugia">
     <v-card-title class="white--text" style="height:80px; background:#326b35">
           <p class="text-h6">Công ty TMDV và Môi trường Ngôi Sao Xanh</p>
           <v-spacer></v-spacer>
@@ -25,7 +25,7 @@
                 v-for="(item, i) in menu"
                 :key="i"
               >
-                <v-list-item-title><v-btn color="primary" >{{item.title}}</v-btn></v-list-item-title>
+                <v-list-item-title><v-btn color="primary" @click="madaugia=false" >{{item.title}}</v-btn></v-list-item-title>
               </v-list-item>
             </v-list>
           </v-menu>
@@ -37,18 +37,18 @@
              <v-col md="7" xs="12" style="border:1px solid #f1f1f1;" >
                <v-carousel style="border:1px solid #f1f1f1; height:400px" >
                     <v-carousel-item
-                    v-for="(item,i) in images"
+                    v-for="(item,i) in data.hinh_anhs"
                     :key="i"
-                    :src="item.src"
+                    :src="'http://127.0.0.1:8000'+item"
                     
                     reverse-transition="fade-transition"
                     transition="fade-transition"
                     ></v-carousel-item>
                 </v-carousel>
                 <div >
-                    <span v-for="(item,i) in images" style="boder:1px solid #f00; width:82px; height:82px;">
+                    <span v-for="(item,i) in data.hinh_anhs" style="boder:1px solid #f00; width:82px; height:82px;">
                     <img   
-                            :src="item.src"
+                           :src="'http://127.0.0.1:8000'+item"
                             style="width:70px; height:70px;border:2px solid #655e5e;  margin-right:10px; margin-top:10px"
                     /></span>
                 </div>
@@ -63,15 +63,15 @@
                     <tbody>
                     <tr>
                     <td>1. Chi tiết sản phẩm:</td>
-                    <td>Nhôm phế liệu nguyên chất</td>
+                    <td>{{data.mo_ta}}</td>
                     </tr>
                     <tr>
                     <td>2. Thành phần:</td>
-                    <td>100% nhôm phế liệu nguyên chất</td>
+                    <td>{{data.chi_tiet}}</td>
                     </tr>
                     <tr>
                    <td>3. Tổng khối lượng xuất:</td>
-                    <td>10,000 kg</td>
+                    <td>{{data.so_luong_ban}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -79,25 +79,25 @@
              </v-col>
              
              <v-col md="5" xs="12">
-            <span style="font-weight:bold; color:#901515; font-size:20px">Nhôm Phế Liệu</span>
+            <span style="font-weight:bold; color:#901515; font-size:20px">{{data.ten_san_pham}}</span>
             <table style="width:100%; border-bottom:2px solid #901515">
             <tr>
-            <th style="text-align: start; font-weight:300">Mã sản phẩm: NPL</th>
-             <th style="text-align: start;font-weight:300">Tên sản phẩm: Nhôm Phế Liệu</th>
+            <th style="text-align: start; font-weight:300">Mã sản phẩm: {{data.ma_san_pham}}</th>
+             <th style="text-align: start;font-weight:300">Tên sản phẩm: {{data.ten_san_pham}}</th>
             </tr>
              <tr>
-            <th style="text-align: start;font-weight:300">Phiên đấu giá số: 26</th>
-             <th style="text-align: start;font-weight:300"><v-chip color="orange">Đang diễn ra</v-chip></th>
+            <th style="text-align: start;font-weight:300">Phiên đấu giá số: {{data.ma}}</th>
+             <th style="text-align: start;font-weight:300"><v-chip color="orange">{{data.trang_thai=='dang_dien_ra'?'Đang diễn ra':'Chưa diễn ra'}}</v-chip></th>
             </tr>
               <tr>
             <th style="text-align: start;font-weight:500">Thời gian đấu giá:</th>
             </tr>
             <tr>
-            <th style="text-align: start;font-weight:300">Bắt đầu: 15-07-2021 10:00</th>
-            <th style="text-align: start;font-weight:300">Kết thúc: 01-08-2021 10:00</th>
+            <th style="text-align: start;font-weight:300">Bắt đầu: {{data.bat_dau}}</th>
+            <th style="text-align: start;font-weight:300">Kết thúc: {{data.ket_thuc}}</th>
             </tr>
              <tr>
-            <th style="text-align: start;font-weight:500">Giá khởi điểm: <span style="font-size:20px; color: #0137d4">3,000</span> (vnđ/kg)</th>
+            <th style="text-align: start;font-weight:500">Giá khởi điểm: <span style="font-size:20px; color: #0137d4">{{data.gia_khoi_diem}}</span> ({{data.dvt}})</th>
             </tr>
             </table>
            <div style="text-align:center; border:1px solid #f1f1f1; padding:20px">
@@ -107,8 +107,8 @@
                     style="font-weight:bold"
                             @start_callback="startCallBack('event started')"
                             @end_callback="endCallBack('event ended')"
-                            :start-time="'2021-07-15 00:00:00'"
-                            :end-time="'2021-08-01 00:00:00'"
+                            :start-time="data.bat_dau"
+                            :end-time="data.ket_thuc"
                             :interval="1000"
                             :start-label="'Thời gian bắt đầu'"
                             :end-label="'Thời gian còn lại'"
@@ -179,7 +179,6 @@
                 <v-btn
                     color="blue darken-1"
                     text
-                    @click="createData"
                     >Thêm</v-btn
                 >
                
@@ -187,18 +186,95 @@
         </v-card>
     </v-dialog>
   </v-app>
+  <v-app style="background:#f1f1f1"  id="login" v-else class="fill-height justify-center" tag="section">
+        <v-row justify="center" >
+            <v-slide-y-transition appear>
+                <base-material-card
+                  style="margin-top:50px"
+                    max-width="100%"
+                    height="500"
+                    width="400"
+                    class="px-5 py-3"
+                >
+                  
+
+                    <v-card-text class="text-center">
+                        <div
+                            class="text-center grey--text body-1 font-weight-light"
+                        >
+                          ĐĂNG NHẬP 
+                        </div>
+                        <v-form ref="form" lazy-validation v-model="valid">
+                            <v-text-field
+                                color="secondary"
+                                v-model="form.username"
+                                ref="login"
+                                @keyup.enter="login"
+                                :disabled="loading"
+                                :label="$t('login_username')"
+                                :rules="rule.nameRules"
+                                prepend-icon="mdi-account"
+                                class="mt-10"
+                            />
+
+                            <v-text-field
+                                class="mb-8"
+                                :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                                @click:append="show = !show"
+                                color="secondary"
+                                @keyup.enter="login"
+                                v-model="form.password"
+                                :disabled="loading"
+                                :rules="rule.passwordRules"
+                                :label="$t('login_password')"
+                                prepend-icon="mdi-lock-outline"
+                                :type="show ? 'text' : 'password'"
+                            />
+                        </v-form>
+
+                        <pages-btn
+                            large
+                            color
+                            depressed
+                            @click="login"
+                            :loading="loading"
+                            class="v-btn--text success--text"
+                            >{{ $t("login_button_text") }}</pages-btn
+                        >
+                    </v-card-text>
+                </base-material-card>
+            </v-slide-y-transition>
+        </v-row>
+        <!-- <v-snackbar
+            v-model="snackbar"
+            :bottom="y === 'bottom'"
+            :color="color"
+            :left="x === 'left'"
+            :multi-line="mode === 'multi-line'"
+            :right="x === 'right'"
+            :timeout="timeout"
+            :top="y === 'top'"
+            :vertical="mode === 'vertical'"
+        >
+            {{ text }}
+        </v-snackbar>-->
+  </v-app>
 </div>
 </template>
 
 <script>
 import VueCountdownTimer from 'vuejs-countdown-timer';
 import Vue from "vue";
-
+import { show } from "@/api/business/doitac";
 Vue.use(VueCountdownTimer);
 
 export default {
+      components: {
+        PagesBtn: () => import("@/layouts/pages/components/Btn")
+    },
   data () {
     return {
+      madaugia:false,
         timerCount:10,
         showDialog:false,
         loading:false,
@@ -210,7 +286,33 @@ export default {
         ],
       menu: [
         { icon: 'mdi-login', title: 'Đăng nhập' },
-      ]
+      ],
+      valid: true,
+        show: false,
+        data:{},
+        loading: false,
+        form: {
+            username: localStorage.getItem("username"),
+            password: localStorage.getItem("password")
+        },
+        rule: {
+            nameRules: [v => !!v || "Bạn chưa nhập tên đăng nhập"],
+            passwordRules: [v => !!v || "Bạn chưa nhập password"]
+        },
+        socials: [
+            {
+                href: "#",
+                icon: "mdi-facebook"
+            },
+            {
+                href: "#",
+                icon: "mdi-twitter"
+            },
+            {
+                href: "#",
+                icon: "mdi-github"
+            }
+        ]
     }
   },
   watch: {
@@ -230,6 +332,26 @@ export default {
 
         },
   methods: {
+     login() {
+            this.$refs.form.validate();
+            if (!this.valid) return;
+            this.loading = true;
+            this.$store
+                .dispatch("user/login", this.form)
+                .then(homeUrl => {
+                    this.loading = false;
+                    localStorage.setItem("username", this.form.username);
+                    localStorage.setItem("password", this.form.password);
+                    window.location.reload();
+                })
+                .catch(error => {
+                    this.loading = false;
+                    if (error.response.status === 401) {
+                        this.$snackbar("Sai tài khoản hoặc mật khẩu", "error");
+                        this.loading = false;
+                    }
+                });
+        },
       startCallBack: function(x) {
       console.log(x);
     },
@@ -238,10 +360,16 @@ export default {
     },
     menuItems () {
       return this.menu
+    },
+    async showSP(ma){
+      const {data}= await show(ma);
+    this.data =data 
+    console.log(data)
     }
   },
   mounted(){
-    console.log(this.$route.query.madg)
+    if(this.$route.query.madg) this.madaugia=true
+      this.showSP(this.$route.query.madg)
   }
   
 }

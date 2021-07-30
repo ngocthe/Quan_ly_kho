@@ -15,7 +15,7 @@
                         class="body-1 font-weight-light pt-6 pt-md-0 text-center"
                     >
                         <span class="font-weight-bold"
-                            >Copyright &copy; {{ new Date().getFullYear() }} QUẢN LÝ KHO.</span
+                            >Copyright &copy; {{ new Date().getFullYear() }} QUẢN LÝ ĐẤU GIÁ.</span
                         >
                         All rights reserved.
                     </div>

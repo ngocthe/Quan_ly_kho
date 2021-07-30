@@ -62,7 +62,7 @@ export default {
         ],
         titles: {
             "/pages/lock": "Lock Page",
-            "/pages/login": "QUẢN LÝ KHO",
+            "/pages/login": "QUẢN LÝ ĐẤU GIÁ",
             "/pages/pricing": "Pricing Page",
             "/pages/register": "Register Page",
         },

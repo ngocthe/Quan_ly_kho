@@ -12,7 +12,7 @@
     >
         <template v-slot:top>
             <v-toolbar class="custom-toolbar" flat>
-                <v-toolbar-title>Đối tác</v-toolbar-title>
+                <v-toolbar-title>Danh sách các phiên đấu giá</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-btn
                     @click="$emit('handle-create')"
@@ -37,7 +37,12 @@
                 </v-btn> 
             </v-toolbar>
         </template>
- 
+         <template v-slot:item.trang_thai="{ item }">
+         <v-chip v-if="item.trang_thai=='chua_dien_ra'" color="orange">Chưa diễn ra</v-chip>
+          <v-chip v-if="item.trang_thai=='dang_dien_ra'" color="red">Chưa diễn ra</v-chip>
+         <v-chip v-if="item.trang_thai=='ket_thuc'" color="green">Chưa diễn ra</v-chip>
+
+         </template>
         <template v-slot:item.actions="{ item }">
             <v-btn
                 x-small
@@ -81,10 +86,13 @@ export default {
         headers() {
             return [
                 { text: 'Mã', value: "ma" },
-                { text: 'Tên', value: "ten" },
-                { text: 'Số điện thoại', value: "sdt" },
-                { text: 'Mã số thuế', value: "ma_so_thue" },
-		         { text:'Địa chỉ', value: "dia_chi" },
+                { text: 'Ngày bắt đầu', value: "bat_dau" },
+                { text: 'Ngày kết thúc', value: "ket_thuc" },
+                { text: 'Sản phẩm', value: "ten_san_pham" },
+		         { text:'Giá khởi điểm', value: "gia_khoi_diem" },
+                 { text:'Người trúng thầu', value: "ng" },
+                 { text:'Trạng thái', value: "trang_thai" },
+
                 {
                     text: this.$t("actions"),
                     value: "actions",

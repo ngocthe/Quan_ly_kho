@@ -21,9 +21,9 @@
                 <v-list-item-title
                     class="text-uppercase font-weight-regular display-2"
                 >
-                    <span class="logo-mini"><img src="/images/logo.jpg" style="width:50px" /></span>
+                    <span class="logo-mini"></span>
                     <span class="logo-normal" > 
-                         QUẢN LÝ KHO
+                         QUẢN LÝ ĐẤU GIÁ
                     </span>
                     
                 </v-list-item-title>

@@ -60,12 +60,16 @@ export default {
             form: {
                 id: undefined,
                 ma: "",
-                ma_misa: "",
-                ten: "",
-                sdt: "",
-                email:"",
-                ma_so_thue:"",
-                dia_chi: "",
+                ma_san_pham: "",
+                ten_san_pham: "",
+                hinh_anhs: [],
+                bat_dau:new Date().toLocaleDateString("en-CA"),
+                ket_thuc:new Date().toLocaleDateString("en-CA"),
+                gia_khoi_diem: 0,
+                    mo_ta:"",
+                chi_tiet:"",
+                so_luong_ban:"",
+                dvt:"Vnđ/kg"
 
             },
         };

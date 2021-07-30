@@ -2,7 +2,7 @@ import request from "@/utils/request";
 
 export function index(params, responseType = "json") {
     return request({
-        url: "/doitacs",
+        url: "/daugias",
         method: "get",
         params,
         responseType
@@ -10,21 +10,29 @@ export function index(params, responseType = "json") {
 }
 export function store(data) {
     return request({
-        url: "/doitacs",
+        url: "/daugias",
         method: "post",
-        data
+        data,
+        headers: { "Content-Type": "multipart/form-data" }
+
     });
 }
 export function update(id, data) {
     return request({
-        url: `/doitacs/${id}`,
+        url: `/daugias/${id}`,
         method: "put",
         data
     });
 }
 export function destroy(id) {
     return request({
-        url: `/doitacs/${id}`,
+        url: `/daugias/${id}`,
         method: "delete"
+    });
+}
+export function show(id) {
+    return request({
+        url: `/showdaugias/${id}`,
+        method: "get"
     });
 }

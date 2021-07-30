@@ -81,11 +81,9 @@ export default {
         headers() {
             return [
                 { text: 'Mã', value: "ma" },
-                { text: 'Mã misa', value: "ma_misa" },
                 { text: 'Tên', value: "ten" },
                 { text: 'Số điện thoại', value: "sdt" },
                 { text: 'Email', value: "email" },
-                 { text: 'Mã số thuế', value: "ma_so_thue" },
 		         { text:'Địa chỉ', value: "dia_chi" },
                 {
                     text: this.$t("actions"),

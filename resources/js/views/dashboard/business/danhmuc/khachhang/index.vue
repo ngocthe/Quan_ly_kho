@@ -60,12 +60,11 @@ export default {
             form: {
                 id: undefined,
                 ma: "",
-                ma_misa: "",
                 ten: "",
                 sdt: "",
                 email:"",
                 dia_chi: "",
-                ma_so_thue:""
+
             },
         };
     },

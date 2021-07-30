@@ -16,14 +16,7 @@
                                 ></v-text-field>
                             </v-col>
 
-                            <v-col cols="12" sm="6">
-                                <v-text-field
-                                    v-model="form.ma_misa"
-                                    :label="'Mã misa'"
-                                    dense
-                                ></v-text-field>
-                            </v-col>
-
+                           
                               <v-col cols="12" sm="6">
                                 <v-text-field
                                     v-model="form.ten"
@@ -45,13 +38,7 @@
                                     dense
                                 ></v-text-field>
                             </v-col>
-                             <v-col cols="12" sm="6">
-                                <v-text-field
-                                    v-model="form.ma_so_thue"
-                                    :label="'Mã số thuế'"
-                                    dense
-                                ></v-text-field>
-                            </v-col>
+                             
                              <v-col cols="12" sm="6">
                                 <v-text-field
                                     v-model="form.dia_chi"

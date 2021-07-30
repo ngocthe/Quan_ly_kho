@@ -156,16 +156,16 @@ const businessRouter = [
         meta: {
             en_name: "Khách Hàng"
         },
-        path: "danhmuc/khachhangs",
+        path: "khachhangs",
         component: () =>
             import("@/views/dashboard/business/danhmuc/khachhang/index")
     },
     {
-        name: "Đối Tác",
+        name: "Quản ly đấu giá",
         meta: {
-            en_name: "Đối Tác"
+            en_name: "Quản lý đấu giá"
         },
-        path: "danhmuc/doitacs",
+        path: "daugiasps",
         component: () =>
             import("@/views/dashboard/business/danhmuc/doitac/index")
     },
