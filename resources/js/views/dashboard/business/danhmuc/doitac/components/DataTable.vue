@@ -39,29 +39,39 @@
         </template>
          <template v-slot:item.trang_thai="{ item }">
          <v-chip v-if="item.trang_thai=='chua_dien_ra'" color="orange">Chưa diễn ra</v-chip>
-          <v-chip v-if="item.trang_thai=='dang_dien_ra'" color="red">Chưa diễn ra</v-chip>
-         <v-chip v-if="item.trang_thai=='ket_thuc'" color="green">Chưa diễn ra</v-chip>
+          <v-chip v-if="item.trang_thai=='dang_dien_ra'" color="error">Đang diễn ra</v-chip>
+         <v-chip v-if="item.trang_thai=='da_ket_thuc'" color="success">Kết thúc</v-chip>
 
          </template>
-        <template v-slot:item.actions="{ item }">
-            <v-btn
+          <template v-slot:item.khach_hang_du_thau="{ item }">
+             <v-btn
+             v-if="item.trang_thai!='dang_dien_ra'"
                 x-small
-                @click="$emit('handle-edit', item)"
-                fab
+                @click="$emit('handle-chitet', item)"
                 dark
                 color="primary"
             >
-                <v-icon dark>mdi-pencil</v-icon>
+            Chi tiết
+            </v-btn>
+          </template>
+        <template v-slot:item.actions="{ item }">
+             
+            <v-btn
+                x-small
+                @click="$emit('handle-edit', item)"
+                dark
+                color="primary"
+            >
+            Sửa
             </v-btn>
             <v-btn
                 x-small
                 @click="handleDelete(item.id)"
                 class="ml-2"
-                fab
                 dark
                 color="error"
             >
-                <v-icon dark>mdi-delete</v-icon>
+             Xoá
             </v-btn>
         </template>
         <template v-slot:item.active="{ item }">
@@ -92,12 +102,13 @@ export default {
 		         { text:'Giá khởi điểm', value: "gia_khoi_diem" },
                  { text:'Người trúng thầu', value: "ng" },
                  { text:'Trạng thái', value: "trang_thai" },
+                 { text:'Khách hàng dự thầu', value: "khach_hang_du_thau" },
 
                 {
                     text: this.$t("actions"),
                     value: "actions",
                     align: "center",
-                    width: 120,
+                    width:130
                 },
             ];
         },

@@ -15,6 +15,7 @@
                     :table-data="tableData"
                     @handle-edit="showDialogForm('edit', $event)"
                     @handle-create="showDialogForm('create')"
+                    @handle-chitet="showDialogForm2($event)"
                     @handle-delete="getData()"
                     @handle-export="exportData"
                 />
@@ -36,6 +37,15 @@
             :editing="editing"
             :form="form"
         />
+         <DialogForm2
+            @created="getData(1)"
+            @updated="getData"
+            :options="options"
+            :showdialog2.sync="showdialog2"
+            :editing="editing"
+            :idc="idc"
+            :chitiets="cts"
+        />
     </v-container>
 </template>
 
@@ -43,20 +53,36 @@
 import DataTable from "./components/DataTable";
 import Search from "./components/Search";
 import DialogForm from "./components/DialogForm";
+import DialogForm2 from "./components/DialogForm2";
 import Pagination from "@/components/Pagination";
 import { index } from "@/api/business/doitac";
+import { index as getKhachHangs  } from "@/api/business/khachhang";
 import indexMixin from "@/mixins/crud/index";
 import FileSaver from "file-saver";
 export default {
-    mixins: [indexMixin(index)],
-    components: { DataTable, Search, DialogForm, Pagination },
+  
+    mixins: [
+        indexMixin(index, {
+        khachhangs : {
+                func: getKhachHangs,
+                params: {
+                    all: true,
+                },
+            }
+            }
+        ),
+    ],
+    components: { DataTable,DialogForm2, Search, DialogForm, Pagination },
     data() {
         return {
+            idc:null,
+            showdialog2:false,
             defaultParams: {
                 search: "",
                        page: 1,
                 per_page: 50,
             },
+            cts:[],
             form: {
                 id: undefined,
                 ma: "",
@@ -74,5 +100,12 @@ export default {
             },
         };
     },
+    methods:{
+        showDialogForm2(e){
+            this.cts =e.chitiets
+            this.idc =e.id
+            this.showdialog2=true
+        }
+    }
 };
 </script>

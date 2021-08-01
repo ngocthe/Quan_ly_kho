@@ -66,7 +66,10 @@ Route::group(
         Route::apiResource('chuyenkhos', 'Api\Business\ChuyenKhoController');
         Route::apiResource('daugias', 'Api\Business\DauGiaController');
         Route::get('showdaugias/{ma}', 'Api\Business\DauGiaController@show');
+        Route::post('themdaugia', 'Api\Business\DauGiaController@themdaugia');
 
+        
+        Route::put('addkhachhang/{id}', 'Api\Business\DauGiaController@addkhachhang');
         Route::get('histories', 'Api\Business\NhapKhoController@histories');
         Route::get('tonkhos/{id}', 'Api\Business\KhoController@tonKho');
         Route::get('ipdatetonkhos/{id}', 'Api\Business\KhoController@updateTonKho');

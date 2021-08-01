@@ -161,7 +161,7 @@ const businessRouter = [
             import("@/views/dashboard/business/danhmuc/khachhang/index")
     },
     {
-        name: "Quản ly đấu giá",
+        name: "Quản lý đấu giá",
         meta: {
             en_name: "Quản lý đấu giá"
         },

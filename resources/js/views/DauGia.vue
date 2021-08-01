@@ -87,7 +87,10 @@
             </tr>
              <tr>
             <th style="text-align: start;font-weight:300">Phiên đấu giá số: {{data.ma}}</th>
-             <th style="text-align: start;font-weight:300"><v-chip color="orange">{{data.trang_thai=='dang_dien_ra'?'Đang diễn ra':'Chưa diễn ra'}}</v-chip></th>
+             <th style="text-align: start;font-weight:300"><v-chip color="error" v-if="data.trang_thai=='dang_dien_ra'"> Đang diễn ra</v-chip>
+             <v-chip color="orange" v-if="data.trang_thai=='chua_dien_ra'"> Chưa diễn ra</v-chip>
+             <v-chip color="success" v-if="data.trang_thai=='da_ket_thuc'"> Đã kết thúc</v-chip>
+             </th>
             </tr>
               <tr>
             <th style="text-align: start;font-weight:500">Thời gian đấu giá:</th>
@@ -113,7 +116,7 @@
                             :start-label="'Thời gian bắt đầu'"
                             :end-label="'Thời gian còn lại'"
                             label-position="begin"
-                            :end-text="'Event ended!'"
+                            :end-text="'Đã kết thúc!'"
                             :day-txt="'Ngày'"
                             :hour-txt="'Giờ'"
                             :minutes-txt="'Phút'"
@@ -133,7 +136,7 @@
             </vue-countdown-timer>
            </div>
            <div style="text-align:center">
-           <v-btn style="margin-top:20px" @click="showDialog=true">
+           <v-btn style="margin-top:20px" @click="showDialog=true" v-if="data.trang_thai=='dang_dien_ra'">
            <v-icon>mdi-gavel</v-icon> ĐẶT GIÁ THẦU
            </v-btn>
            </div>
@@ -147,7 +150,7 @@
          <v-dialog v-model="showDialog" persistent max-width="600px">
         <v-card :loading="loading">
             <v-card-title>
-                <span class="headline"> Đặt giá thầu </span>
+                <span class="headline" > Đặt giá thầu </span>
             </v-card-title>
             <v-card-text>
                 <v-container>
@@ -179,6 +182,7 @@
                 <v-btn
                     color="blue darken-1"
                     text
+                    @click="dauGia"
                     >Thêm</v-btn
                 >
                
@@ -186,7 +190,7 @@
         </v-card>
     </v-dialog>
   </v-app>
-  <v-app style="background:#f1f1f1"  id="login" v-else class="fill-height justify-center" tag="section">
+  <v-app style="background:#f1f1f1"  id="login" v-else class="fill-height dmm justify-center" tag="section">
         <v-row justify="center" >
             <v-slide-y-transition appear>
                 <base-material-card
@@ -198,7 +202,7 @@
                 >
                   
 
-                    <v-card-text class="text-center">
+                    <v-card-text class="text-center " >
                         <div
                             class="text-center grey--text body-1 font-weight-light"
                         >
@@ -244,28 +248,30 @@
                     </v-card-text>
                 </base-material-card>
             </v-slide-y-transition>
+
         </v-row>
-        <!-- <v-snackbar
-            v-model="snackbar"
-            :bottom="y === 'bottom'"
-            :color="color"
-            :left="x === 'left'"
-            :multi-line="mode === 'multi-line'"
-            :right="x === 'right'"
-            :timeout="timeout"
-            :top="y === 'top'"
-            :vertical="mode === 'vertical'"
-        >
-            {{ text }}
-        </v-snackbar>-->
+      
+         
+         
   </v-app>
+    <div class="text-center ma-2">
+ <v-snackbar v-model="snackbar" :color="snack.color" :timeout="-1" top>
+            {{ snack.text }}
+            <template v-slot:action="{ attrs }">
+                <v-btn v-bind="attrs" dark text @click="snackbar = false">
+                    Đóng
+                </v-btn>
+            </template>
+        </v-snackbar>
+  </div>
+        
 </div>
 </template>
 
 <script>
 import VueCountdownTimer from 'vuejs-countdown-timer';
 import Vue from "vue";
-import { show } from "@/api/business/doitac";
+import { show,daugia } from "@/api/business/doitac";
 Vue.use(VueCountdownTimer);
 
 export default {
@@ -274,6 +280,12 @@ export default {
     },
   data () {
     return {
+       vertical: true,
+      snack:{
+          text:'',
+          color:'success'
+      },
+      snackbar:false,
       madaugia:false,
         timerCount:10,
         showDialog:false,
@@ -364,12 +376,35 @@ export default {
     async showSP(ma){
       const {data}= await show(ma);
     this.data =data 
-    console.log(data)
-    }
+    this.form.dau_gia_id=data.id
+    },
+    async dauGia(){
+      try {
+                    this.loading = true;
+                    await daugia(this.form);
+                    this.reload();
+
+            } catch (error) {
+                this.loading = false;
+                this.snack.text='Thông tin không hợp lệ!'
+                this.snack.color='red'
+            this.snackbar=true
+             this.showDialog=false;
+            }
+    },
+    reload() {
+            this.loading = false;
+            this.snackbar=true
+           
+               this.snack.text='Gửi đấu giá thành công!'
+                this.snack.color='red'
+            this.showDialog=false;
+        }
   },
   mounted(){
     if(this.$route.query.madg) this.madaugia=true
       this.showSP(this.$route.query.madg)
+      
   }
   
 }
@@ -389,5 +424,8 @@ width:100%}
     border:1px solid #f1f1f1;
     padding-left:10px;
 
+}
+.dmm .grow {
+  display:none !important
 }
 </style>

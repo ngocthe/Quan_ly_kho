@@ -81,14 +81,14 @@
                                 <DatePicker
                                     label="Ngày bắt đầu"
                                     :value="form.bat_dau"
-                                    @updatevalue="form.ngay=$event"
+                                    @updatevalue="form.bat_dau=$event"
                                 />
                             </v-col>
                              <v-col cols="6" sm="3">
                                 <DatePicker
                                     label="Ngày kết thúc"
                                     :value="form.ket_thuc"
-                                    @updatevalue="form.ngay=$event"
+                                    @updatevalue="form.ket_thuc=$event"
                                 />
                             </v-col>
                               <v-col cols="6" sm="3">
@@ -98,7 +98,6 @@
                                     :label="'Giá khởi điểm'"
                                     dense
                                 ></v-text-field>
-                                
                             </v-col>
                             <v-col cols="6" sm="2">
                                 <v-text-field

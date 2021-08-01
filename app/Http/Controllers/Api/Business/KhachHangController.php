@@ -18,7 +18,6 @@ class KhachHangController extends Controller
         $query = KhachHang::query();
         if ($search) {
             $query->where('ma','ilike', '%' . $search . '%');
-            $query->orWhere('ma_misa','ilike', '%' . $search . '%');
             $query->orWhere('ten','ilike', '%' . $search . '%');
 
         }
