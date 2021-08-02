@@ -39,7 +39,7 @@
                     <v-carousel-item
                     v-for="(item,i) in data.hinh_anhs"
                     :key="i"
-                    :src="'http://127.0.0.1:8000'+item"
+                    :src="'http://daugia.mauxanhcuocsong.vn'+item"
                     
                     reverse-transition="fade-transition"
                     transition="fade-transition"
@@ -48,7 +48,7 @@
                 <div >
                     <span v-for="(item,i) in data.hinh_anhs" style="boder:1px solid #f00; width:82px; height:82px;">
                     <img   
-                           :src="'http://127.0.0.1:8000'+item"
+                           :src="'http://daugia.mauxanhcuocsong.vn'+item"
                             style="width:70px; height:70px;border:2px solid #655e5e;  margin-right:10px; margin-top:10px"
                     /></span>
                 </div>
