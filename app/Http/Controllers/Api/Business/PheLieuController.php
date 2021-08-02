@@ -20,7 +20,7 @@ class PheLieuController extends Controller
     {
         $perPage = $request->query('per_page', 20);
         $search = $request->query('search');
-        $query = PheLieu::query();
+        $query = PheLieu::query()->orderBy('ma','asc');
         if ($search) {
             $query->where('ten','ilike', '%' . $search . '%');
             $query->orWhere('nhom','ilike', '%' . $search . '%');

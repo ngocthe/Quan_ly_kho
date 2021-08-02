@@ -17,23 +17,19 @@
                 <v-btn
                     @click="$emit('handle-create');getSoPhieu()"
                     class="mx-2"
-                    small
-                    fab
                     dark
                     color="indigo"
                 >
-                    <v-icon dark>mdi-plus</v-icon>
+                    <v-icon dark>mdi-plus</v-icon> Thêm mới
                 </v-btn>
-                <!-- <v-btn
+               <v-btn
                     @click="$emit('handle-export')"
                     class="mx-2"
-                    small
-                    fab
                     dark
                     color="indigo"
                 >
-                    <v-icon dark>mdi-download</v-icon>
-                </v-btn> -->
+                    <v-icon dark>mdi-download</v-icon> Xuất excel
+                </v-btn> 
             </v-toolbar>
         </template>
         <template v-slot:item.actions="{ item }">
