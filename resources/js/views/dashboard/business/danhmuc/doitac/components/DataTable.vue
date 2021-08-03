@@ -45,7 +45,6 @@
          </template>
           <template v-slot:item.khach_hang_du_thau="{ item }">
              <v-btn
-             v-if="item.trang_thai!='dang_dien_ra'"
                 x-small
                 @click="$emit('handle-chitet', item)"
                 dark
