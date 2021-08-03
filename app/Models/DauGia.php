@@ -10,7 +10,7 @@ class DauGia extends Model
     protected $guarded = [];
 
     protected $casts=['hinh_anhs'=>'array'];
-    protected $appends = ['trang_thai'];
+    protected $appends = ['trang_thai','cao_nhat'];
 
     public function chitiets()
     {
@@ -26,5 +26,14 @@ class DauGia extends Model
     }
       return 'chua_dien_ra';
     }
+    public function getCaoNhatAttribute(){
+      $now= Carbon::now();
+      $kh=KhachHangDauGia::where('dau_gia_id',$this->attributes['id'])->orderBy('gia','asc')->first();
+      if(isset($kh)){
+            return $kh->gia;
+      }
+    
+    return 0;
+  }
 
 }

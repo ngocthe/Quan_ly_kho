@@ -105,7 +105,7 @@
             </table>
            <div style="text-align:center; border:1px solid #f1f1f1; padding:20px">
             <span style="font-weight:bold; color:#12222"> KẾT QUẢ </span>
-            <p style="margin-top:10px"><v-icon>mdi-trending-up</v-icon> Giá cao nhất hiện tại: <span style="font-size:25px; color: #f00">3,450 </span> (vnđ/kg)</p>
+            <p style="margin-top:10px"><v-icon>mdi-trending-up</v-icon> Giá cao nhất hiện tại: <span style="font-size:25px; color: #f00">{{data.cao_nhat}} </span> (vnđ/kg)</p>
                     <vue-countdown-timer
                     style="font-weight:bold"
                             @start_callback="startCallBack('event started')"
@@ -383,6 +383,7 @@ export default {
                     this.loading = true;
                     await daugia(this.form);
                     this.reload();
+                    this.showSP()
 
             } catch (error) {
                 this.loading = false;
