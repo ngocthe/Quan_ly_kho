@@ -23,7 +23,7 @@
                     <v-icon dark>mdi-plus</v-icon> Thêm mới
                 </v-btn>
                <v-btn
-                    @click="$emit('handle-export')"
+                    @click="$emit('handle-export2')"
                     class="mx-2"
                     dark
                     color="indigo"

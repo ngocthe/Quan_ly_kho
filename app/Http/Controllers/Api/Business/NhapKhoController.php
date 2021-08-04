@@ -362,6 +362,52 @@ public function nhapKhoAdmin2(Request $request)
     return ['data'=>$data];
 }
 
+public function export(Request $request)
+{
+    $ngay = $request->query('ngay', [Carbon::now()->toDateString(), Carbon::now()->toDateString()]);
+    $ids = NhapKho::where('ngay', '>=', $ngay[0])->where('ngay', '<=', $ngay[1])->pluck('id');
+    $data= ChiTietNhapKho::whereIn('nhap_kho_id',$ids)->get();
+    $file = public_path() . '/excel/NhapKho.xlsx';
+    \Excel::load($file, function ($excel) use ($data) {
+        $excel->sheet('Sheet1', function ($sheet) use ($data) {
+            foreach ($data as $key => $value) {
+                $sheet->row($key+2, [
+                    $value->nhapKho->ngay,
+                    $value->pheLieu->ma,
+                    $value->pheLieu->ten,
+                    $value->pheLieu->don_vi,
+                    $value->so_luong_thuc_te,
+                    $value->nhapKho->khachHang->ma,
+                    $value->nhapKho->khachHang->ten,
+                ]);
+               
+                $sheet->cell('A' . ($key + 4), function ($cell) {
+                    $cell->setBorder('thin', 'thin', 'thin', 'thin');
+                });
+                $sheet->cell('B' . ($key + 4), function ($cell) {
+                    $cell->setBorder('thin', 'thin', 'thin', 'thin');
+                });
+                $sheet->cell('C' . ($key + 4), function ($cell) {
+                    $cell->setBorder('thin', 'thin', 'thin', 'thin');
+                });
+                $sheet->cell('D' . ($key + 4), function ($cell) {
+                    $cell->setBorder('thin', 'thin', 'thin', 'thin');
+                });
+                $sheet->cell('E' . ($key + 4), function ($cell) {
+                    $cell->setBorder('thin', 'thin', 'thin', 'thin');
+                });
+                $sheet->cell('F' . ($key + 4), function ($cell) {
+                    $cell->setBorder('thin', 'thin', 'thin', 'thin');
+                });
+                $sheet->cell('G' . ($key + 4), function ($cell) {
+                    $cell->setBorder('thin', 'thin', 'thin', 'thin');
+                });
+            
+            }
+        });
+    })->download('xlsx');
+}
+
     public function nhapphanloai(Request $request)
     {
         $so=$request->so;

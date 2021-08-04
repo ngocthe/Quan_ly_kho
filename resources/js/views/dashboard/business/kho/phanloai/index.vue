@@ -117,7 +117,7 @@ export default {
     methods: {
         exportExcel(e) {
            window.location.assign(
-                `/api/phanloai/export?ngay[]=`+this.defaultParams.ngay[0]+'&ngay[]='+this.defaultParams.ngay[1]
+                `/api/phanloai/export?ngay[]=`+this.params.ngay[0]+'&ngay[]='+this.params.ngay[1]
             );
         },
         pushDetail() {

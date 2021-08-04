@@ -17,7 +17,7 @@
                     @handle-create="showDialogForm('create')"
                     @handle-delete="getData()"
                      @push-detail="pushDetail()"
-                    @handle-export="exportData"
+                    @handle-export2="exportData2"
                 />
             </v-col>
             <v-col cols="12">
@@ -132,6 +132,11 @@ export default {
         };
     },
     methods: {
+        exportData2() {
+           window.location.assign(
+                `/api/nhapkho/export?ngay[]=`+this.params.ngay[0]+'&ngay[]='+this.params.ngay[1]
+            );
+        },
          showDialogForm2(mode, id = null) {
             if (mode == "edit") {
                 // this.editing = true;
