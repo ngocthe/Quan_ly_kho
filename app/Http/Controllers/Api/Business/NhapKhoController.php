@@ -277,6 +277,7 @@ function addNhapKhoAdmin(Request $request){
             'so_luong_thuc_te'=>$form['so_luong_thuc_te'],
             'so_luong_chung_tu'=>$form['so_luong_chung_tu'],
             'hang_gui'=>$form['hang_gui'],
+            'kho_id'=> $form['kho_id'],
             ]);
             if(!empty($chitiets)){
                     $phanloai = PhanLoai::create([
@@ -541,6 +542,7 @@ public function export(Request $request)
                 'so_luong_thuc_te'=>$item['so_luong_thuc_te'],
                 'so_luong_chung_tu'=>$item['so_luong_chung_tu'],
                 'don_gia'=>$item['don_gia'],
+                'kho_id'=>$item['kho_id'],
                 ]);
                 $user = Auth::user();
                 // if(!empty($item['phanloais'])){

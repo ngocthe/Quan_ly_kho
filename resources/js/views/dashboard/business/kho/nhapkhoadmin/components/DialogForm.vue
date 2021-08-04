@@ -212,7 +212,7 @@ export default {
                  "Thêm mới thành công",
                 "success"
             );
-            //    this.$emit('created');
+               this.$emit('created');
             } catch (error) {
                 this.loading = false;
             }

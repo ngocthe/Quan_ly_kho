@@ -75,6 +75,16 @@
                 dense
             ></v-autocomplete>
         </template>
+        <template v-slot:item.khach_hang_id="{ item }">
+             <v-autocomplete
+                v-model="item.khach_hang_id"
+                :items="options.khachhangs"
+                item-text="ten"
+                item-value="id"
+                style="width:100%"
+                dense
+            ></v-autocomplete>
+        </template>
 
      <template v-slot:item.actions="{ item }">
             <v-btn
@@ -101,11 +111,23 @@ export default {
     props: ["chitiets", "editing","options","kho_id"],
     computed: {
         headers() {
-            return [
+            
+            return this.editing?[
                 { text: "Phế liệu", value: "phe_lieu_id",width: 250 },
                 { text: "Đơn vị", value: "dvt", width: 100 },
                 { text: "Số lượng", value: "so_luong"  },
                  { text: "Kho nhập", value: "kho_id"},
+                 {
+                    text: this.$t("actions") ,
+                    value: "actions" ,
+                    align: "center"
+                }
+            ]:[
+                { text: "Phế liệu", value: "phe_lieu_id",width: 250 },
+                { text: "Đơn vị", value: "dvt", width: 100 },
+                { text: "Số lượng", value: "so_luong"  },
+                 { text: "Kho nhập", value: "kho_id"},
+                { text: "Khách hàng", value: "khach_hang_id"},
                  {
                     text: this.$t("actions") ,
                     value: "actions" ,
@@ -139,6 +161,8 @@ export default {
                 dvt: 'Kg',
                 so_luong: null,
                 kho_id:this.kho_id,
+                 khach_hang_id:null,
+
             });
         },
         handleDelete(id) {

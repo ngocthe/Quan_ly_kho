@@ -95,8 +95,8 @@ export default {
             return [
                 { text: "Ngày", value: "ngay" },
                 {
-                    text: 'Ca',
-                    value: "ca",
+                    text: 'Số phiếu',
+                    value: "so_phieu",
                 },
                  {
                     text: 'Khách hàng',

@@ -60,7 +60,7 @@
         <template v-slot:item.so_luong_thuc_te="{ item }">
             <v-text-field
                 v-model="item.so_luong_thuc_te"
-                type="number"
+                @change="sum(item)"
                 dense
             ></v-text-field>
         </template>
@@ -79,6 +79,16 @@
                 :min="0"
                 dense
             ></v-text-field>
+        </template>
+           <template v-slot:item.kho_id="{ item }">
+             <v-autocomplete
+                v-model="item.kho_id"
+                :items="options.khos"
+                item-text="ten"
+                item-value="id"
+                style="width:100%"
+                dense
+            ></v-autocomplete>
         </template>
        <template v-slot:item.chenh_lech="{ item }">
                        {{ (item.so_luong_thuc_te - item.so_luong_chung_tu) | money }}
@@ -129,7 +139,7 @@
 </template>
 <script>
 export default {
-    props: ["chitiets", "editing","options"],
+    props: ["chitiets", "editing","options","kho_id"],
       data() {
         return {
            showFormPL:false,
@@ -154,6 +164,7 @@ export default {
                 { text: "Phế liệu", value: "phe_lieu_id", width: 200 },
                 { text: "Đơn vị", value: "dvt", width: 150 },
                 { text: "Số lượng thực", value: "so_luong_thuc_te", width: 200 },
+                 { text: "Kho nhập", value: "kho_id"},
                  {
                     text: this.$t("actions") ,
                     value: "actions" ,
@@ -165,13 +176,22 @@ export default {
     },
 
     methods: {
-            them(index){
-                var so = index+1;
+      
+         them(index){
+         if(!this.editing){
+             if(this.kho_id!=5){
+                 console.log(this.kho_id)
+             this.chitiets[index].kho_id =  this.chitiets[index].phe_lieu_id
+                    ? this.options.phelieus.find( product => product.id === this.chitiets[index].phe_lieu_id).kho_id:this.kho_id
+                    }
+                    }else{
+                        this.chitiets[index].kho_id =5
+                    }
+          var so = index+1;
             if(this.chitiets.length==so){
                 this.addPheLieu()
             }
-            console.log(so)
-        },
+          },
          them2(index2,index){
              console.log(index)
               var index=this.chitiets.findIndex(p => p.id === index)
@@ -196,6 +216,7 @@ export default {
                 so_luong_thuc_te: null,
                 so_luong_chung_tu:0,
                 don_gia: 0,
+                kho_id:this.kho_id,
                 phanloais:[
                     {
                         id: Math.random(),
@@ -212,6 +233,18 @@ export default {
                 this.chitiets.findIndex(p => p.id === id),
                 1
             );
+        },
+        sum(item){
+            var index=this.chitiets.findIndex(p => p.id === item.id)
+            console.log(this.chitiets[index].so_luong_thuc_te)
+            if(this.chitiets[index].so_luong_thuc_te){
+            var array =this.chitiets[index].so_luong_thuc_te.split('+');
+            var t= 0;
+            array.forEach(element => {
+                t = t + parseFloat(element)
+            });
+            this.chitiets[index].so_luong_thuc_te = t
+            }
         },
         handleDelete2(id_Cah,id){
             var index=this.chitiets.findIndex(p => p.id === id_Cah)

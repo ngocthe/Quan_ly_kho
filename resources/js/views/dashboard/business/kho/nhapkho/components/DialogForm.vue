@@ -52,27 +52,7 @@
                                     dense
                                 ></v-text-field>
                             </v-col>
-                                     <v-col cols="12" sm="2">
-                                <v-autocomplete
-                                    v-model="form.tai_khoan_co_id"
-                                    :items="options.tkcos"
-                                    item-text="so_tk"
-                                    dense
-                                    item-value="id"
-                                    :label="'Có'"
-                                ></v-autocomplete>
-                            </v-col>
-
-                           <v-col cols="12" sm="2">
-                                <v-autocomplete
-                                    v-model="form.tai_khoan_no_id"
-                                    :items="options.tknos"
-                                    item-text="so_tk"
-                                    dense
-                                    item-value="id"
-                                    :label="'Nợ'"
-                                ></v-autocomplete>
-                            </v-col>
+                            
 
                                 <v-col cols="12" sm="4">
                                      <v-autocomplete
@@ -94,19 +74,6 @@
                                     :label="'Xe'"
                                 ></v-autocomplete>
                             </v-col>
-                            <v-col cols="12" sm="4">
-                                <v-autocomplete
-                                    v-model="form.kho_id"
-                                    :items="options.khos"
-                                    item-text="ten"
-                                    dense
-                                    item-value="id"
-                                    :label="'Kho'"
-                                ></v-autocomplete>
-                            </v-col>
-
-
-
                         </v-row>
                          <v-row >
                             <v-col cols="12">
@@ -114,6 +81,7 @@
                                     :chitiets="form.chitiets"
                                     :editing="editing"
                                     :options="options"
+                                    :kho_id="form.kho_id"
                                 />
                             </v-col>
                         </v-row>

@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-model="showDialog" persistent  :height="editing ? 'calc(100vh - 550px)' : null" max-width="65vw">
+    <v-dialog v-model="showDialog" persistent  :height="editing ? 'calc(100vh - 550px)' : null" max-width="85vw">
         <v-card :loading="loading">
             <v-card-title>
                 <span class="headline">{{ title }}</span>
@@ -47,8 +47,9 @@
                                 ></v-text-field>
                             </v-col>
 
-                           <v-col cols="12" sm="6">
-                                <v-autocomplete
+                       
+                             <v-col cols="12" sm="4" v-if="editing">
+                                     <v-autocomplete
                                     v-model="form.khach_hang_id"
                                     :items="options.khachhangs"
                                     item-text="ten"
@@ -57,8 +58,7 @@
                                     :label="'Khách hàng'"
                                 ></v-autocomplete>
                             </v-col>
-
-                                <v-col cols="12" sm="6">
+                                <v-col cols="12" sm="4">
                                      <v-autocomplete
                                     v-model="form.kho_id"
                                     :items="options.khos"
@@ -75,7 +75,7 @@
                                     dense
                                 ></v-text-field>
                             </v-col> -->
-                                <v-col cols="12" sm="6">
+                                <v-col cols="12" sm="4">
                                      <v-autocomplete
                                     v-model="form.phe_lieu_id"
                                     :items="options.phelieus"

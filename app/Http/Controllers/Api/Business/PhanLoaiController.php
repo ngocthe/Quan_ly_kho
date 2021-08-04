@@ -77,47 +77,58 @@ class PhanLoaiController extends Controller
             //     'result'  => []
             // ], 500, []);
             // }
+            $info=$request->all();
+            $khs =[];
+            foreach($info['chitiets'] as $chitiet){
+                if(!in_array($chitiet['khach_hang_id'],$khs)) $khs[]=$chitiet['khach_hang_id'];
+            }
             $user = Auth::user();
-            $phanloai = PhanLoai::create([
-                'created_by'=>$user->id,
-                'ngay' => $request->ngay,
-                'phe_lieu_id' => $request->phe_lieu_id,
-                'khach_hang_id' => $request->khach_hang_id,
-                'kho_id' => $request->kho_id,
-                'noi_dung' => $request->noi_dung,
-                'so_phieu' => $request->so_phieu,
-                'nguoi_can' => $request->nguoi_can,
-                'so_luong' => $request->so_luong,
 
-            ]);
+            foreach($khs as $kh){
+                if(isset($kh)){
+                    $phanloai = PhanLoai::create([
+                        'created_by'=>$user->id,
+                        'ngay' => $request->ngay,
+                        'phe_lieu_id' => $request->phe_lieu_id,
+                        'khach_hang_id' => $kh,
+                        'kho_id' => $request->kho_id,
+                        'noi_dung' => $request->noi_dung,
+                        'so_phieu' => $request->so_phieu,
+                        'nguoi_can' => $request->nguoi_can,
+                        'so_luong' => $request->so_luong,
+                    ]);
+                    foreach($info['chitiets'] as $chitiet){
+                        if(isset($chitiet['phe_lieu_id']) && $chitiet['khach_hang_id']==$kh){
+                            ChiTietPhanLoai::create([
+                             'phan_loai_id'=>$phanloai->id,
+                             'phe_lieu_id'=>$chitiet['phe_lieu_id'],
+                             'dvt'=>$chitiet['dvt'],
+                            'so_luong'=>$chitiet['so_luong'],
+                            'kho_id'=>$chitiet['kho_id']
+                            ]);
+                            $ctkho=ChiTietKho::where('phe_lieu_id',$chitiet['phe_lieu_id'])->where('kho_id',$chitiet['kho_id'])->first();
+                                if(isset($ctkho)){
+                                    $ctkho->khoi_luong =  $ctkho->khoi_luong+$chitiet['so_luong'];
+                                    $ctkho->save();
+                                }else{
+                                    ChiTietKho::create([
+                                       'kho_id'=>$chitiet['kho_id'],
+                                        'phe_lieu_id'=>$chitiet['phe_lieu_id'],
+                                        'dvt'=>$chitiet['dvt'],
+                                        'khoi_luong'=>$chitiet['so_luong'],
+                                    ]);
+                                }
+                        }
+                    }
+                }
+            }
+            
             if(isset($ctkho1))
                 {
-                    $ctkho1->khoi_luong =  $ctkho1->khoi_luong-$request->so_luong;
+              $ctkho1->khoi_luong =  $ctkho1->khoi_luong-$request->so_luong;
                 $ctkho1->save();
             }
-            foreach($request->chitiets as $item){
-                if(isset($item['phe_lieu_id'])){
-                ChiTietPhanLoai::create([
-                 'phan_loai_id'=>$phanloai->id,
-                 'phe_lieu_id'=>$item['phe_lieu_id'],
-                 'dvt'=>$item['dvt'],
-                'so_luong'=>$item['so_luong'],
-                'kho_id'=>$item['kho_id']
-                ]);
-                $ctkho=ChiTietKho::where('phe_lieu_id',$item['phe_lieu_id'])->where('kho_id',$item['kho_id'])->first();
-                    if(isset($ctkho)){
-                        $ctkho->khoi_luong =  $ctkho->khoi_luong+$item['so_luong'];
-                        $ctkho->save();
-                    }else{
-                        ChiTietKho::create([
-                           'kho_id'=>$item['kho_id'],
-                            'phe_lieu_id'=>$item['phe_lieu_id'],
-                            'dvt'=>$item['dvt'],
-                            'khoi_luong'=>$item['so_luong'],
-                        ]);
-                    }
-            }
-        }
+                
 
             DB::commit();
             return Response::created();
