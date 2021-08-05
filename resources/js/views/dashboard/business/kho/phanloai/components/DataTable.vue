@@ -125,7 +125,8 @@ export default {
                 {
                     text: this.$t("actions"),
                     value: "actions",
-                    align: "center"
+                    align: "center",
+                    width:120
                 },
             ];
         },

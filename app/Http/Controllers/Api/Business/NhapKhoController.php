@@ -373,7 +373,7 @@ public function export(Request $request)
         $excel->sheet('Sheet1', function ($sheet) use ($data) {
             foreach ($data as $key => $value) {
                 $sheet->row($key+2, [
-                    $value->nhapKho->ngay,
+                    Carbon::parse($value->nhapKho->ngay)->format('d-m-Y'),
                     $value->pheLieu->ma,
                     $value->pheLieu->ten,
                     $value->pheLieu->don_vi,

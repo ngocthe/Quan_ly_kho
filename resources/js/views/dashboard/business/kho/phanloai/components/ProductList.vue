@@ -59,8 +59,7 @@
         <template v-slot:item.so_luong="{ item }">
             <v-text-field
                 v-model="item.so_luong"
-                type="number"
-                :min="0"
+                @change="sum(item)"
                 dense
             ></v-text-field>
         </template>
@@ -153,6 +152,18 @@ export default {
                 this.addPheLieu()
             }
           },
+           sum(item){
+            var index=this.chitiets.findIndex(p => p.id === item.id)
+            console.log(this.chitiets[index].so_luong)
+            if(this.chitiets[index].so_luong){
+            var array =this.chitiets[index].so_luong.split('+');
+            var t= 0;
+            array.forEach(element => {
+                t = t + parseFloat(element)
+            });
+            this.chitiets[index].so_luong = t
+            }
+        },
         addPheLieu() {
             console.log(this.kho_id)
             this.chitiets.push({

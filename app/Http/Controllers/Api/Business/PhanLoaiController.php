@@ -299,7 +299,8 @@ class PhanLoaiController extends Controller
                             $value2->so_luong,
                             $value->khachHang->ma,
                             $value->khachHang->ten,
-                            $value->noi_dung,
+                            isset($value2->kho)?$value2->kho->ten:null,
+
                         ]);
                     }
                     $t= $t +$value->chitiets->count()+1;
