@@ -45,6 +45,7 @@
                 item-text="ma"
                 item-value="id"
                 style="width:100%"
+                :filter="customFilter"
                 dense
             ></v-autocomplete>
         </template>
@@ -176,7 +177,10 @@ export default {
     },
 
     methods: {
-      
+        customFilter(item, queryText, itemText){
+            var searchText= queryText.toUpperCase()
+            return item.ma.indexOf(searchText)>-1 && item.ma.charAt(0)==searchText.charAt(0)
+        },
          them(index){
          if(!this.editing){
              if(this.kho_id!=5){
