@@ -13,9 +13,9 @@ class AddColumn extends Migration
      */
     public function up()
     {
-        Schema::table('chi_tiet_nhap_khos', function (Blueprint $table) {
-            $table->dropColumn('kho_id');
-        });
+        // Schema::table('chi_tiet_nhap_khos', function (Blueprint $table) {
+        //     $table->dropColumn('kho_id');
+        // });
         Schema::table('chi_tiet_nhap_khos', function (Blueprint $table) {
             $table->integer('kho_id')->nullable();
         });
