@@ -54,6 +54,21 @@
                         :label="'Trạng thái'"
                     ></v-autocomplete>
                 </v-col>
+              <v-col cols="3" md="2" lg="2" class="pb-0">
+                 <v-text-field type="number" dense style="!important" v-model="so" label="Số chứng từ tiếp theo"></v-text-field>
+              </v-col>
+        <v-col cols="6" md="3" lg="3" class="pb-0">
+                <v-btn
+                    @click="$emit('handle-export',so)"
+                    class="mx-2"
+                    small
+                    dark
+                    color="indigo"
+                >
+                    <v-icon dark>mdi-download</v-icon>
+                    Xuất theo mẫu misa
+                </v-btn>
+              </v-col>
             </v-row>
         </v-col>
         <v-col cols="12" style="padding-top: 20px" md="2">
@@ -72,6 +87,10 @@ import DateRangePicker from "@/components/DateRangePicker";
 export default {
     props: ["params", "options"],
     components: { DateRangePicker },
+     data: () => ({
+         so:0
+     })
+
 };
 </script>
 <style lang=""></style>

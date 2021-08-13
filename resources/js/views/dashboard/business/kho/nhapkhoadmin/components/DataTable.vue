@@ -1,5 +1,6 @@
 <template>
     <v-data-table
+    style="margin-top:20px"
         :headers="getHeaders()"
               v-model="selected"
         :items="tableData"
@@ -39,7 +40,7 @@
                     <v-icon dark>mdi-plus</v-icon>
                     Thêm phiếu
                 </v-btn>
-             
+                
             </v-toolbar>
         </template>
 
@@ -105,10 +106,7 @@ export default {
         headers() {
             return [
                 { text: "Ngày", value: "ngay" },
-                {
-                    text: 'Ca',
-                    value: "ca",
-                },
+             
                  {
                     text: 'Khách hàng',
                     value: "khach_hang",
@@ -145,6 +143,10 @@ export default {
                     text: 'Kho',
                     value: "kho",
                 },
+                   {
+                    text: 'Xuất PL',
+                    value: "phan_loai",
+                },
               
                 // {
                 //     text: this.$t("actions"),
@@ -156,7 +158,6 @@ export default {
         },
     },
      data: () => ({
-  
     selected: []}),
       methods:{
           

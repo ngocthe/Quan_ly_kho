@@ -56,7 +56,9 @@ class NhapKhoController extends Controller
             $query->where('khach_hang_id',$khach_hang_id);
         }
         $query->orderBy('updated_at','desc');
+      
         return NhapKhoResource::collection($request->all ? $query->get(): $query->paginate($perPage));
+    
     }
 
 
@@ -222,7 +224,7 @@ public function nhapKhoAdmin(Request $request)
     if(isset($phe_lieu_id)){
         $chitietnhapQuery->where('phe_lieu_id', $phe_lieu_id);
     }
-    if($ghi_so==1){
+    if($ghi_so==1||$request->export){
         $chitietnhapQuery->where('ghi_so',true);
     }else{
         $chitietnhapQuery->where('ghi_so',false);
@@ -237,9 +239,11 @@ public function nhapKhoAdmin(Request $request)
                     'ngay'=>$nhapkho->ngay,
                     'ca'=>$nhapkho->ca,
                     'khach_hang'=>$nhapkho->khachHang->ten,
+                    'ma_khach_hang'=>$nhapkho->khachHang->ma,
                     'bks'=>isset($nhapkho->xe)?$nhapkho->xe->bks:null,
                     'phe_lieu'=>$nhap->pheLieu->ma,
                     'dvt'=>$nhap->dvt,
+                    'phan_loai'=>isset($nhap->phanLoai)?$nhap->phanLoai->so_phieu:null,
                     'so_luong_thuc_te'=>$nhap->so_luong_thuc_te,
                     'so_luong_chung_tu'=>$nhap->so_luong_chung_tu,
                     'hang_cong'=>0,
@@ -248,10 +252,101 @@ public function nhapKhoAdmin(Request $request)
                     'kho_id'=>$nhapkho->kho_id,
                     'khach_hang_id'=>$nhapkho->khach_hang_id,
                     'ghi_so'=>$nhap->ghi_so,
-
-
                 ];
          }
+    }
+    if($request->export){
+        $so=$request->so;
+        $data2=[];
+        foreach($data as $nhap){
+            if($nhap['ghi_so']==true)
+            {
+                $data2[]=[
+                'id'=>$nhap['id'],
+                'ngay'=>$nhap['ngay'],
+                'ca'=>$nhap['ca'],
+                'ma_khach_hang'=>($nhap['ma_khach_hang']),
+                'khach_hang'=>($nhap['khach_hang']),
+                'bks'=>$nhap['bks'],
+                'phe_lieu'=>$nhap['phe_lieu'],
+                'dvt'=>$nhap['dvt'],
+                'phan_loai'=>$nhap['phan_loai'],
+                'so_luong'=>$nhap['so_luong_chung_tu'],
+                'kho'=>$nhap['kho'],
+                'ghi_so'=>$nhap['ghi_so'],
+            ];
+            if($nhap['hang_gui']>0){
+                $data2[]=[
+                'id'=>$nhap['id'],
+                'ngay'=>$nhap['ngay'],
+                'ca'=>$nhap['ca'],
+                    'ma_khach_hang'=>$nhap['ma_khach_hang'].'_N',
+                    'khach_hang'=>$nhap['khach_hang'].'_N',
+                    'bks'=>$nhap['bks'],
+                    'phe_lieu'=>$nhap['phe_lieu'],
+                    'dvt'=>$nhap['dvt'],
+                    'phan_loai'=>$nhap['phan_loai'],
+                    'so_luong'=>$nhap['hang_gui'],
+                    'kho'=>$nhap['kho'],
+                    'ghi_so'=>$nhap['ghi_so'],
+                ];
+            }
+            if($nhap['so_luong_chung_tu']<$nhap['so_luong_thuc_te']){
+                $data2[]=[
+                    'id'=>$nhap['id'],
+                'ngay'=>$nhap['ngay'],
+                'ca'=>$nhap['ca'],
+                    'ma_khach_hang'=>$nhap['ma_khach_hang'].'_D',
+                    'khach_hang'=>$nhap['khach_hang'].'_D',      
+                    'bks'=>$nhap['bks'],
+                    'phe_lieu'=>$nhap['phe_lieu'],
+                    'dvt'=>$nhap['dvt'],
+                    'phan_loai'=>$nhap['phan_loai'],
+                    'so_luong'=>(int)$nhap['so_luong_thuc_te']-(int)$nhap['so_luong_chung_tu'],
+                    'kho'=>$nhap['kho'],
+                    'ghi_so'=>$nhap['ghi_so'],
+                ];
+            }
+        }
+        }
+       $file = public_path() . '/excel/Mua_hang_qua_kho.xlsx';
+       \Excel::load($file, function ($excel) use ($data2,$so) {
+        $excel->sheet('Chứng từ mua hàng nhập kho', function ($sheet) use ($data2,$so) {
+            $t=2;
+            foreach ($data2 as $key => $value) {
+                $sheet->row($t+$key, [
+                    null,
+                    null,
+                    null,
+                    null,
+                    Carbon::parse($value['ngay'])->format('d/m/Y'),
+                    Carbon::parse($value['ngay'])->format('d/m/Y'),
+                    'NK2018/'.($so+$key),
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    $value['ma_khach_hang'],
+                    $value['khach_hang'],
+                    null,
+                    'Mua hàng công ty '.$value['ma_khach_hang'],  
+                    null,
+                    null,
+                    null,
+                    $value['phe_lieu'],
+                    null,
+                    $value['kho'],
+                    $value['phan_loai'],
+                    null,
+                    '1561',
+                    '331',
+                    $value['dvt'],
+                    $value['so_luong'],
+                ]);
+            }
+        });
+    })->download('xlsx');
     }
 return ['data'=>$data];
 }
@@ -289,6 +384,16 @@ function addNhapKhoAdmin(Request $request){
                         'so_phieu' => PhanLoai::max('id')+1,
                         'nguoi_can' => null,
                         'so_luong' =>$form['so_luong_thuc_te']]);
+                        ChiTietNhapKho::create([
+                            'nhap_kho_id'=>$nhapkho->id,
+                            'phe_lieu_id'=>$form['phe_lieu_id'],
+                            'dvt'=>$form['dvt'],
+                           'so_luong_thuc_te'=>$form['so_luong_thuc_te'],
+                           'so_luong_chung_tu'=>$form['so_luong_chung_tu'],
+                           'hang_gui'=>$form['hang_gui'],
+                           'kho_id'=> $form['kho_id'],
+                           'phan_loai_id'=>$phanloai->id
+                           ]);
                     foreach($chitiets as $item2){
                         if($item2['chon']==true){
                         $ctnhapkho = ChiTietNhapKho::find($item2['id']);
@@ -303,6 +408,7 @@ function addNhapKhoAdmin(Request $request){
                     }
                     }
                 }
+                
             $ctkho=ChiTietKho::where('phe_lieu_id',$form['phe_lieu_id'])->where('kho_id',$form['kho_id'])->first();
                 if(isset($ctkho)){
                     $ctkho->khoi_luong =  $ctkho->khoi_luong+$form['so_luong_thuc_te'];

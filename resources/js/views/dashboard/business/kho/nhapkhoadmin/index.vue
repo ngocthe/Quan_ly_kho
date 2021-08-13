@@ -7,6 +7,8 @@
                     @handle-search="getData(1)"
                     @handle-reset="reset"
                     :options="options"
+                   @handle-export="exportExcel($event)"
+
                 />
             </v-col>
             <v-col class="pt-0" cols="12">
@@ -155,6 +157,12 @@ export default {
                 don_gia: 0
             });
         },
+         exportExcel(e) {
+           window.location.assign(
+                `/api/nhapKhoAdmin/?export=true&ngay[]=`+this.params.ngay[0]+'&ngay[]='+this.params.ngay[1]+'&so='+e
+            );
+        },
     },
+   
 };
 </script>
