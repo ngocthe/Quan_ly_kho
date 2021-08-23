@@ -12,6 +12,10 @@ use App\Models\ChiTietNhapKho;
 use App\Models\ChiTietXuatKho;
 
 use App\Models\NhapKho;
+use App\Models\PheLieu;
+
+use App\Models\KhachHang;
+
 use App\Models\XuatKho;
 use App\Models\PhanLoai;
 
@@ -349,6 +353,72 @@ public function nhapKhoAdmin(Request $request)
     })->download('xlsx');
     }
 return ['data'=>$data];
+}
+
+public function import(Request $request)
+{
+    $file = $request->file('file');
+    $kho_id = $request->get('kho_id');
+    $user = Auth::user();
+    $type = $file->getClientOriginalExtension();
+    if ($type != 'xlsx') return response(['message' => 'Định dạng file không hợp lệ'], 400);
+    $fileName = time() . '_' . $file->getClientOriginalName();
+    $file->storeAs('public/imports/', $fileName);
+    try {
+        $data=[];
+        $phelieus= PheLieu::get();
+        \Excel::load(storage_path('app/public/imports/' . $fileName), function ($reader) use (&$pc_new,&$data,$user,$phelieus,$kho_id ,&$results) {
+            $results = $reader->get();
+            DB::beginTransaction();
+            $session=null;
+            foreach($results as $item){
+                $kh = KhachHang::where('ma','ilike',''.$item->ma_kh.'')->first();
+                $ngay = Carbon::parse($item->ngay);
+                if(isset($kh)){
+                    $nhapkho =  NhapKho::where('ngay',$ngay)
+                    ->where('khach_hang_id',$kh->id)->whereHas('chitiets',function ($query)use ($kho_id){
+                        $query->where('kho_id',$kho_id);
+                    })->first(); 
+
+                    if(isset($nhapkho)){
+                        $phelieu= $phelieus->where('ma',strtoupper($item->mh))->first();
+                        if(isset($phelieu))
+                            ChiTietNhapKho::create([
+                             'nhap_kho_id'=>$nhapkho->id,
+                             'phe_lieu_id'=>$phelieu->id,
+                             'dvt'=>$item['dvt'],
+                            'so_luong_thuc_te'=>$item['so_luong'],
+                            'kho_id'=> $kho_id,
+                            ]);
+                    }else{
+                        $phelieu= $phelieus->where('ma',strtoupper($item->mh))->first();
+                        $nhapkho = NhapKho::create([
+                            'ngay' => $ngay,
+                            'ca' =>1 ,
+                            'created_by'=>$user->id,
+                            'so_phieu' => NhapKho::max('id')+1,
+                            'khach_hang_id' => $kh->id,
+                            'kho_id' => $kho_id,
+                        ]);
+                        if(isset($phelieu))
+                        ChiTietNhapKho::create([
+                            'nhap_kho_id'=>$nhapkho->id,
+                            'phe_lieu_id'=>$phelieu->id,
+                            'dvt'=>$item['dvt'],
+                           'so_luong_thuc_te'=>$item['so_luong'],
+                           'kho_id'=> $kho_id,
+                           ]);
+                          
+                    }
+                }
+            }
+            DB::commit();
+            return [];
+        });
+    }catch(\Exception $e){
+        DB::rollback();
+        dd($e);
+    }
 }
 function addNhapKhoAdmin(Request $request){
     $form = $request->form;

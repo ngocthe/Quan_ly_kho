@@ -30,6 +30,14 @@
                 >
                     <v-icon dark>mdi-download</v-icon> Xuất excel
                 </v-btn> 
+                <v-btn
+                @click="$emit('handle-upload')"
+                    class="mx-2"
+                    dark
+                    color="indigo"
+                >
+                    <v-icon dark>mdi-import</v-icon>Import excel
+                </v-btn> 
             </v-toolbar>
         </template>
         <template v-slot:item.actions="{ item }">

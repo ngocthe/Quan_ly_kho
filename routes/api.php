@@ -80,7 +80,9 @@ Route::group(
         
 
         Route::get('nhapkho/export', 'Api\Business\NhapKhoController@export');
+        Route::post('nhapkho_attachment', 'Api\Business\NhapKhoController@import');
 
+        
         Route::get('phanloai/export', 'Api\Business\PhanLoaiController@export');
         Route::get('xuong_hang', 'Api\Business\KhoController@xuongHang');
         Route::put('xuong_hang/duyet/{id}', 'Api\Business\KhoController@duyetXuongHang');

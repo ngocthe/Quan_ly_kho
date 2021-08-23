@@ -17,6 +17,7 @@
                     @handle-create="showDialogForm('create')"
                     @handle-delete="getData()"
                      @push-detail="pushDetail()"
+                 @handle-upload="a()"
                     @handle-export2="exportData2"
                 />
             </v-col>
@@ -37,6 +38,14 @@
             :editing="editing"
             :form="form"
         />
+        <DialogForm2
+        @closeupload="closeupload()"
+            :showupload="showupload"
+            :editing="editing"
+            :form="form"
+            :options="options"
+
+        />
     </v-container>
 </template>
 
@@ -44,6 +53,7 @@
 import DataTable from "./components/DataTable";
 import Search from "./components/Search";
 import DialogForm from "./components/DialogForm";
+import DialogForm2 from "./components/DialogForm2";
 import Pagination from "@/components/Pagination";
 import { index } from "@/api/business/nhapkho";
 import indexMixin from "@/mixins/crud/index";
@@ -97,9 +107,10 @@ export default {
             },
         }),
     ],
-    components: { DataTable, Search, DialogForm, Pagination },
+    components: {DialogForm2, DataTable, Search, DialogForm, Pagination },
     data() {
         return {
+            showupload:false,
             defaultParams: {
                 search: "",
                 page: 1,
@@ -132,6 +143,14 @@ export default {
         };
     },
     methods: {
+        a(){
+            this.showupload=true;
+
+        },
+        closeupload(){
+               this.showupload=false;
+               this.getData()
+         },
         exportData2() {
            window.location.assign(
                 `/api/nhapkho/export?ngay[]=`+this.params.ngay[0]+'&ngay[]='+this.params.ngay[1]

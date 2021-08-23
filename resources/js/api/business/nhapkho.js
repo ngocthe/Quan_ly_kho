@@ -16,6 +16,17 @@ export function index_admin(params, responseType = "json") {
         responseType
     });
 }
+
+export function attach(data) {
+    return request({
+        url: `/nhapkho_attachment`,
+        method: "post",
+        data,
+        headers: { "Content-Type": "multipart/form-data" }
+    });
+}
+
+
 export function ghiso(data) {
     return request({
         url: "/ghiso",
