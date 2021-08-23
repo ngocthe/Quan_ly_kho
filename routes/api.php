@@ -75,6 +75,7 @@ Route::group(
         Route::put('updateSL/{id}', 'Api\Business\NhapKhoController@updateSL');
         Route::get('nhapKhoAdmin2', 'Api\Business\NhapKhoController@nhapKhoAdmin2');
         Route::post('adminnhapkhos', 'Api\Business\NhapKhoController@addNhapKhoAdmin');
+        Route::get('template', 'Api\Business\NhapKhoController@export');
 
         Route::post('ghiso', 'Api\Business\NhapKhoController@ghiSo');
         

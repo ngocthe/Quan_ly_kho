@@ -59,10 +59,16 @@ class NhapKhoController extends Controller
         if(isset( $khach_hang_id )){
             $query->where('khach_hang_id',$khach_hang_id);
         }
-        $query->orderBy('updated_at','desc');
+        $query->orderBy('ngay','desc');
       
         return NhapKhoResource::collection($request->all ? $query->get(): $query->paginate($perPage));
     
+    }
+
+    public function export()
+    {
+        $file = public_path() . '/excel/mau_import_nhap_kho.xlsx';
+        \Excel::load($file)->download('xlsx');
     }
 
 
