@@ -21,7 +21,7 @@ const businessRouter = [
         meta: {
             en_name: "Kho"
         },
-        path: "kho/khos",
+        path: "danhmuc/khos",
         component: () =>
             import("@/views/dashboard/business/kho/index")
     },
