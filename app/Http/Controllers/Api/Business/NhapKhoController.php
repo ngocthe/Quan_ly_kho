@@ -65,7 +65,7 @@ class NhapKhoController extends Controller
     
     }
 
-    public function export()
+    public function export2()
     {
         $file = public_path() . '/excel/mau_import_nhap_kho.xlsx';
         \Excel::load($file)->download('xlsx');
