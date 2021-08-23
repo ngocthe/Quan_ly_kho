@@ -394,7 +394,7 @@ public function import(Request $request)
                              'phe_lieu_id'=>$phelieu->id,
                              'dvt'=>$item['dvt'],
                             'so_luong_thuc_te'=>$item['so_luong'],
-                            'kho_id'=> $kho_id,
+                            'kho_id'=> $kho_id==5?$kho_id:$phelieu->kho_id,
                             ]);
                     }else{
                         $phelieu= $phelieus->where('ma',strtoupper($item->mh))->first();
@@ -412,7 +412,7 @@ public function import(Request $request)
                             'phe_lieu_id'=>$phelieu->id,
                             'dvt'=>$item['dvt'],
                            'so_luong_thuc_te'=>$item['so_luong'],
-                           'kho_id'=> $kho_id,
+                           'kho_id'=>$kho_id==5?$kho_id:$phelieu->kho_id,
                            ]);
                           
                     }
