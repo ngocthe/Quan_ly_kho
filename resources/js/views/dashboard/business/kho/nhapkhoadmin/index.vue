@@ -123,9 +123,9 @@ export default {
                 phe_lieu_id:null,
                 dvt:null,
                 so_luong_thuc_te:0,
-                so_luong_chung_tu:null,
-                hang_gui:null,
-                hang_cong:null,
+                so_luong_chung_tu:0,
+                hang_gui:0,
+                hang_cong:0,
                 chitiets:[]
             },
         };

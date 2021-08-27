@@ -135,9 +135,8 @@
                             ></v-text-field>
                             </v-col>
                          <v-col cols="2">
-                             <label>SL cộng</label><br>
+                             <label>SL dư</label><br>
                              <span style="font-weight:bold; margin-top:15px">{{parseFloat(form.so_luong_thuc_te)-parseFloat(form.so_luong_chung_tu)-parseFloat(form.hang_gui)}}</span>
-                            
                             </v-col>
                         </v-row>
                          <v-row >
