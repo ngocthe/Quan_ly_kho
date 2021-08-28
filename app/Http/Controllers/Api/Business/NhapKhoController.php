@@ -252,6 +252,7 @@ public function nhapKhoAdmin(Request $request)
                     'ma_khach_hang'=>$nhapkho->khachHang->ma,
                     'bks'=>isset($nhapkho->xe)?$nhapkho->xe->bks:null,
                     'phe_lieu'=>$nhap->pheLieu->ma,
+                    'ten_phe_lieu'=>$nhap->pheLieu->ten,
                     'dvt'=>$nhap->dvt,
                     'phan_loai'=>isset($nhap->phanLoai)?$nhap->phanLoai->so_phieu:null,
                     'so_luong_thuc_te'=>$nhap->so_luong_thuc_te,
@@ -262,6 +263,8 @@ public function nhapKhoAdmin(Request $request)
                     'kho_id'=>$nhapkho->kho_id,
                     'khach_hang_id'=>$nhapkho->khach_hang_id,
                     'ghi_so'=>$nhap->ghi_so,
+                    'so_phieu'=>$nhap->so_phieu,
+
                 ];
          }
     }
@@ -284,6 +287,8 @@ public function nhapKhoAdmin(Request $request)
                 'so_luong'=>$nhap['so_luong_chung_tu'],
                 'kho'=>$nhap['kho'],
                 'ghi_so'=>$nhap['ghi_so'],
+                'so_phieu'=>$nhap['so_phieu'],
+
             ];
             if($nhap['hang_gui']>0){
                 $data2[]=[
@@ -299,6 +304,8 @@ public function nhapKhoAdmin(Request $request)
                     'so_luong'=>$nhap['hang_gui'],
                     'kho'=>$nhap['kho'],
                     'ghi_so'=>$nhap['ghi_so'],
+                    'so_phieu'=>($nhap['so_phieu'])+1,
+
                 ];
             }
             if($nhap['so_luong_chung_tu']<$nhap['so_luong_thuc_te']){
@@ -315,6 +322,8 @@ public function nhapKhoAdmin(Request $request)
                     'so_luong'=>(int)$nhap['so_luong_thuc_te']-(int)$nhap['so_luong_chung_tu'],
                     'kho'=>$nhap['kho'],
                     'ghi_so'=>$nhap['ghi_so'],
+                    'so_phieu'=>($nhap['so_phieu'])+2,
+
                 ];
             }
         }
@@ -331,7 +340,7 @@ public function nhapKhoAdmin(Request $request)
                     null,
                     Carbon::parse($value['ngay'])->format('d/m/Y'),
                     Carbon::parse($value['ngay'])->format('d/m/Y'),
-                    'NK2018/'.($so+$key),
+                    'NK2018/'.$value['so_phieu'],
                     null,
                     null,
                     null,
@@ -441,15 +450,6 @@ function addNhapKhoAdmin(Request $request){
             'kho_id' => $form['kho_id'],
             'xe_id' => $form['xe_id'],
         ]);
-            ChiTietNhapKho::create([
-             'nhap_kho_id'=>$nhapkho->id,
-             'phe_lieu_id'=>$form['phe_lieu_id'],
-             'dvt'=>$form['dvt'],
-            'so_luong_thuc_te'=>$form['so_luong_thuc_te'],
-            'so_luong_chung_tu'=>$form['so_luong_chung_tu'],
-            'hang_gui'=>$form['hang_gui'],
-            'kho_id'=> $form['kho_id'],
-            ]);
             if(!empty($chitiets)){
                     $phanloai = PhanLoai::create([
                         'created_by'=>$user->id,
@@ -893,8 +893,9 @@ function updateSL(Request $request,$id){
 }
 function ghiSo(Request $request){
     $data= $request->data;
+    $so_phieu = ChiTietNhapKho::max('so_phieu')+1;
     foreach($data as $item){
-        ChiTietNhapKho::where('id',$item['id'])->update(['ghi_so'=>true]);
+        ChiTietNhapKho::where('id',$item['id'])->update(['ghi_so'=>true,'so_phieu'=>$so_phieu]);
     }
     return Response::updated();
 }

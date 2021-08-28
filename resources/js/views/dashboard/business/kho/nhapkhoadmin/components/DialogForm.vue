@@ -186,7 +186,7 @@ import { getsophieu,getPL,addNhapKhoAdmin} from "@/api/business/kho";
 //validator import
 import {} from "validator";
 export default {
-    props: ["type"],
+    props: ["type","params"],
     mixins: [dialogMixin(store, update)],
     components: { DatePicker,ProductList },
     computed: {
@@ -235,6 +235,8 @@ export default {
     }
      },
      mounted(){
+         console.log(this.params)
+         this.form.khach_hang_id = this.params.khach_hang_id
         this.getSoPhieu()
     }
 };

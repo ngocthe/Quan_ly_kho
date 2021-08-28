@@ -21,7 +21,7 @@
                 <v-col cols="6" md="3" lg="3" class="pb-0">
                     <v-autocomplete
                                     v-model="params.khach_hang_id"
-                                    @change="$emit('handle-search')"
+                                    @change="$emit('handle-search');$emit('khang_df',params.khach_hang_id)"
                                     :items="options.khachhangs"
                                     item-text="ten"
                                     clearable

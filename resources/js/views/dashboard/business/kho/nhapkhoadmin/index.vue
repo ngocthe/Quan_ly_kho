@@ -4,6 +4,7 @@
             <v-col class="pb-0" cols="12">
                 <Search
                     :params="params"
+                    @khang_df="khachDf($event)"
                     @handle-search="getData(1)"
                     @handle-reset="reset"
                     :options="options"
@@ -16,7 +17,7 @@
                     :form="form"
                     :table-data="tableData"
                     @handle-edit="showDialogForm('edit', $event)"
-                    @handle-create="showDialogForm('create')"
+                    @handle-create="showDialogForm2('create')"
                     @handle-delete="getData()"           
                      @handle-ghiso="getData()"
                      @push-detail="pushDetail()"
@@ -26,8 +27,9 @@
            
         </v-row>
         <DialogForm
-            @created="getData(1)"
+            @created="getData(1);showDialog=false"
             @updated="getData"
+            :params="params"
             :options="options"
             :show-dialog.sync="showDialog"
             :editing="editing"
@@ -128,21 +130,37 @@ export default {
                 hang_cong:0,
                 chitiets:[]
             },
+             formDef: {
+                id: undefined,
+                ngay: new Date(),
+                ca: 1,
+                 khach_hang_id:null,
+                xe_id:null,
+                kho_id:19,
+                so_phieu:null,
+                tai_khoan_no_id:null,
+                tai_khoan_co_id:null,
+                phe_lieu_id:null,
+                dvt:null,
+                so_luong_thuc_te:0,
+                so_luong_chung_tu:0,
+                hang_gui:0,
+                hang_cong:0,
+                chitiets:[]
+            },
         };
     },
     methods: {
-         showDialogForm2(mode, id = null) {
-            if (mode == "edit") {
-                // this.editing = true;
-                // for (let field in this.form) {
-                //     this.form[field] = data[field];
-                // }
-            } else {
-                this.form = JSON.parse(JSON.stringify(this.formDef));
+        khachDf(val){
+         this.form.khach_hang_id=val
+        },
+         showDialogForm2(mode) {
+            
+                this.form = this.formDef;
                 this.form.id = undefined;
                 this.editing = false;
-            }
-            this.showDialog = true;
+                this.form.khach_hang_id=this.params.khach_hang_id
+                    this.showDialog = true;
         },
          pushDetail() {
             if(this.form.chitiets.length==0)
