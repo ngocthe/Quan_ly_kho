@@ -66,6 +66,14 @@
          <template v-slot:item.chenh_lech="{ item }">
             {{+item.so_luong_thuc_te - (item.so_luong_chung_tu?(parseFloat(item.so_luong_chung_tu)+(parseFloat(item.hang_gui))):0)}}
         </template>
+        <template slot="body.append">
+                    <tr class="pink--text">
+                        <th  class="title" colspan="6">Totals</th>
+                        <th class="title">{{ sumField('so_luong_thuc_te') }}</th>
+                        <th class="title">{{ sumField('so_luong_chung_tu') }}</th>
+                        <th class="title">{{ sumField('hang_gui') }}</th>
+                    </tr>
+                </template>
         <template v-slot:item.actions="{ item }">
              <v-btn
                 x-small
@@ -119,6 +127,7 @@ export default {
                     text: 'Phế liệu',
                     value: "phe_lieu",
                 },
+                
                     {
                     text: 'ĐVT',
                     value: "dvt",
@@ -182,6 +191,10 @@ export default {
             if (this.selected.length) this.selected = []
             else this.selected = this.desserts.slice()
             },
+            sumField(key) {
+        // sum data in give key (property)
+        return this.tableData.reduce((a, b) => parseFloat(a) + parseFloat(b[key] || 0), 0)
+    },
     changeSort(column) {
             if (this.pagination.sortBy === column) {
                 this.pagination.descending = !this.pagination.descending

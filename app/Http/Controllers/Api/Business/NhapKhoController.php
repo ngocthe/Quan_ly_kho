@@ -288,7 +288,6 @@ public function nhapKhoAdmin(Request $request)
                 'kho'=>$nhap['kho'],
                 'ghi_so'=>$nhap['ghi_so'],
                 'so_phieu'=>$nhap['so_phieu'],
-
             ];
             if($nhap['hang_gui']>0){
                 $data2[]=[
